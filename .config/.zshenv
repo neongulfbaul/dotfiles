@@ -1,0 +1,1 @@
+/home/neon/projects/repos/.config/zsh/rc.zsh
