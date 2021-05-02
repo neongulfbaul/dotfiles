@@ -1,9 +1,4 @@
-# Copyright (c) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
-# Copyright (c) 2016-present Sven Greb <development@svengreb.de>
-#
-# Project:    igloo
-# Repository: https://github.com/arcticicestudio/igloo
-# License:    MIT
+# Set date alias to equal time style set in env.zsh
 alias date='command date "$TIME_STYLE"'
 
 # Add "safety net" for basic but irreversible file system operations by using

@@ -1,10 +1,3 @@
-# Copyright (c) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
-# Copyright (c) 2016-present Sven Greb <development@svengreb.de>
-
-# Project:    igloo
-# Repository: https://github.com/arcticicestudio/igloo
-# License:    MIT
-
 # Custom variables for XDG base directories to support OS that don't adhere to the specifications like macOS.
 export IGLOO_PATH_USER_CACHE="${IGLOO_PATH_USER_CACHE:-$HOME/.cache}"
 export IGLOO_PATH_USER_CONFIG="${IGLOO_PATH_USER_CONFIG:-$HOME/.config}"

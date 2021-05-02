@@ -1,10 +1,3 @@
-# Copyright (c) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
-# Copyright (c) 2016-present Sven Greb <development@svengreb.de>
-
-# Project:    igloo
-# Repository: https://github.com/arcticicestudio/igloo
-# License:    MIT
-
 # Configurations for fzf via environment variables.
 # See:
 #   1. https://github.com/junegunn/fzf

@@ -1,10 +1,3 @@
-# Copyright (c) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
-# Copyright (c) 2016-present Sven Greb <development@svengreb.de>
-
-# Project:    igloo
-# Repository: https://github.com/arcticicestudio/igloo
-# License:    MIT
-
 # Pass options by default to...
 # - only display ANSI "color" escape sequences in "raw" form (`-R`, `--RAW-CONTROL-CHARS`)
 # - automatically exit if the entire file can be displayed on the first screen (`-F`, `--quit-if-one-screen`)

@@ -130,7 +130,7 @@ prompt_igloo_help() {
      - ...with 3 commits ahead of the upstream
      - ...with an configured upstream
      - ...with the latest commit ID
-
+ 
    %F{8}┌─╼[%F{4}arcticicestudio%f@%F{4}polarbear%F{8}]╾─╼[%F{1}1%f%F{8}][%F{4}3%F{8}]╾─╼[%F{4}12:32:04%F{8}]%f
    %F{8}└─╼[%F{4}~/code/igloo%F{8}]%f
     %F{8}╰╼[%F{6}master *+%%\$ u+3 origin/master%f%F{8}]╾─╼[%F{6}d808e72%F{8}]%f
@@ -139,6 +139,7 @@ prompt_igloo_help() {
    When the shell is running with privileges, like e.g. logged in as %F{4}root%f,
    the name of the user is rendered with %Bbold font style%b and %F{14}cyan%f foreground
    color to better visualize the current permission state.
+
    %F{8}┌─╼[%B%F{14}arcticicestudio%b%f@%F{4}polarbear%F{8}]%f
 
   %B+----------------+%b
@@ -223,7 +224,6 @@ prompt_igloo_setup() {
   # Also configurable per repository via `git config bash.hideIfPwdIgnored`.
 
   GIT_PS1_HIDE_IF_PWD_IGNORED=${GIT_PS1_HIDE_IF_PWD_IGNORED:-false}
-
   # Show colored hints about the current dirty state.
   # The colors are based on the colored output of `git status -sb`.
   # NOTE: Only available when using `__git_ps1` via ZSH's `precmd` hook function!
@@ -264,11 +264,11 @@ prompt_igloo_setup() {
   # +--------------------------------+
   # By default the name of the host is only shown for remote/SSH sessions.
   # When set to `true` the name will always be shown independent of the current session type.
-  IGLOO_ZSH_PROMPT_THEME_ALWAYS_SHOW_HOST=${IGLOO_ZSH_PROMPT_THEME_ALWAYS_SHOW_HOST:-false}
+  IGLOO_ZSH_PROMPT_THEME_ALWAYS_SHOW_HOST=${IGLOO_ZSH_PROMPT_THEME_ALWAYS_SHOW_HOST:-true}
 
   # By default the name of the user is only shown for remote/SSH sessions.
   # When set to `true` the name will always be shown independent of the current session type.
-  IGLOO_ZSH_PROMPT_THEME_ALWAYS_SHOW_USER=${IGLOO_ZSH_PROMPT_THEME_ALWAYS_SHOW_USER:-false}
+  IGLOO_ZSH_PROMPT_THEME_ALWAYS_SHOW_USER=${IGLOO_ZSH_PROMPT_THEME_ALWAYS_SHOW_USER:-true}
 
   # By default the time is always shown.
   # When set to `true` the segment won't be rendered.

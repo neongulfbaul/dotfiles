@@ -1,10 +1,3 @@
-# Copyright (c) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
-# Copyright (c) 2016-present Sven Greb <development@svengreb.de>
-
-# Project:    igloo
-# Repository: https://github.com/arcticicestudio/igloo
-# License:    MIT
-
 # zplug base setup and plugins.
 # See:
 #   1. https://github.com/zplug/zplug
@@ -30,6 +23,9 @@ zplug "b4b4r07/enhancd", use:init.sh
 
 # Suggests commands while typing based on history and completions.
 zplug "zsh-users/zsh-autosuggestions"
+
+# Git from oh-my-zsh
+zplug "plugins/git",   from:oh-my-zsh
 
 # Syntax highlighting for commands whilst they are typed.
 # This helps in reviewing commands before running them, particularly in catching syntax errors.

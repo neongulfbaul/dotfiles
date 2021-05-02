@@ -1,10 +1,3 @@
-# Copyright (c) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
-# Copyright (c) 2016-present Sven Greb <development@svengreb.de>
-
-# Project:    igloo
-# Repository: https://github.com/arcticicestudio/igloo
-# License:    MIT
-
 # Tie (`-T`) the `FPATH` environment variable for unique (`-U`) entries.
 # Extend the ZSH function search path where system-wide functions should always take precedence.
 export -TU FPATH fpath
