@@ -1,2 +1,2 @@
 # source and load the git prompt script.
-source ~/.git-prompt.sh 
+# source ~/.git-prompt.sh 

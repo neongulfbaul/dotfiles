@@ -52,6 +52,9 @@ function {
 # Set the prompt theme.
 prompt $IGLOO_ZSH_PROMPT_THEME_NAME
 
+# Load the git prompt script
+source ~/.git-prompt.sh
+
 # Load the ZSH line editor key bindings.
 [[ -f $ZDOTDIR/lib/key_bindings.zsh ]] && source $ZDOTDIR/lib/key_bindings.zsh
 
