@@ -3,9 +3,9 @@
 #   1. https://github.com/zplug/zplug
 [[ -f $ZDOTDIR/lib/plugins-base.zsh ]] && source $ZDOTDIR/lib/plugins-base.zsh
 
-zplug "usr/share/fzf", \
+zplug "usr/bin/fzf", \
   from:local, \
-  if:"type fzf > /dev/null && [[ -d usr/share/fzf ]]", \
+  if:"type fzf > /dev/null && [[ -d usr/bin/fzf ]]", \
   use:"{completion,key-bindings}.zsh"
 
 # Load all plugins and add commands to the executable search path.
