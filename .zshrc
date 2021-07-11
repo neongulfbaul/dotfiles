@@ -1,7 +1,7 @@
 # ~/.zshrc file for zsh interactive shells.
 # see /usr/share/doc/zsh/examples/zshrc for examples
 source ~/.git-prompt.sh # Load the git prompt script
-source ~/.config/zsh/igloo.zsh # set prompt
+source ~/igloo.zsh # set prompt
 source /usr/share/virtualenvwrapper/virtualenvwrapper.sh # python env
 
 
