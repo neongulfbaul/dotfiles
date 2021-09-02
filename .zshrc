@@ -14,9 +14,6 @@ setopt promptsubst         # enable command substitution in prompt
 
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
 
-#export
-export ZPLUG_HOME=~/.zplug
-
 # hide EOL sign ('%')
 PROMPT_EOL_MARK=""
 
@@ -88,4 +85,4 @@ if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
 fi
 
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
+source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
