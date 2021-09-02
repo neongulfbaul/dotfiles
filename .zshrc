@@ -85,4 +85,4 @@ if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
 fi
 
-source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
