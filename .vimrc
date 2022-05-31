@@ -1,10 +1,3 @@
-" Copyright (c) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
-" Copyright (c) 2016-present Sven Greb <development@svengreb.de>
-
-" Project:    igloo
-" Repository: https://github.com/arcticicestudio/igloo
-" License:    MIT
-" References:
 "   https://google.github.io/styleguide/vimscriptguide.xml
 
 "+---------+
@@ -20,7 +13,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'shime/vim-livedown'
 if v:version >= 704
   Plug 'honza/vim-snippets'
-  Plug 'SirVer/ultisnips'
+"#  Plug 'SirVer/ultisnips'
 endif
 
 "+--- UI ---+
@@ -131,6 +124,9 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:UltiSnipsEditSplit="vertical"
+
+"+--- davidhalter/jedi-vim ---+
+let g:jedi#audo_initialization = 0
 
 "+---------------+
 "+ Auto Commands +
