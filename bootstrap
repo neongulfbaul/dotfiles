@@ -50,15 +50,15 @@ mkdir -p "${HOME}/.config/zsh" \
 
 printf "Creating Symlinks"
 
-ln -fs "~/.dotfiles/main.zsh" "$HOME/.zshenv" \
-    && ln -fs "~/.dotfiles/.gitconfig" "$HOME/.gitconfig" \ 
-    && ln -fs "~/.dotfiles/.vimrc" "$HOME/.vimrc" \
-    && ln -fs "~/.dotfiles/.tmux.conf" "$HOME/.tmux.conf" \
-    && ln -fs "~/.dotfiles/zsh/login.zsh" "$HOME/.config/zsh/.zlogin" \
-    && ln -fs "~/.dotfiles/zsh/logout.zsh" "$HOME/.config/zsh/.zlogout" \
-    && ln -fs "~/.dotfiles/zsh/profile.zsh" "$HOME/.config/zsh/.zprofile" \
-    && ln -fs "~/.dotfiles/zsh/env.zsh" "$HOME/.config/zsh/.zshenv" \
-    && ln -fs "~/.dotfiles/zsh/rc.zsh" "$HOME/.config/zsh/.zshrc" \
+ln -fs "~/.dotfiles/zsh/main.zsh" "$HOME/.zshenv" \
+#ln -fs "~/.dotfiles/.gitconfig" "$HOME/.gitconfig" \ 
+ln -fs "~/.dotfiles/.vimrc" "$HOME/.vimrc" \
+ln -fs "~/.dotfiles/.tmux.conf" "$HOME/.tmux.conf" \
+ln -fs "~/.dotfiles/zsh/login.zsh" "$HOME/.config/zsh/.zlogin" \
+ln -fs "~/.dotfiles/zsh/logout.zsh" "$HOME/.config/zsh/.zlogout" \
+ln -fs "~/.dotfiles/zsh/profile.zsh" "$HOME/.config/zsh/.zprofile" \
+ln -fs "~/.dotfiles/zsh/env.zsh" "$HOME/.config/zsh/.zshenv" \
+ln -fs "~/.dotfiles/zsh/rc.zsh" "$HOME/.config/zsh/.zshrc" \
 
 # recursive cp for the rest as they don't need renaming
 
