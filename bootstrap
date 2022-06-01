@@ -1,0 +1,94 @@
+#!/bin/sh
+
+set -e
+
+apt_packages="curl man git python3-pip ripgrep tmux zsh"
+
+# install packages using APT package manager
+printf "Installing Packages"
+
+function apt_install_packages {
+    sudo apt-get update && sudo apt-get install -y ${apt_packages}
+}
+
+# clone dotfiles
+printf "Cloning Dotfiles"
+git clone https://github.com/neongulfbaul/dotfiles "$HOME/.dotfiles/"
+
+# create initial directories
+
+printf "Creating Directories"
+
+mkdir -p "${HOME}/.config/zsh" \
+    "${HOME}/.cache/zsh" \
+    "${HOME}/.local/share" \
+
+# personalize git user
+# cp "${clone_path}/.gitconfig.user" "${HOME}/.gitconfig.user"
+
+# install zsh plugins
+
+#"${clone_path}/.local/bin/update-zsh-plugins"
+
+# install plug (vim plugin manager)
+
+#curl -fLo "${HOME}/.vim/autoload/plug.vim" --create-dirs \
+#  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# install tmux plugin manager (tpm)
+
+# rm -rf "${HOME}/.tmux/plugins/tpm"
+# git clone --depth 1 https://github.com/tmux-plugins/tpm "${HOME}/.tmux/plugins/tpm"
+
+# install fzf
+
+#rm -rf "${HOME}/.local/share/fzf"
+#git clone --depth 1 https://github.com/junegunn/fzf.git "${HOME}/.local/share/fzf" \
+#  && yes | "${HOME}/.local/share/fzf/install" --bin --no-update-rc
+
+# create symlinks
+
+printf "Creating Symlinks"
+
+ln -fs "~/.dotfiles/main.zsh" "$HOME/.zshenv" \
+    && ln -fs "~/.dotfiles/.gitconfig" "$HOME/.gitconfig" \ 
+    && ln -fs "~/.dotfiles/.vimrc" "$HOME/.vimrc" \
+    && ln -fs "~/.dotfiles/.tmux.conf" "$HOME/.tmux.conf" \
+    && ln -fs "~/.dotfiles/zsh/login.zsh" "$HOME/.config/zsh/.zlogin" \
+    && ln -fs "~/.dotfiles/zsh/logout.zsh" "$HOME/.config/zsh/.zlogout" \
+    && ln -fs "~/.dotfiles/zsh/profile.zsh" "$HOME/.config/zsh/.zprofile" \
+    && ln -fs "~/.dotfiles/zsh/env.zsh" "$HOME/.config/zsh/.zshenv" \
+    && ln -fs "~/.dotfiles/zsh/rc.zsh" "$HOME/.config/zsh/.zshrc" \
+
+# recursive cp for the rest as they don't need renaming
+
+cp -rsf ~/.dotfiles/zsh/config ~/.config/zsh/config
+cp -rsf ~/.dotfiles/zsh/lib ~/.config/zsh/lib
+cp -rsf ~/.dotfiles/zsh/pkgs ~/.config/zsh/pkgs
+
+# change default shell to zsh
+
+printf "Changing default shell"
+
+chsh -s "$(command -v zsh)"
+
+# install tmux plugins
+
+#printf "\n\nInstalling tmux plugins...\n"
+
+#export TMUX_PLUGIN_MANAGER_PATH="${HOME}/.tmux/plugins"
+#"${HOME}/.tmux/plugins/tpm/bin/install_plugins"
+
+# Install Vim plugins
+
+#printf "\n\nInstalling Vim plugins...\n"
+
+#vim -E +PlugInstall +qall || true
+
+# done
+
+cat << EOF
+fin!
+EOF
+
+exit 0
