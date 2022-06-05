@@ -2,24 +2,22 @@
 
 set -e
 
+#defining list of packages to install
 apt_packages="curl man git python3-pip ripgrep tmux zsh vim"
 
-# install packages using APT package manager
-printf "\Installing Packages"
-
+#install packages using APT package manager
+echo -e  "\n Installing Packages"
 sudo apt-get update && sudo apt-get install -y ${apt_packages}
 
-# clone dotfiles
-printf "\Cloning Dotfiles"
+#clone dotfiles
+echo -e "\n Cloning Dotfiles" 
 git clone https://github.com/neongulfbaul/dotfiles "$HOME/.dotfiles/"
 
-# create initial directories
-
-printf "\Creating Directories"
-
-mkdir -p "${HOME}/.config/zsh" \
-    "${HOME}/.cache/zsh" \
-    "${HOME}/.local/share" \
+#create initial directories
+echo -e "\n Creating Directories"
+mkdir -p "${HOME}/.config/zsh"
+mkdir -p "${HOME}/.cache/zsh"
+mkdir -p "${HOME}/.local/share"
 
 # personalize git user
 # cp "${clone_path}/.gitconfig.user" "${HOME}/.gitconfig.user"
@@ -33,7 +31,7 @@ mkdir -p "${HOME}/.config/zsh" \
 #curl -fLo "${HOME}/.vim/autoload/plug.vim" --create-dirs \
 #  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-# install tmux plugin manager (tpm)
+#install tmux plugin manager(tpm)
 
 # rm -rf "${HOME}/.tmux/plugins/tpm"
 # git clone --depth 1 https://github.com/tmux-plugins/tpm "${HOME}/.tmux/plugins/tpm"
@@ -46,7 +44,7 @@ mkdir -p "${HOME}/.config/zsh" \
 
 # create symlinks
 
-printf "\Creating Symlinks"
+echo -e "\n Creating Symlinks"
 
 ln -fs "$HOME/.dotfiles/zsh/main.zsh" "$HOME/.zshenv" 
 #ln -fs "~/.dotfiles/.gitconfig" "$HOME/.gitconfig"  
@@ -66,7 +64,7 @@ cp -rsf "$HOME/.dotfiles/zsh/pkgs" "$HOME/.config/zsh/pkgs"
 
 # change default shell to zsh
 
-printf "\Changing default shell"
+echo -e "\n Changing default shell"
 
 chsh -s "$(command -v zsh)"
 
@@ -87,6 +85,6 @@ chsh -s "$(command -v zsh)"
 
 zsh
 
-printf "\fin!"
+echo -e "\n Fin!"
 
 exit 0
