@@ -11,7 +11,7 @@
 # This also links the `emacs` keymap to `main` so that it is selected by default next time the editor starts.
 # See:
 #   1. http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#index-bindkey
-bindkey -e
+bindkey -v
 
 # Make sure the terminal is in application mode when the ZSH line editor zle is active.
 # otherwise values from `$terminfo` are not valid.

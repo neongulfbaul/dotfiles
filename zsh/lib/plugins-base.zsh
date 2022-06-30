@@ -42,3 +42,6 @@ zplug "$ZDOTDIR/pkgs/zplug/plugins/zsh-users/zsh-syntax-highlighting", \
   from:local, \
   use:"theme-nord.zsh", \
   defer:2
+
+## load plugins
+zplug load

@@ -22,28 +22,7 @@ mkdir -p "${HOME}/.local/share"
 # personalize git user
 # cp "${clone_path}/.gitconfig.user" "${HOME}/.gitconfig.user"
 
-# install zsh plugins
-
-#"${clone_path}/.local/bin/update-zsh-plugins"
-
-# install plug (vim plugin manager)
-
-#curl -fLo "${HOME}/.vim/autoload/plug.vim" --create-dirs \
-#  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-#install tmux plugin manager(tpm)
-
-# rm -rf "${HOME}/.tmux/plugins/tpm"
-# git clone --depth 1 https://github.com/tmux-plugins/tpm "${HOME}/.tmux/plugins/tpm"
-
-# install fzf
-
-#rm -rf "${HOME}/.local/share/fzf"
-#git clone --depth 1 https://github.com/junegunn/fzf.git "${HOME}/.local/share/fzf" \
-#  && yes | "${HOME}/.local/share/fzf/install" --bin --no-update-rc
-
 # create symlinks
-
 echo -e "\n Creating Symlinks"
 
 ln -fs "$HOME/.dotfiles/zsh/main.zsh" "$HOME/.zshenv" 
@@ -57,34 +36,40 @@ ln -fs "$HOME/.dotfiles/zsh/env.zsh" "$HOME/.config/zsh/.zshenv"
 ln -fs "$HOME/.dotfiles/zsh/rc.zsh" "$HOME/.config/zsh/.zshrc"
 
 # recursive cp for the rest as they don't need renaming
-
 cp -rsf "$HOME/.dotfiles/zsh/config" "$HOME/.config/zsh/config"
 cp -rsf "$HOME/.dotfiles/zsh/lib" "$HOME/.config/zsh/lib"
 cp -rsf "$HOME/.dotfiles/zsh/pkgs" "$HOME/.config/zsh/pkgs"
 
+# install zsh plugins
+source ~"$HOME/.dotfiles/zsh/lib/plugins-base.zsh"
+
+# install plug (vim plugin manager)
+curl -fLo "${HOME}/.vim/autoload/plug.vim" --create-dirs \
+  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+#install tmux plugin manager(tpm)
+git clone --depth 1 https://github.com/tmux-plugins/tpm "${HOME}/.tmux/plugins/tpm"
+
+#install fzf
+git clone --depth 1 https://github.com/junegunn/fzf.git "${HOME}/.local/share/fzf" \
+  && yes | "${HOME}/.local/share/fzf/install" --bin --no-update-rc
+
 # change default shell to zsh
-
 echo -e "\n Changing default shell"
-
 chsh -s "$(command -v zsh)"
 
 # install tmux plugins
-
-#printf "\n\nInstalling tmux plugins...\n"
-
-#export TMUX_PLUGIN_MANAGER_PATH="${HOME}/.tmux/plugins"
-#"${HOME}/.tmux/plugins/tpm/bin/install_plugins"
+printf "\n\nInstalling tmux plugins...\n"
+export TMUX_PLUGIN_MANAGER_PATH="${HOME}/.tmux/plugins"
+"${HOME}/.tmux/plugins/tpm/bin/install_plugins"
 
 # Install Vim plugins
-
-#printf "\n\nInstalling Vim plugins...\n"
-
-#vim -E +PlugInstall +qall || true
+printf "\n\nInstalling Vim plugins...\n"
+vim -E +PlugInstall +qall || true
 
 # done
-
 zsh
 
-echo -e "\n Fin!"
+echo -e "\n done"
 
 exit 0

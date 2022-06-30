@@ -56,4 +56,4 @@ prompt $IGLOO_ZSH_PROMPT_THEME_NAME
 [[ -f $ZDOTDIR/lib/key_bindings.zsh ]] && source $ZDOTDIR/lib/key_bindings.zsh
 
 # Load and setup ZSH plugins with zplug.
-[[ -f $ZDOTDIR/lib/plugins.zsh ]] && source $ZDOTDIR/lib/plugins.zsh
+[[ -f $ZDOTDIR/lib/plugins-base.zsh ]] && source $ZDOTDIR/lib/plugins.zsh
