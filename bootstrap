@@ -37,7 +37,7 @@ cp -rsf "$HOME/.dotfiles/zsh/lib" "$HOME/.config/zsh/lib"
 cp -rsf "$HOME/.dotfiles/zsh/pkgs" "$HOME/.config/zsh/pkgs"
 
 # install zsh plugins
-source ~"$HOME/.dotfiles/zsh/lib/plugins-base.zsh"
+source "$HOME/.dotfiles/zsh/lib/plugins-base.zsh"
 
 # install plug (vim plugin manager)
 curl -fLo "${HOME}/.vim/autoload/plug.vim" --create-dirs \
@@ -51,7 +51,7 @@ echo -e "\n Changing default shell"
 chsh -s "$(command -v zsh)"
 
 # install tmux plugins
-printf "\n\nInstalling tmux plugins...\n"
+printf "\n Installing tmux plugins...\n"
 export TMUX_PLUGIN_MANAGER_PATH="${HOME}/.tmux/plugins"
 "${HOME}/.tmux/plugins/tpm/bin/install_plugins"
 
