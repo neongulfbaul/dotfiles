@@ -19,14 +19,10 @@ mkdir -p "${HOME}/.config/zsh"
 mkdir -p "${HOME}/.cache/zsh"
 mkdir -p "${HOME}/.local/share"
 
-# personalize git user
-# cp "${clone_path}/.gitconfig.user" "${HOME}/.gitconfig.user"
-
 # create symlinks
 echo -e "\n Creating Symlinks"
 
 ln -fs "$HOME/.dotfiles/zsh/main.zsh" "$HOME/.zshenv" 
-#ln -fs "~/.dotfiles/.gitconfig" "$HOME/.gitconfig"  
 ln -fs "$HOME/.dotfiles/.vimrc" "$HOME/.vimrc"
 ln -fs "$HOME/.dotfiles/.tmux.conf" "$HOME/.tmux.conf"
 ln -fs "$HOME/.dotfiles/zsh/login.zsh" "$HOME/.config/zsh/.zlogin"
@@ -49,10 +45,6 @@ curl -fLo "${HOME}/.vim/autoload/plug.vim" --create-dirs \
 
 #install tmux plugin manager(tpm)
 git clone --depth 1 https://github.com/tmux-plugins/tpm "${HOME}/.tmux/plugins/tpm"
-
-#install fzf
-git clone --depth 1 https://github.com/junegunn/fzf.git "${HOME}/.local/share/fzf" \
-  && yes | "${HOME}/.local/share/fzf/install" --bin --no-update-rc
 
 # change default shell to zsh
 echo -e "\n Changing default shell"
