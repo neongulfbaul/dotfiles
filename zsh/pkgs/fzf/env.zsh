@@ -16,7 +16,7 @@ FZF_DEFAULT_OPTS+="
 # Set the path to the search history file and use the same maximum number of entires like for the ZSH
 # command history. 
 FZF_DEFAULT_OPTS+="
-  --history=$IGLOO_PATH_USER_CACHE/fzf/history
+  --history=$PATH_USER_CACHE/fzf/history
   --history-size=1000000000"
 # Adjust the colors to match the "Nord" theme.
 # See:

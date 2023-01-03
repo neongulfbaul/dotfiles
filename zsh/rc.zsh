@@ -53,7 +53,7 @@ function {
 prompt $IGLOO_ZSH_PROMPT_THEME_NAME
 
 # Load the ZSH line editor key bindings.
-[[ -f $ZDOTDIR/lib/key_bindings.zsh ]] && source $ZDOTDIR/lib/key_bindings.zsh
+[[ -f $ZDOTDIR/lib/key-bindings.zsh ]] && source $ZDOTDIR/lib/key-bindings.zsh
 
 # Load and setup ZSH plugins with zplug.
-[[ -f $ZDOTDIR/lib/plugins-base.zsh ]] && source $ZDOTDIR/lib/plugins-base.zsh
+[[ -f $ZDOTDIR/lib/plugins.zsh ]] && source $ZDOTDIR/lib/plugins.zsh

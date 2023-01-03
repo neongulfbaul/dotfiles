@@ -4,8 +4,8 @@ export PATH_USER_CONFIG="${PATH_USER_CONFIG:-$HOME/.config}"
 export PATH_USER_DATA="${PATH_USER_DATA:-$HOME/.local/share}"
 export PATH_USER_BIN=$HOME/.local/bin
 export PATH_USER_FUNC=$HOME/.local/functions
-export PATH_USER_INFO="${PATH_USER_INFO:-$IGLOO_PATH_USER_DATA/info}"
-export PATH_USER_MAN="${PATH_USER_MAN:-$IGLOO_PATH_USER_DATA/man}"
+export PATH_USER_INFO="${PATH_USER_INFO:-$PATH_USER_DATA/info}"
+export PATH_USER_MAN="${PATH_USER_MAN:-$PATH_USER_DATA/man}"
 
 # Custom variables for XDG user directories to support OS that don't adhere to the specifications like macOS.
 export PATH_USER_DESKTOP="${PATH_USER_DESKTOP:-${XDG_DESKTOP_DIR:-HOME/desktop}}"
