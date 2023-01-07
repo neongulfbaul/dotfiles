@@ -20,7 +20,7 @@ mkdir -p "${HOME}/.cache/zsh"
 mkdir -p "${HOME}/.local/share"
 
 # cp dots
-echo -e "\n Creating Symlinks"
+echo -e "\n Copying dots"
 
 cp "$HOME/.dotfiles/zsh/main.zsh" "$HOME/.zshenv" 
 cp "$HOME/.dotfiles/zsh/env.zsh" "$HOME/.config/zsh/.zshenv"
@@ -48,6 +48,9 @@ export TMUX_PLUGIN_MANAGER_PATH="${HOME}/.tmux/plugins"
 # Install Vim plugins
 printf "\n\nInstalling Vim plugins...\n"
 vim -E +PlugInstall +all || true
+
+#changing default shell
+chsh -s "$(command -v zsh)"
 
 # done
 zsh
