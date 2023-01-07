@@ -47,7 +47,7 @@ export TMUX_PLUGIN_MANAGER_PATH="${HOME}/.tmux/plugins"
 
 # Install Vim plugins
 printf "\n\nInstalling Vim plugins...\n"
-vim -E +PlugInstall +all 
+vim -E +PlugInstall +qall || true 
 
 printf "\n\changing default shell\n"
 #changing default shell

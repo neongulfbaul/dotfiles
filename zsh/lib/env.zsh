@@ -17,7 +17,7 @@ export PATH_USER_TEMPLATES="${PATH_USER_TEMPLATES:-${XDG_TEMPLATES_DIR:-HOME/cod
 export PATH_USER_VIDEOS="${PATH_USER_VIDEOS:-${XDG_VIDEOS_DIR:-HOME/videos}}"
 
 # The custom path for the ZSH cache directory.
-export ZSH_PATH_CACHE=$IGLOO_PATH_USER_CACHE/zsh
+export ZSH_PATH_CACHE=$PATH_USER_CACHE/zsh
 
 # The name of the ZSH prompt theme.
 export ZSH_PROMPT_THEME_NAME="${ZSH_PROMPT_THEME_NAME:-igloo}"

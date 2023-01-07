@@ -1,22 +1,22 @@
 # Tie (`-T`) the `FPATH` environment variable for unique (`-U`) entries.
 # Extend the ZSH function search path where system-wide functions should always take precedence.
 export -TU FPATH fpath
-fpath=($fpath $ZDOTDIR/lib/functions $ZDOTDIR/lib/themes $IGLOO_PATH_USER_FUNC)
+fpath=($fpath $ZDOTDIR/lib/functions $ZDOTDIR/lib/themes $PATH_USER_FUNC)
 
 # Tie (`-T`) the `INFOPATH` environment variable for unique (`-U`) entries.
 # Extend the info search path where user-level manuals should always take precedence.
 export -TU INFOPATH infopath
-infopath=($IGLOO_PATH_USER_INFO $infopath)
+infopath=($PATH_USER_INFO $infopath)
 
 # Tie (`-T`) the `MANPATH` environment variable for unique (`-U`) entries.
 # Extend the manual search path where user-level manuals should always take precedence.
 export -TU MANPATH manpath
-manpath=($IGLOO_PATH_USER_MAN $manpath)
+manpath=($PATH_USER_MAN $manpath)
 
 # Tie (`-T`) the `PATH` environment variable for unique (`-U`) entries.
 # Extend the executable search path where user-level applications should always take precedence.
 export -TU PATH path
-path=($IGLOO_PATH_USER_BIN $path)
+path=($PATH_USER_BIN $path)
 
 # Load custom configurations.
 [[ -f $ZDOTDIR/lib/config.zsh ]] && source $ZDOTDIR/lib/config.zsh
@@ -28,12 +28,8 @@ function {
 }
 
 # Load all ZSH related configurations.
-[[ -f $ZDOTDIR/config/autoload.zsh ]] && source $ZDOTDIR/config/autoload.zsh
-[[ -f $ZDOTDIR/config/completion.zsh ]] && source $ZDOTDIR/config/completion.zsh
 [[ -f $ZDOTDIR/config/history.zsh ]] && source $ZDOTDIR/config/history.zsh
 [[ -f $ZDOTDIR/config/options.zsh ]] && source $ZDOTDIR/config/options.zsh
-[[ -f $ZDOTDIR/config/style.zsh ]] && source $ZDOTDIR/config/style.zsh
-[[ -f $ZDOTDIR/config/hooks.zsh ]] && source $ZDOTDIR/config/hooks.zsh
 [[ -f $ZDOTDIR/config/zle.zsh ]] && source $ZDOTDIR/config/zle.zsh
 
 # Load all package configurations and aliases.
@@ -50,7 +46,7 @@ function {
 }
 
 # Set the prompt theme.
-prompt $IGLOO_ZSH_PROMPT_THEME_NAME
+prompt $ZSH_PROMPT_THEME_NAME
 
 # Load the ZSH line editor key bindings.
 [[ -f $ZDOTDIR/lib/key-bindings.zsh ]] && source $ZDOTDIR/lib/key-bindings.zsh
