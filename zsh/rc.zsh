@@ -45,6 +45,10 @@ function {
   for lib_func ($ZDOTDIR/lib/functions/**/*) autoload -Uz $lib_func
 }
 
+# Enable Promptinit
+autoload -Uz promptinit
+promptinit
+
 # Set the prompt theme.
 prompt $ZSH_PROMPT_THEME_NAME
 
