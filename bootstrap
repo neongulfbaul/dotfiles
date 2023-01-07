@@ -22,11 +22,11 @@ mkdir -p "${HOME}/.local/share"
 # create symlinks
 echo -e "\n Creating Symlinks"
 
-ln -fs "$HOME/.dotfiles/zsh/main.zsh" "$HOME/.zshenv" 
-ln -fs "$HOME/.dotfiles/zsh/env.zsh" "$HOME/.config/zsh/.zshenv"
-ln -fs "$HOME/.dotfiles/zsh/rc.zsh" "$HOME/.config/zsh/.zshrc"
-ln -fs "$HOME/.dotfiles/.vimrc" "$HOME/.vimrc"
-ln -fs "$HOME/.dotfiles/.tmux.conf" "$HOME/.tmux.conf"
+cp "$HOME/.dotfiles/zsh/main.zsh" "$HOME/.zshenv" 
+cp "$HOME/.dotfiles/zsh/env.zsh" "$HOME/.config/zsh/.zshenv"
+cp "$HOME/.dotfiles/zsh/rc.zsh" "$HOME/.config/zsh/.zshrc"
+cp "$HOME/.dotfiles/.vimrc" "$HOME/.vimrc"
+cp "$HOME/.dotfiles/.tmux.conf" "$HOME/.tmux.conf"
 
 # recursive cp for the rest as they don't need renaming
 cp -rsf "$HOME/.dotfiles/zsh/config" "$HOME/.config/zsh/config"
@@ -39,10 +39,6 @@ curl -fLo "${HOME}/.vim/autoload/plug.vim" --create-dirs \
 
 #install tmux plugin manager(tpm)
 git clone --depth 1 https://github.com/tmux-plugins/tpm "${HOME}/.tmux/plugins/tpm"
-
-# change default shell to zsh
-echo -e "\n Changing default shell"
-chsh -s "$(command -v zsh)"
 
 # install tmux plugins
 printf "\n Installing tmux plugins...\n"
