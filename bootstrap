@@ -29,9 +29,9 @@ cp "$HOME/.dotfiles/.vimrc" "$HOME/.vimrc"
 cp "$HOME/.dotfiles/.tmux.conf" "$HOME/.tmux.conf"
 
 # recursive cp for the remaining folders 
-cp -rsf "$HOME/.dotfiles/zsh/config" "$HOME/.config/zsh/config"
-cp -rsf "$HOME/.dotfiles/zsh/lib" "$HOME/.config/zsh/lib"
-cp -rsf "$HOME/.dotfiles/zsh/pkgs" "$HOME/.config/zsh/pkgs"
+cp -r "$HOME/.dotfiles/zsh/config" "$HOME/.config/zsh/config"
+cp -r "$HOME/.dotfiles/zsh/lib" "$HOME/.config/zsh/lib"
+cp -r "$HOME/.dotfiles/zsh/pkgs" "$HOME/.config/zsh/pkgs"
 
 # install plug (vim plugin manager)
 curl -fLo "${HOME}/.vim/autoload/plug.vim" --create-dirs \
