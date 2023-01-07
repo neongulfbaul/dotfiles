@@ -19,7 +19,7 @@ mkdir -p "${HOME}/.config/zsh"
 mkdir -p "${HOME}/.cache/zsh"
 mkdir -p "${HOME}/.local/share"
 
-# create symlinks
+# cp dots
 echo -e "\n Creating Symlinks"
 
 cp "$HOME/.dotfiles/zsh/main.zsh" "$HOME/.zshenv" 
@@ -28,7 +28,7 @@ cp "$HOME/.dotfiles/zsh/rc.zsh" "$HOME/.config/zsh/.zshrc"
 cp "$HOME/.dotfiles/.vimrc" "$HOME/.vimrc"
 cp "$HOME/.dotfiles/.tmux.conf" "$HOME/.tmux.conf"
 
-# recursive cp for the rest as they don't need renaming
+# recursive cp for the remaining folders 
 cp -rsf "$HOME/.dotfiles/zsh/config" "$HOME/.config/zsh/config"
 cp -rsf "$HOME/.dotfiles/zsh/lib" "$HOME/.config/zsh/lib"
 cp -rsf "$HOME/.dotfiles/zsh/pkgs" "$HOME/.config/zsh/pkgs"
