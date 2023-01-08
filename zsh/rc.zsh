@@ -1,3 +1,9 @@
+# Launch Tmux if not already open session
+if [ -z "$TMUX" ]
+then
+  tmux attach -t TMUX || tmux new -s TMUX
+fi
+
 # Tie (`-T`) the `FPATH` environment variable for unique (`-U`) entries.
 # Extend the ZSH function search path where system-wide functions should always take precedence.
 export -TU FPATH fpath
