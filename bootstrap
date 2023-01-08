@@ -22,7 +22,7 @@ mkdir -p "${HOME}/.local/share"
 # cp dots
 echo -e "\n Copying dots"
 
-cp "$HOME/.dotfiles/zsh/main.zsh" "$HOME/.zshenv" 
+cp "$HOME/.dotfiles/zsh/main.zsh" "$HOME/.zshrc" 
 cp "$HOME/.dotfiles/zsh/env.zsh" "$HOME/.config/zsh/.zshenv"
 cp "$HOME/.dotfiles/zsh/rc.zsh" "$HOME/.config/zsh/.zshrc"
 cp "$HOME/.dotfiles/.vimrc" "$HOME/.vimrc"
@@ -51,7 +51,7 @@ vim -E +PlugInstall +qall || true
 
 printf "\n\changing default shell\n"
 #changing default shell
-chsh -s "$(command -v zsh)"
+#chsh -s "$(command -v zsh)"
 
 # done
 zsh
