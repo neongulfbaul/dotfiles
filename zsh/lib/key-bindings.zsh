@@ -6,13 +6,6 @@
 #   3. http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Standard-Widgets
 #   4. https://wiki.archlinux.org/index.php/zsh#Key_bindings
 #   5. https://sgeb.io/posts/2014/04/zsh-zle-custom-widgets/
-
-# Use the default Emacs mode/keymap.
-# This also links the `emacs` keymap to `main` so that it is selected by default next time the editor starts.
-# See:
-#   1. http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#index-bindkey
-bindkey -v
-
 # Make sure the terminal is in application mode when the ZSH line editor zle is active.
 # otherwise values from `$terminfo` are not valid.
 if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then

@@ -1,28 +1,22 @@
-# Launch Tmux if not already open session
-if [ -z "$TMUX" ]
-then
-  tmux attach -t TMUX || tmux new -s TMUX
-fi
-
 # Tie (`-T`) the `FPATH` environment variable for unique (`-U`) entries.
 # Extend the ZSH function search path where system-wide functions should always take precedence.
-export -TU FPATH fpath
-fpath=($fpath $ZDOTDIR/lib/functions $ZDOTDIR/lib/themes $PATH_USER_FUNC)
+#export -TU FPATH fpath
+#fpath=($fpath $ZDOTDIR/lib/functions $ZDOTDIR/lib/themes $PATH_USER_FUNC)
 
 # Tie (`-T`) the `INFOPATH` environment variable for unique (`-U`) entries.
 # Extend the info search path where user-level manuals should always take precedence.
-export -TU INFOPATH infopath
-infopath=($PATH_USER_INFO $infopath)
+#export -TU INFOPATH infopath
+#infopath=($PATH_USER_INFO $infopath)
 
 # Tie (`-T`) the `MANPATH` environment variable for unique (`-U`) entries.
 # Extend the manual search path where user-level manuals should always take precedence.
-export -TU MANPATH manpath
-manpath=($PATH_USER_MAN $manpath)
+#export -TU MANPATH manpath
+#manpath=($PATH_USER_MAN $manpath)
 
 # Tie (`-T`) the `PATH` environment variable for unique (`-U`) entries.
 # Extend the executable search path where user-level applications should always take precedence.
-export -TU PATH path
-path=($PATH_USER_BIN $path)
+#export -TU PATH path
+#path=($PATH_USER_BIN $path)
 
 # Load custom configurations.
 [[ -f $ZDOTDIR/lib/config.zsh ]] && source $ZDOTDIR/lib/config.zsh
