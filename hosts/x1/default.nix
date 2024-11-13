@@ -11,8 +11,6 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-6th-gen
-      ../../modules/home.nix
-      ../../modules/shell/zsh.nix
     ];
 
   # Bootloader.
@@ -102,8 +100,9 @@
     ];
   };
 
-  # User Configurations
-  # home-manager.users.neon = import ./home.nix;
+  programs.zsh.enable = true;
+  environment.shells = with pkgs; [ zsh ];
+  users.defaultUserShell = pkgs.zsh;
 
   # Install firefox.
   programs.firefox.enable = true;

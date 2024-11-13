@@ -53,7 +53,7 @@ in {
       };
 
       # Necessary for home-manager to work with flakes (useful for integration)
-      stateVersion = config.system.stateVersion;
+      stateVersion = 24.11;
     };
   };
 }
