@@ -1,12 +1,14 @@
 { lib, config, pkgs, ... }:
 
 {
-  imports = [ ../../modules/shell/zsh.nix ];
+  imports = [
+    ../../modules/shell/zsh.nix 
+    ../../modules/editor/nvim.nix
+    ];
 
   home.username = "neon";
   home.stateVersion = "24.11";
   home.packages = with pkgs; [
-    neovim
     git
     cowsay
     anki-bin
