@@ -13,6 +13,20 @@
       l = "eza -l";
       la = "eza -la";
       ip = "ip --color=auto";
+      exa="exa --group-directories-first --git";
+      l="exa -blF";
+      ll="exa -abghilmu";
+      llm="ll --sort=modified";
+      la="LC_COLLATE=C exa -ablF";
+      tree="exa --tree";
+      rm="rm -i";
+      cp="cp -i";
+      mv="mv -i";
+      y="xclip -selection clipboard -in";
+      p="xclip -selection clipboard -out";
+      jc="journalctl -xe";
+      sc="systemctlr";
+      ssc="sudo systemctl";
     };
 
     initExtra = ''
@@ -23,7 +37,6 @@
       AGKOZAK_CUSTOM_SYMBOLS=( '⇣⇡' '⇣' '⇡' '+' 'x' '!' '>' '?' )
       AGKOZAK_MULTILINE=0
       AGKOZAK_PROMPT_CHAR=( ❯ ❯ ❮ )
-      eval $(thefuck --alias)
       autopair-init
                               '';
 
