@@ -30,5 +30,7 @@
     ripgrep  # a better grep
     tokei    # for code statistics
   ];
+  home.file.".config/nvim/".source = ../../config/nvim;
+  home.file.".config/nvim/".recursive = true;
 }
 
