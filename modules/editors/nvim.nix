@@ -71,13 +71,7 @@
       # }
     ];
     extraLuaConfig = ''
-      -- Write lua code here
-
-      -- or interpolate files like this
-
       ${builtins.readFile ../../config/nvim/options.lua}
-      $(builtins.readFile ../../config/nvim/keymaps.lua}
-
     '';
 
   };

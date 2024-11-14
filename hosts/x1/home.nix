@@ -8,6 +8,7 @@
 
   home.username = "neon";
   home.stateVersion = "24.11";
+  home.file.".zshenv".enable = false;
   home.packages = with pkgs; [
     git
     cowsay
@@ -38,6 +39,8 @@
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_CACHE_HOME = "$HOME/.cache";
   };
+
+  
 
   #home.file.".config/nvim/".source = config.lib.file.mkOutOfStoreSymlink ../../config/nvim;
   #home.file.".config/nvim/".recursive = true;

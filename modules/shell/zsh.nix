@@ -2,22 +2,23 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.file.".config/zsh/".source = ../../config/zsh;
-  home.file.".config/zsh/".recursive = true;
+      home.file.".config/zsh/".source = ../../config/zsh;
+      home.file.".config/zsh/".recursive = true;
 
-  programs.zsh = {
-    enable = true;
-    autocd = false;
-    dotDir = ".config/zsh";
-    enableCompletion = true;
-    completionInit = ''
-      source $ZDOTDIR/config.zsh
-    '';
-   };  
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-  };
+      programs.zsh = {
+        enable = true;
+        autocd = false;
+        dotDir = ".config/zsh";
+        history.path = "$XDG_STATE_HOME/zsh/history";
+        enableCompletion = true;
+        completionInit = ''
+          source $ZDOTDIR/config.zsh
+        '';
+      };  
+      programs.fzf = {
+        enable = true;
+        enableZshIntegration = true;
+      };
 
   #xdg.configFile."zsh/.zshenv".source = ./zshenv;
   #xdg.configFile."zsh/.zshrc".source = ./zshrc;

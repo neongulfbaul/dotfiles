@@ -122,7 +122,10 @@
   environment.systemPackages = with pkgs; [
   acpi
   ];
-
+  
+   environment.etc."zshenv".text = ''
+    source $HOME/.config/zsh/.zshenv
+  '';
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
