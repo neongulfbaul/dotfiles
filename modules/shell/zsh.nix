@@ -9,7 +9,6 @@
         enable = true;
         autocd = false;
         dotDir = ".config/zsh";
-        history.path = "$XDG_STATE_HOME/zsh/history";
         enableCompletion = true;
         completionInit = ''
           source $ZDOTDIR/config.zsh

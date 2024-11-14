@@ -40,7 +40,16 @@
     XDG_CACHE_HOME = "$HOME/.cache";
   };
 
-  
+   xsession.windowManager.xmonad = {
+    enable = true;
+    enableContribAndExtras = true;
+    config = "../../xmonad.hs";
+  };
+
+    xmobar = {
+      enable = true;
+      extraConfig = builtins.readFile "$../../xmobar.hs";
+    };
 
   #home.file.".config/nvim/".source = config.lib.file.mkOutOfStoreSymlink ../../config/nvim;
   #home.file.".config/nvim/".recursive = true;
