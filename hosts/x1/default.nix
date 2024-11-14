@@ -4,7 +4,6 @@
 
 { config, pkgs, inputs, home-manager, lib, ... }:
 
-#with lib;
 
 {
   imports =
@@ -99,10 +98,6 @@
     #  thunderbird
     ];
   };
-
-  programs.zsh.enable = true;
-  environment.shells = with pkgs; [ zsh ];
-  users.defaultUserShell = pkgs.zsh;
 
   # Install firefox.
   programs.firefox.enable = true;

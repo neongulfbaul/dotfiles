@@ -1,14 +1,10 @@
 { lib, config, pkgs, ... }:
-let
- username = "neon";
- homeDirectory = "/home/${username}";
- dotfilesPath = "${homeDirectory}/.dotfiles";
-in
+
 {
-  home = {
-    inherit username homeDirectory;
-    stateVersion = "24.11";
-  };
+  imports = [ ../../modules/shell/zsh.nix ];
+
+  home.username = "neon";
+  home.stateVersion = "24.11";
   home.packages = with pkgs; [
     neovim
     git
@@ -34,9 +30,5 @@ in
     ripgrep  # a better grep
     tokei    # for code statistics
   ];
-  home.file.".config/zsh" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/config/zsh";
-      recursive = true;
-    };
 }
 
