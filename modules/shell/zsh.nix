@@ -2,7 +2,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.file.".config/zsh/".source = config.lib.file.mkOutOfStoreSymlink m../../config/zsh;
+  home.file.".config/zsh/".source = ../../config/zsh;
   home.file.".config/zsh/".recursive = true;
 
   programs.zsh = {
@@ -19,7 +19,8 @@
     enableZshIntegration = true;
   };
 
-  # Scripts
+  #xdg.configFile."zsh/.zshenv".source = ./zshenv;
+  #xdg.configFile."zsh/.zshrc".source = ./zshrc;
   #home.file.".config/zsh/scripts".source = ./files/scripts;
   #home.file.".config/zsh/scripts".recursive = true;
 }

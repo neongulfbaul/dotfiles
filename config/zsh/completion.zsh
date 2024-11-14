@@ -1,133 +1,113 @@
-#!/usr/bin/env zsh
+ifpath+=( "${0:a:h}/completions" )
 
-# Stop TRAMP (in Emacs) from hanging or term/shell from echoing back commands
-if [[ $TERM == dumb || -n $INSIDE_EMACS ]]; then
-  unsetopt zle prompt_cr prompt_subst
-  whence -w precmd >/dev/null && unfunction precmd
-  whence -w preexec >/dev/null && unfunction preexec
-  PS1='$ '
-fi
+# Don't offer history completion; we have fzf, C-r, and
+# zsh-history-substring-search for that.
+ZSH_AUTOSUGGEST_STRATEGY=(completion)
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
 
-## Bootstrap interactive session
-if [[ $TERM != dumb ]]; then
-  # Don't call compinit too early. I'll do it myself, at the right time.
-  export ZGEN_AUTOLOAD_COMPINIT=0
+# Completion is slow. Use a cache! For the love of god, use a cache...
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh"
 
-  ## ZSH configuration
-  if (( $+commands[bat] )); then
-    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-    export MANROFFOPT='-c'
-  fi
+# Expand partial paths, e.g. cd f/b/z == cd foo/bar/baz (assuming no ambiguity)
+zstyle ':completion:*:paths' path-completion yes
 
-  # Treat these characters as part of a word.
-  WORDCHARS='-*?[]~&.;!#$%^(){}<>'
-  unsetopt BRACE_CCL        # Allow brace character class list expansion.
-  setopt COMBINING_CHARS    # Combine zero-length punc chars (accents) with base char
-  setopt RC_QUOTES          # Allow 'Henry''s Garage' instead of 'Henry'\''s Garage'
-  setopt HASH_LIST_ALL
-  unsetopt CORRECT_ALL
-  unsetopt NOMATCH
-  unsetopt MAIL_WARNING     # Don't print a warning message if a mail file has been accessed.
-  unsetopt BEEP             # Hush now, quiet now.
-  setopt IGNOREEOF
-  ## Jobs
-  setopt LONG_LIST_JOBS     # List jobs in the long format by default.
-  setopt AUTO_RESUME        # Attempt to resume existing job before creating a new process.
-  setopt NOTIFY             # Report status of background jobs immediately.
-  unsetopt BG_NICE          # Don't run all background jobs at a lower priority.
-  unsetopt HUP              # Don't kill jobs on shell exit.
-  unsetopt CHECK_JOBS       # Don't report on jobs when shell exit.
-  ## History
-  HISTORY_SUBSTRING_SEARCH_PREFIXED=1
-  HISTORY_SUBSTRING_SEARCH_FUZZY=1
-  HISTSIZE=100000   # Max events to store in internal history.
-  SAVEHIST=100000   # Max events to store in history file.
-  setopt BANG_HIST                 # History expansions on '!'
-  setopt EXTENDED_HISTORY          # Include start time in history records
-  setopt APPEND_HISTORY            # Appends history to history file on exit
-  setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
-  setopt SHARE_HISTORY             # Share history between all sessions.
-  setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
-  setopt HIST_IGNORE_DUPS          # Do not record an event that was just recorded again.
-  setopt HIST_IGNORE_ALL_DUPS      # Remove old events if new event is a duplicate
-  setopt HIST_FIND_NO_DUPS         # Do not display a previously found event.
-  setopt HIST_IGNORE_SPACE         # Do not record an event starting with a space.
-  setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history file.
-  setopt HIST_REDUCE_BLANKS        # Minimize unnecessary whitespace
-  setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
-  setopt HIST_BEEP                 # Beep when accessing non-existent history.
-  ## Directories
-  DIRSTACKSIZE=9
-  unsetopt AUTO_CD            # Implicit CD slows down plugins
-  setopt AUTO_PUSHD           # Push the old directory onto the stack on cd.
-  setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
-  setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
-  unsetopt PUSHD_TO_HOME      # Don't push to $HOME when no argument is given.
-  setopt CDABLE_VARS          # Change directory to a path stored in a variable.
-  setopt MULTIOS              # Write to multiple descriptors.
-  unsetopt GLOB_DOTS
-  unsetopt AUTO_NAME_DIRS     # Don't add variable-stored paths to ~ list
+# Fix slow one-by-one character pasting when bracketed-paste-magic is on. See
+# zsh-users/zsh-syntax-highlighting#295
+zstyle ':bracketed-paste-magic' active-widgets '.self-*'
 
-  ## Plugin configuration
-  if (( $+commands[fd] )); then
-    export FZF_DEFAULT_OPTS="--reverse --ansi"
-    export FZF_DEFAULT_COMMAND="fd ."
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-    export FZF_ALT_C_COMMAND="fd -t d . $HOME"
-  fi
-  # zsh-vi-mode
-  export ZVM_INIT_MODE=sourcing
-  export ZVM_VI_ESCAPE_BINDKEY=^G
-  export ZVM_LINE_INIT_MODE=i
-  # zsh-autosuggest
-  export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+# Options
+setopt COMPLETE_IN_WORD    # Complete from both ends of a word.
+setopt EXTENDED_GLOB       # Use extended globbing syntax.
+setopt PATH_DIRS           # Perform path search even on command names with slashes.
+setopt AUTO_MENU           # Show completion menu on a successive tab press.
+setopt AUTO_LIST           # Automatically list choices on ambiguous completion.
+# setopt AUTO_PARAM_SLASH    # If completed parameter is a directory, add a trailing slash.
+# setopt AUTO_PARAM_KEYS
+unsetopt FLOW_CONTROL        # Redundant with tmux
+unsetopt MENU_COMPLETE     # Do not autoselect the first completion entry.
+unsetopt COMPLETE_ALIASES  # Disabling this enables completion for aliases
+# unsetopt ALWAYS_TO_END     # Move cursor to the end of a completed word.
+unsetopt CASE_GLOB
 
-  ## Bootstrap zgenom
-  export ZGEN_DIR="${ZGEN_DIR:-${XDG_DATA_HOME:-~/.local/share}/zgenom}"
-  if [[ ! -d "$ZGEN_DIR" ]]; then
-    # Use zgenom because zgen is no longer maintained
-    echo "Installing jandamm/zgenom"
-    git clone https://github.com/jandamm/zgenom "$ZGEN_DIR"
-  fi
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
-  source $ZGEN_DIR/zgenom.zsh
-  zgenom autoupdate   # checks for updates every ~7 days
-  if ! zgenom saved; then
-    echo "Initializing zgenom"
-    rm -frv $ZDOTDIR/*.zwc(N) \
-            $ZDOTDIR/.*.zwc(N) \
-            $XDG_CACHE_HOME/zsh \
-            $ZGEN_INIT.zwc
+# Fuzzy match mistyped completions.
+zstyle ':completion:*' completer _complete _match _approximate _list
+zstyle ':completion:*' matcher-list 'm:{[:lower:]-}={[:upper:]_}' 'r:[[:ascii:]]||[[:ascii:]]=** r:|?=**'
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+# Increase the number of errors based on the length of the typed word.
+zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
+# Don't complete unavailable commands.
+zstyle ':completion:*:(functions|parameters)' ignored-patterns '(_*|.*|-*|+*|autosuggest-*|pre(cmd|exec))'
+# Group matches and describe.
+zstyle ':completion:*:corrections' format '%B%F{green}%d (errors: %e)%f%b'
+zstyle ':completion:*:messages' format '%B%F{yellow}%d%f%b'
+zstyle ':completion:*:warnings' format '%B%F{red}No such %d%f%b'
+zstyle ':completion:*:errors' format '%B%F{red}No such %d%f%b'
+zstyle ':completion:*:descriptions' format $'%{\e[35;1m%}%d%{\e[0m%}'
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+# Omit parent and current directories from completion results when they are
+# already named in the input.
+zstyle ':completion:*:*:cd:*' ignore-parents parent pwd
+# Merge multiple, consecutive slashes in paths
+zstyle ':completion:*' squeeze-slashes true
+# Don't wrap around when navigating to either end of history
+zstyle ':completion:*:history-words' stop yes
+zstyle ':completion:*:history-words' remove-all-dups yes
+zstyle ':completion:*:history-words' list false
+zstyle ':completion:*:history-words' menu yes
+# Exclude internal/fake envvars
+zstyle ':completion::*:(-command-|export):*' fake-parameters ${${${_comps[(I)-value-*]#*,}%%,*}:#-*-}
+# Sory array completion candidates
+zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+# Complete hostnames from ssh files too
+zstyle -e ':completion:*:hosts' hosts 'reply=(
+  ${=${=${=${${(f)"$(cat {/etc/ssh_,~/.{config/,}ssh/known_}hosts(|2)(N) 2>/dev/null)"}%%[#| ]*}//\]:[0-9]*/ }//,/ }//\[/ }
+  ${=${${${${(@M)${(f)"$(cat ~/.{config/,}ssh/config 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
+)'
+# Don't complete uninteresting users
+zstyle ':completion:*:users' ignored-patterns \
+  adm amanda apache avahi beaglidx bin cacti canna clamav daemon \
+  dbus distcache dovecot fax ftp games gdm gkrellmd gopher \
+  hacluster haldaemon halt hsqldb ident junkbust ldap lp mail \
+  mailman mailnull mldonkey mysql nagios \
+  named netdump news nfsnobody nobody 'nixbld*' nscd ntp nut nx openvpn \
+  operator pcap postfix postgres privoxy pulse pvm quagga radvd \
+  rpc rpcuser rpm shutdown squid sshd sync 'systemd-*' uucp vcsa xfs '_*'
+# ... unless we really want to.
+zstyle '*' single-ignored show
+# Ignore multiple entries.
+zstyle ':completion:*:(rm|kill|diff):*' ignore-line other
+zstyle ':completion:*:rm:*' file-patterns '*:all-files'
+# PID completion for kill
+zstyle ':completion:*:*:*:*:processes' command 'ps -u $LOGNAME -o pid,user,command -w'
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;36=0=01'
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:*:kill:*' force-list always
+zstyle ':completion:*:*:kill:*' insert-ids single
+# Man
+zstyle ':completion:*:manuals' separate-sections true
+zstyle ':completion:*:manuals.(^1*)' insert-sections true
+# Media Players
+zstyle ':completion:*:*:mpg123:*' file-patterns '*.(mp3|MP3):mp3\ files *(-/):directories'
+zstyle ':completion:*:*:mpg321:*' file-patterns '*.(mp3|MP3):mp3\ files *(-/):directories'
+zstyle ':completion:*:*:ogg123:*' file-patterns '*.(ogg|OGG|flac):ogg\ files *(-/):directories'
+zstyle ':completion:*:*:mocp:*' file-patterns '*.(wav|WAV|mp3|MP3|ogg|OGG|flac):ogg\ files *(-/):directories'
+# SSH/SCP/RSYNC
+zstyle ':completion:*:(scp|rsync):*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
+zstyle ':completion:*:(scp|rsync):*' group-order users files all-files hosts-domain hosts-host hosts-ipaddr
+zstyle ':completion:*:ssh:*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
+zstyle ':completion:*:ssh:*' group-order users hosts-domain hosts-host users hosts-ipaddr
+zstyle ':completion:*:(ssh|scp|rsync):*:hosts-host' ignored-patterns '*(.|:)*' loopback ip6-loopback localhost ip6-localhost broadcasthost
+zstyle ':completion:*:(ssh|scp|rsync):*:hosts-domain' ignored-patterns '<->.<->.<->.<->' '^[-[:alnum:]]##(.[-[:alnum:]]##)##' '*@*'
+zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '255.255.255.255' '::1' 'fe80::*'
 
-    # Be extra careful about plugin load order, or subtle breakage can emerge.
-    # This is the best order I've sussed out for these plugins.
-    zgenom load junegunn/fzf shell
-    zgenom load jeffreytse/zsh-vi-mode
-    zgenom load zdharma-continuum/fast-syntax-highlighting
-    zgenom load zsh-users/zsh-completions src
-    zgenom load zsh-users/zsh-autosuggestions
-    zgenom load dxrcy/zsh-history-substring-search
-    zgenom load romkatv/powerlevel10k powerlevel10k
-    zgenom load hlissner/zsh-autopair autopair.zsh
-
-    zgenom save
-
-    # Must be explicit because zgenom compile ignores nix-store symlinks
-    zgenom compile \
-      $ZDOTDIR/*(-.N) \
-      $ZDOTDIR/.*(-.N) \
-      $ZDOTDIR/completions/_*(-.N) \
-      $DOTFILES_HOME/lib/zsh/*~*.zwc(.N)
-  fi
-
-  ## My dotfiles
-  source $ZDOTDIR/completion.zsh
-  source $ZDOTDIR/keybinds.zsh
-  source $ZDOTDIR/aliases.zsh
-  source $ZDOTDIR/extra.zshrc   # Auto-generated by nixos
-
-  autopair-init
-
-  # CD-able vars
-  cfg=~/.config
+# Only generate the dump if it doesn't exist. `hey reload` will clear it. And
+# yes, -d is necessary. compinit doesn't respect cache-path.
+ZCOMPCACHE="$XDG_CACHE_HOME/zsh/zcompdump.$ZSH_VERSION"
+if autoload -Uz compinit; then
+  compinit -u -C -d "$ZCOMPCACHE"
+  [[ ! -f "$ZCOMPCACHE.zwc" && -f $ZCOMPCACHE ]] && zcompile "$ZCOMPCACHE"
 fi
