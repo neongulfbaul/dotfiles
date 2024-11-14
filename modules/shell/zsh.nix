@@ -5,7 +5,7 @@
     enable = true;
     autocd = true;
     dotDir = ".config/zsh";
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
     shellAliases = {
       sl = "eza";
@@ -87,6 +87,6 @@
   };
 
   # Scripts
-  home.file.".config/zsh/scripts".source = ./files/scripts;
-  home.file.".config/zsh/scripts".recursive = true;
+  #home.file.".config/zsh/scripts".source = ./files/scripts;
+  #home.file.".config/zsh/scripts".recursive = true;
 }
