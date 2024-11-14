@@ -39,6 +39,6 @@
     XDG_CACHE_HOME = "$HOME/.cache";
   };
 
-  home.file.".config/nvim/".source = config.lib.file.mkOutOfStoreSymlink ../../config/nvim;
-  home.file.".config/nvim/".recursive = true;
+  #home.file.".config/nvim/".source = config.lib.file.mkOutOfStoreSymlink ../../config/nvim;
+  #home.file.".config/nvim/".recursive = true;
 }
