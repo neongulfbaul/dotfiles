@@ -2,14 +2,13 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.file.".config/zsh/".source = config.lib.file.mkOutOfStoreSymlink ../../config/nvim;
+  home.file.".config/zsh/".source = config.lib.file.mkOutOfStoreSymlink m../../config/zsh;
   home.file.".config/zsh/".recursive = true;
 
   programs.zsh = {
     enable = true;
     autocd = false;
     dotDir = ".config/zsh";
-    autosuggestion.enable = true;
     enableCompletion = true;
     completionInit = ''
       source $ZDOTDIR/config.zsh
