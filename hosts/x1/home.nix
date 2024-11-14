@@ -3,7 +3,7 @@
 {
   imports = [
     ../../modules/shell/zsh.nix 
-    ../../modules/editor/nvim.nix
+    ../../modules/editors/nvim.nix
     ];
 
   home.username = "neon";
