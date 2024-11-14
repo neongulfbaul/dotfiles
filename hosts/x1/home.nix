@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, dotfiles, ... }:
 
 {
   imports = [
@@ -40,16 +40,16 @@
     XDG_CACHE_HOME = "$HOME/.cache";
   };
 
-   xsession.windowManager.xmonad = {
+  xsession.windowManager.xmonad = {
     enable = true;
     enableContribAndExtras = true;
-    config = "../../xmonad.hs";
+    config = "${dotfiles}/xmonad.hs";
   };
 
-    xmobar = {
-      enable = true;
-      extraConfig = builtins.readFile "$../../xmobar.hs";
-    };
+  programs.xmobar = {
+    enable = true;
+    extraConfig = builtins.readFile "${dotfiles}/xmobar.hs";
+  };
 
   #home.file.".config/nvim/".source = config.lib.file.mkOutOfStoreSymlink ../../config/nvim;
   #home.file.".config/nvim/".recursive = true;

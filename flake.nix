@@ -11,7 +11,8 @@
   };
 
   outputs = inputs @ { self, nixpkgs, nixos-hardware, home-manager, ... }: 
-  let 
+  let
+    dotfiles = ./config;
     args = {
      inherit self;
      inherit (nixpkgs);
@@ -41,7 +42,7 @@
 	    home-manager.users.neon = import ./hosts/x1/home.nix;
 	  }
 	  ];
-        specialArgs = { inherit inputs home-manager; };
+        specialArgs = { inherit inputs home-manager dotfiles; };
       };
     };
   };
