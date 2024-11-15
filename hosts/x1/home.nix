@@ -10,6 +10,9 @@
   home.stateVersion = "24.11";
   home.file.".zshenv".enable = false;
   home.packages = with pkgs; [
+    ubuntu_font_family
+    dejavu_fonts
+    symbola
     kitty
     git
     cowsay
@@ -42,12 +45,12 @@
 
   # Enable hpyrland in home-manager
   #wayland.windowManager.hyprland.enable = true; 
-  programs.wezterm = {
-    enable = true;
-    enableZshIntegration = true;
-    enableBashIntegration = true;
-    extraConfig = builtins.readFile ./wezterm.lua;
-  };
+  #programs.wezterm = {
+  #  enable = true;
+  #  enableZshIntegration = true;
+  #  enableBashIntegration = true;
+  #  extraConfig = builtins.readFile ./wezterm.lua;
+  #};
 
   # Enable xmonad
   #xsession.windowManager.xmonad = {

@@ -43,7 +43,6 @@ in
 
   programs.neovim = {
     enable = true;
-    package = pkgs.neovim;
     vimAlias = true;
     coc.enable = false;
     withNodeJs = true;
@@ -59,9 +58,9 @@ in
   };
 
   home.file."./.config/nvim/lua/user/init.lua".text = ''
-    require("user.options")
-    require("user.remaps")
-    vim.opt.runtimepath:append("${treesitter-parsers}")
+   require("user.options")
+   require("user.keymaps")
+   vim.opt.runtimepath:append("${treesitter-parsers}")
   '';
 
   # Treesitter is configured as a locally developed module in lazy.nvim
