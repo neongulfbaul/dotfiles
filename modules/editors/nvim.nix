@@ -1,78 +1,74 @@
 { pkgs, ... }:
+let
 
+  treesitterWithGrammars = (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
+    p.bash
+    p.comment
+    p.css
+    p.dockerfile
+    p.fish
+    p.gitattributes
+    p.gitignore
+    p.go
+    p.gomod
+    p.gowork
+    p.hcl
+    p.javascript
+    p.jq
+    p.json5
+    p.json
+    p.lua
+    p.make
+    p.markdown
+    p.nix
+    p.python
+    p.rust
+    p.toml
+    p.typescript
+    p.vue
+    p.yaml
+  ]));
+
+  treesitter-parsers = pkgs.symlinkJoin {
+    name = "treesitter-parsers";
+    paths = treesitterWithGrammars.dependencies;
+  };
+in
 {
+  home.packages = with pkgs; [
+    ripgrep
+    fd
+    lua-language-server
+  ];
 
   programs.neovim = {
     enable = true;
-    viAlias = true;
+    package = pkgs.neovim;
     vimAlias = true;
-    vimdiffAlias = true;
-    extraPackages = with pkgs; [
+    coc.enable = false;
+    withNodeJs = true;
+
+    plugins = [
+      treesitterWithGrammars
     ];
+  };
 
-    plugins = with pkgs.vimPlugins; [
-          {
-        plugin = nvim-lspconfig;
-        #config = toLuaFile ./nvim/plugin/lsp.lua;
-      }
+  home.file."./.config/nvim/" = {
+    source = ../../config/nvim;
+    recursive = true;
+  };
 
-      {
-        plugin = comment-nvim;
-        #config = toLua "require(\"Comment\").setup()";
-      }
+  home.file."./.config/nvim/lua/user/init.lua".text = ''
+    require("user.options")
+    require("user.remaps")
+    vim.opt.runtimepath:append("${treesitter-parsers}")
+  '';
 
-      {
-        plugin = gruvbox-nvim;
-        config = "colorscheme gruvbox";
-      }
-
-      neodev-nvim
-
-      nvim-cmp 
-      {
-        plugin = nvim-cmp;
-        #config = toLuaFile ./nvim/plugin/cmp.lua;
-      }
-
-      {
-        plugin = telescope-nvim;
-        #config = toLuaFile ./nvim/plugin/telescope.lua;
-      }
-
-      telescope-fzf-native-nvim
-
-      cmp_luasnip
-      cmp-nvim-lsp
-
-      luasnip
-      friendly-snippets
-
-
-      lualine-nvim
-      nvim-web-devicons
-
-      {
-        plugin = (nvim-treesitter.withPlugins (p: [
-          p.tree-sitter-nix
-          p.tree-sitter-vim
-          p.tree-sitter-bash
-          p.tree-sitter-lua
-          p.tree-sitter-python
-          p.tree-sitter-json
-        ]));
-        #config = toLuaFile ./nvim/plugin/treesitter.lua;
-      }
-
-      vim-nix
-
-      # {
-      #   plugin = vimPlugins.own-onedark-nvim;
-      #   config = "colorscheme onedark";
-      # }
-    ];
-    extraLuaConfig = ''
-      ${builtins.readFile ../../config/nvim/options.lua}
-    '';
-
+  # Treesitter is configured as a locally developed module in lazy.nvim
+  # we hardcode a symlink here so that we can refer to it in our lazy config
+  home.file."./.local/share/nvim/nix/nvim-treesitter/" = {
+    recursive = true;
+    source = treesitterWithGrammars;
   };
 }
+

@@ -4,15 +4,13 @@
   imports = [
     ../../modules/shell/zsh.nix 
     ../../modules/editors/nvim.nix
-    ../../modules/hyprland.nix
-    ../../modules/swaybar.nix
     ];
 
   home.username = "neon";
   home.stateVersion = "24.11";
   home.file.".zshenv".enable = false;
   home.packages = with pkgs; [
-    wezterm
+    kitty
     git
     cowsay
     anki-bin
@@ -43,8 +41,13 @@
   };
 
   # Enable hpyrland in home-manager
-  wayland.windowManager.hyprland.enable = true; 
-
+  #wayland.windowManager.hyprland.enable = true; 
+  programs.wezterm = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+    extraConfig = builtins.readFile ./wezterm.lua;
+  };
 
   # Enable xmonad
   #xsession.windowManager.xmonad = {
