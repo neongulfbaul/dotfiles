@@ -2,7 +2,7 @@
 { config, lib, pkgs, ... }:
 
 {
-      home.file.".config/zsh/".source = config.lib.file.mkOutOfStoreSymlink ../../config/zsh;
+      home.file.".config/zsh/".source = ../../config/zsh;
       home.file.".config/zsh/".recursive = true;
 
       programs.zsh = {

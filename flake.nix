@@ -8,11 +8,11 @@
     nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
-  outputs = inputs @ { self, nixpkgs, nixos-hardware, home-manager, ... }: 
+  outputs = inputs @ { self, nixpkgs, nixos-hardware, home-manager, hyprland, ... }: 
   let
-    dotfiles = ./config;
     args = {
      inherit self;
      inherit (nixpkgs);
@@ -31,18 +31,18 @@
         specialArgs = { inherit inputs home-manager; };
       };
       x1 = nixpkgs.lib.nixosSystem {
-	system = "x86_64-linux";
+     	system = "x86_64-linux";
         modules = [ 
-	  ./hosts
-	  ./hosts/x1
-	  home-manager.nixosModules.home-manager
-	  {
-	    home-manager.useGlobalPkgs = true;
-	    home-manager.useUserPackages = true;
-	    home-manager.users.neon = import ./hosts/x1/home.nix;
-	  }
-	  ];
-        specialArgs = { inherit inputs home-manager dotfiles; };
+        ./hosts
+        ./hosts/x1
+	    home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.neon = import ./hosts/x1/home.nix; 
+        }
+      ];
+        specialArgs = { inherit inputs home-manager; };
       };
     };
   };

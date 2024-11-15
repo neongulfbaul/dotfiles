@@ -1,19 +1,21 @@
-{ lib, config, pkgs, dotfiles, ... }:
+{ self, config, pkgs, ... }:
 
 {
   imports = [
     ../../modules/shell/zsh.nix 
     ../../modules/editors/nvim.nix
+    ../../modules/hyprland.nix
+    ../../modules/swaybar.nix
     ];
 
   home.username = "neon";
   home.stateVersion = "24.11";
   home.file.".zshenv".enable = false;
   home.packages = with pkgs; [
+    wezterm
     git
     cowsay
     anki-bin
-    discord #testing to see if this was causing hang
     lutris
     wineWowPackages.stable
     winetricks
@@ -40,16 +42,20 @@
     XDG_CACHE_HOME = "$HOME/.cache";
   };
 
-  xsession.windowManager.xmonad = {
-    enable = true;
-    enableContribAndExtras = true;
-    config = "${dotfiles}/xmonad.hs";
-  };
+  # Enable hpyrland in home-manager
+  wayland.windowManager.hyprland.enable = true; 
 
-  programs.xmobar = {
-    enable = true;
-    extraConfig = builtins.readFile "${dotfiles}/xmobar.hs";
-  };
+
+  # Enable xmonad
+  #xsession.windowManager.xmonad = {
+  #  enable = true;
+  #  enableContribAndExtras = true;
+  #  config = ../../config/xmonad.hs;
+  #}; 
+  #programs.xmobar = {
+  #  enable = true;
+  #  extraConfig = builtins.readFile ../../config/xmobar.hs;
+  #};
 
   #home.file.".config/nvim/".source = config.lib.file.mkOutOfStoreSymlink ../../config/nvim;
   #home.file.".config/nvim/".recursive = true;
