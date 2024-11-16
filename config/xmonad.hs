@@ -55,7 +55,7 @@ import XMonad.Util.SpawnOnce (spawnOnce)
 --
 
 -- TODO Collect into def {}
-myTerminal = "wezterm"
+myTerminal = "kitty"
 
 background = "~/.backgrounds/punk.jpg"
 

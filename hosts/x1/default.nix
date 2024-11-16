@@ -10,6 +10,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-6th-gen
+      ../../modules/desktop/x.nix
     ];
 
   # Bootloader.
@@ -132,8 +133,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-        acpi
-        wezterm
+       acpi
+       kitty 
   ];
   
    environment.etc."zshenv".text = ''

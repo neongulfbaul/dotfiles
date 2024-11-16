@@ -2,8 +2,7 @@
 
 {
   imports = [
-    ../../modules/display/x.nix
-    ../../modules/display/xmonad.nix
+    ../../modules/desktop/xmonad.nix
     ../../modules/shell/zsh.nix
     ../../modules/editors/nvim.nix
     ];
@@ -45,27 +44,4 @@
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_CACHE_HOME = "$HOME/.cache";
   };
-
-  # Enable hpyrland in home-manager
-  #wayland.windowManager.hyprland.enable = true;
-  #programs.wezterm = {
-  #  enable = true;
-  #  enableZshIntegration = true;
-  #  enableBashIntegration = true;
-  #  extraConfig = builtins.readFile ./wezterm.lua;
-  #};
-
-#   Enable xmonad
- # xsession.windowManager.xmonad = {
- #   enable = true;
- #   enableContribAndExtras = true;
- #   config = ../../config/xmonad.hs;
- # };
- # programs.xmobar = {
- #   enable = true;
- #   extraConfig = builtins.readFile ../../config/xmobar.hs;
- # };
-
-  #home.file.".config/nvim/".source = config.lib.file.mkOutOfStoreSymlink ../../config/nvim;
-  #home.file.".config/nvim/".recursive = true;
 }

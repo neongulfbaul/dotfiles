@@ -1,8 +1,8 @@
 # Common Nix
 { ... }: {
-  imports = [ ];
-  environment.pathsToLink =
-    [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
+    #imports = [ ];
+    #jenvironment.pathsToLink =
+    # [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
@@ -16,6 +16,6 @@
   services.libinput.enable = true;
 
   # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
+    #  sound.enable = true;
+    #hardware.pulseaudio.enable = true;
 }

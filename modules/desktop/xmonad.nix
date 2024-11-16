@@ -10,7 +10,7 @@
       haskellPackages.containers
     ];
     enableContribAndExtras = true;
-    config = ../../../dot/xmonad/Main.hs;
+    config = ../../config/xmonad.hs;
   };
 
   home.packages = with pkgs; [
