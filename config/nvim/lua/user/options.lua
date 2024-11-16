@@ -28,10 +28,6 @@ vim.opt.wrap = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
--- Set leader key to space
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
 -- Better splitting
 vim.opt.splitbelow = true
 vim.opt.splitright = true

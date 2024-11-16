@@ -2,7 +2,9 @@
 
 {
   imports = [
-    ../../modules/shell/zsh.nix 
+    ../../modules/display/x.nix
+    ../../modules/display/xmonad.nix
+    ../../modules/shell/zsh.nix
     ../../modules/editors/nvim.nix
     ];
 
@@ -10,6 +12,7 @@
   home.stateVersion = "24.11";
   home.file.".zshenv".enable = false;
   home.packages = with pkgs; [
+    cargo
     ubuntu_font_family
     dejavu_fonts
     symbola
@@ -44,7 +47,7 @@
   };
 
   # Enable hpyrland in home-manager
-  #wayland.windowManager.hyprland.enable = true; 
+  #wayland.windowManager.hyprland.enable = true;
   #programs.wezterm = {
   #  enable = true;
   #  enableZshIntegration = true;
@@ -52,16 +55,16 @@
   #  extraConfig = builtins.readFile ./wezterm.lua;
   #};
 
-  # Enable xmonad
-  #xsession.windowManager.xmonad = {
-  #  enable = true;
-  #  enableContribAndExtras = true;
-  #  config = ../../config/xmonad.hs;
-  #}; 
-  #programs.xmobar = {
-  #  enable = true;
-  #  extraConfig = builtins.readFile ../../config/xmobar.hs;
-  #};
+#   Enable xmonad
+ # xsession.windowManager.xmonad = {
+ #   enable = true;
+ #   enableContribAndExtras = true;
+ #   config = ../../config/xmonad.hs;
+ # };
+ # programs.xmobar = {
+ #   enable = true;
+ #   extraConfig = builtins.readFile ../../config/xmobar.hs;
+ # };
 
   #home.file.".config/nvim/".source = config.lib.file.mkOutOfStoreSymlink ../../config/nvim;
   #home.file.".config/nvim/".recursive = true;

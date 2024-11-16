@@ -7,21 +7,6 @@
       allowUnfree = true;
     };
   };
-  # home-manager stuff that probably doesn't work
-  #home-manager.nixosModules.home-manager
-  #  {
-  #    home-manager.useGlobalPkgs = true;
-  #    home-manager.useUserPackages = true;
-  #    home-manager.extraSpecialArgs = extraArgs;
-  #    home-manager.stateVersion = 24.05;
-  #    home-manager.users.${user} = {
-  #     imports = [
-  #       ./home.nix
-  #       ./${ host }/home.nix
-  #       ];
- #       };
- #     };
-
   # Configure nix settings, including experimental features and garbage collection
   nix = {
     settings = {

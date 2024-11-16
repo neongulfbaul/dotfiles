@@ -8,10 +8,10 @@
     nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    hyprland.url = "github:hyprwm/Hyprland";
+    xmonad-contrib.url = "github:xmonad/xmonad-contrib";
   };
 
-  outputs = inputs @ { self, nixpkgs, nixos-hardware, home-manager, hyprland, ... }: 
+  outputs = inputs @ { self, nixpkgs, nixos-hardware, home-manager, xmonad-contrib, ... }: 
   let
     args = {
      inherit self;
@@ -41,7 +41,8 @@
           home-manager.useUserPackages = true;
           home-manager.users.neon = import ./hosts/x1/home.nix; 
         }
-      ];
+             ] ++ xmonad-contrib.nixosModules ++ [ 
+        ]; 
         specialArgs = { inherit inputs home-manager; };
       };
     };

@@ -36,14 +36,20 @@ let
 in
 {
   home.packages = with pkgs; [
+    gcc
     fzf
     ripgrep
     fd
     lua-language-server
+    rust-analyzer-unwrapped
+    black
+    nodejs_22
+
   ];
 
   programs.neovim = {
     enable = true;
+    #package = pkgs.nvim;
     vimAlias = true;
     coc.enable = false;
     withNodeJs = true;
@@ -71,4 +77,3 @@ in
     source = treesitterWithGrammars;
   };
 }
-

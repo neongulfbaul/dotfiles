@@ -55,12 +55,23 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  # Enable Hyprland in NixOS
-  #programs.hyprland.enable = true;
+  # services.xserver.enable = true;
+    #services.xserver.displayManager.startx.enable = true;
+  # Enable xmonad 
+    # services.xserver.windowManager.xmonad = {
+    #enable = true;
+    #enableContribAndExtras = true;
+    #flake = {
+    #    enable = true;
+    #    compiler = "ghc947";
+    #};
+    #config = builtins.readFile ../../config/xmonad.hs;
+    #enableConfiguredRecompile = true;
+    #};
+
   # Enable the GNOME Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  #services.displayManager.sddm.enable = true;
+  #  services.xserver.desktopManager.plasma5.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -121,7 +132,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  acpi
+        acpi
+        wezterm
   ];
   
    environment.etc."zshenv".text = ''
