@@ -36,6 +36,7 @@ let
 in
 {
   home.packages = with pkgs; [
+    fzf
     ripgrep
     fd
     lua-language-server

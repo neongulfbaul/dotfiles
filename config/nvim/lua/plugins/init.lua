@@ -1,4 +1,11 @@
 return {
-	"nvim-lua/plenary.nvim", --lua functions that many plugins use
-	"christoomey/vim-tmux-navigator", -- tmux & split window nav
+    {
+        "dracula/vim",
+        lazy = false,
+        priority = 1000,
+        opts = {},
+        config = function()
+            vim.cmd([[colorscheme dracula]])
+        end
+    },
 }
