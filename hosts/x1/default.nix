@@ -141,9 +141,9 @@
   programs.zsh.enable = true;
   users.users.neon.shell = pkgs.zsh;
 
-   environment.etc."zshenv".text = ''
-    source $HOME/.config/zsh/.zshenv
-  '';
+    # environment.etc."zshenv".text = ''
+    #source $HOME/.config/zsh/.zshenv
+    #'';
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

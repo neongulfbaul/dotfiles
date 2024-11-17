@@ -25,6 +25,7 @@
     tree
 
     # tools used by zsh/shell stuff
+    fd
     at
     bat      # a better cat
     bc
