@@ -5,13 +5,15 @@
   inputs = {
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     #nixpkgs.url = "nixpkgs/nixos-24.05";
+    nixvim.url = "github:nix-community/nixvim";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     xmonad-contrib.url = "github:xmonad/xmonad-contrib";
   };
 
-  outputs = inputs @ { self, nixpkgs, nixos-hardware, home-manager, xmonad-contrib, ... }: 
+  outputs = inputs @ { self, nixpkgs, nixos-hardware, home-manager, xmonad-contrib, nixvim, ... }: 
   let
     args = {
      inherit self;
