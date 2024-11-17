@@ -138,6 +138,9 @@
        dmenu
   ];
   
+  programs.zsh.enable = true;
+  users.users.neon.shell = pkgs.zsh;
+
    environment.etc."zshenv".text = ''
     source $HOME/.config/zsh/.zshenv
   '';

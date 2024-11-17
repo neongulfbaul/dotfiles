@@ -13,6 +13,9 @@
         completionInit = ''
           source $ZDOTDIR/config.zsh
         '';
+        initExtra = ''
+          source $ZDOTDIR/.p10k.zsh  
+            ''
       };  
       programs.fzf = {
         enable = true;
