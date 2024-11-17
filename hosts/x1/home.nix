@@ -4,7 +4,7 @@
   imports = [
     ../../modules/desktop/xmonad.nix
     ../../modules/shell/zsh.nix
-    ../../modules/editors/nvim.nix
+    ../../modules/editors/nixvim.nix
     ];
 
   home.username = "neon";

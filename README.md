@@ -6,4 +6,4 @@
 4. a bar running I guess, preferably xmobar. 
 5. get lsp working for haskell/nix 
 6. fix up my modularisation a bit so it's less all over the place
-7. make zsh and tmux autostart, fix issues with read-only zsh
+7. make tmux autostart 
