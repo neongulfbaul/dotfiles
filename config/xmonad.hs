@@ -161,6 +161,7 @@ infixr 0 ~>
 -- Key bindings. Add, modify or remove key bindings here.
 --
 
+firefox = spawn "firefox"
 maimcopy = spawn "maim -s | xclip -selection clipboard -t image/png"
 maimsave = spawn "maim ~/$(date +%Y-%m-%d_%H-%M-%S).png"
 rofi_launcher = spawn "rofi -no-lazy-grab -show drun -modi run,drun,window" 
@@ -206,7 +207,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       (modm .|. shiftMask, xK_i) ~> sendMessage $ DecGap 10 R, -- decrement the right-hand gap
 
       -- Toggle Full Screen
-      (modm, xK_f) ~> sequence_ [sidebar_destroy, sendMessage (Toggle "Full")],
+      (modm, xK_space) ~> sequence_ [sidebar_destroy, sendMessage (Toggle "Full")],
       -- Rotate through the available layout algorithms
       (modm, xK_n) ~> sendMessage NextLayout,
       --  Reset the layouts on the current workspace to default

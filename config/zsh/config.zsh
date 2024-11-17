@@ -120,10 +120,11 @@ if [[ $TERM != dumb ]]; then
       $DOTFILES_HOME/lib/zsh/*~*.zwc(.N)
   fi
 
-  ## My dotfiles
+  ## My dotfilesa
   source $ZDOTDIR/completion.zsh
   source $ZDOTDIR/keybinds.zsh
   source $ZDOTDIR/aliases.zsh
+  source $ZDOTDIR/p10k.zsh
 
   autopair-init
 
