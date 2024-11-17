@@ -27,8 +27,9 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
-                "rust_analyzer",
-                "gopls",
+                "haskell-language-server",
+                "nixpkgs-fmt",
+                "bash-language-server",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
