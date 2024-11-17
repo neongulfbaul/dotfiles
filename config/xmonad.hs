@@ -78,7 +78,7 @@ myBorderWidth = 2
 -- ("right alt"), which does not conflict with emacs keybindings. The
 -- "windows key" is usually mod4Mask.
 --
-myModMask = mod4Mask
+myModMask = mod1Mask
 
 -- The default number of workspaces (virtual screens) and their names.
 -- By default we use numeric strings, but any string may be used as a
@@ -163,7 +163,7 @@ infixr 0 ~>
 
 maimcopy = spawn "maim -s | xclip -selection clipboard -t image/png"
 maimsave = spawn "maim ~/$(date +%Y-%m-%d_%H-%M-%S).png"
-rofi_launcher = spawn "rofi -no-lazy-grab -show drun -modi run,drun,window -theme $HOME/.config/rofi/launcher/style"
+rofi_launcher = spawn "rofi -no-lazy-grab -show drun -modi run,drun,window" 
 rofi_help = spawn ("rofi -modi run,drun,window -theme $HOME/.config/rofi/help/style -e \"$(echo -e \"" ++ help ++ "\")\"")
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) =

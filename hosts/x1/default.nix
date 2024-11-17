@@ -134,7 +134,8 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
        acpi
-       kitty 
+       kitty
+       dmenu
   ];
   
    environment.etc."zshenv".text = ''
