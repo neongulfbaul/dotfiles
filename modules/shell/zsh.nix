@@ -10,12 +10,13 @@
         autocd = false;
         dotDir = ".config/zsh";
         enableCompletion = true;
+        history.path = "$ZDODIR/zsh_history";
         completionInit = ''
           source $ZDOTDIR/config.zsh
         '';
         initExtra = ''
           source $ZDOTDIR/.p10k.zsh  
-            ''
+            '';
       };  
       programs.fzf = {
         enable = true;
