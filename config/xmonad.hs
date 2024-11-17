@@ -164,7 +164,7 @@ infixr 0 ~>
 maimcopy = spawn "maim -s | xclip -selection clipboard -t image/png"
 maimsave = spawn "maim ~/$(date +%Y-%m-%d_%H-%M-%S).png"
 rofi_launcher = spawn "rofi -no-lazy-grab -show drun -modi run,drun,window" 
-rofi_help = spawn ("rofi -modi run,drun,window -theme $HOME/.config/rofi/help/style -e \"$(echo -e \"" ++ help ++ "\")\"")
+rofi_help = spawn ("rofi -modi run,drun,window -e \"$(echo -e \"" ++ help ++ "\")\"")
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) =
   M.fromList $
@@ -173,7 +173,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       -- lock screen
       (modm .|. shiftMask, xK_l) ~> spawn "betterlockscreen -l",
       -- launch rofi and dashboard
-      (modm, xK_space) ~> rofi_launcher,
+      (modm, xK_p) ~> rofi_launcher,
+      -- launch firefox
+      (modm, xK_f) ~> firefox,
       -- launch eww sidebar
       (modm, xK_Tab) ~> sidebar_toggle,
       -- Audio keys

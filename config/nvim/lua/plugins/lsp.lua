@@ -27,9 +27,6 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
-                "haskell-language-server",
-                "nixpkgs-fmt",
-                "bash-language-server",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
