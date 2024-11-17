@@ -5,8 +5,6 @@
   inputs = {
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     #nixpkgs.url = "nixpkgs/nixos-24.05";
-    nixvim.url = "github:nix-community/nixvim";
-    nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -41,7 +39,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.neon = import ./hosts/x1/home.nix; 
+          home-manager.users.neon = import ./hosts/x1/home.nix;
         }
              ] ++ xmonad-contrib.nixosModules ++ [ 
         ]; 

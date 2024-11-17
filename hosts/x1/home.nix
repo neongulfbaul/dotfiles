@@ -1,10 +1,10 @@
-{ self, config, pkgs, ... }:
+{ self, config, pkgs, nixvim, ... }:
 
 {
   imports = [
     ../../modules/desktop/xmonad.nix
     ../../modules/shell/zsh.nix
-    ../../modules/editors/nixvim
+    ../../modules/editors/nvim.nix
     ];
 
   home.username = "neon";
