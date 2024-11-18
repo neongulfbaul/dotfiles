@@ -4,7 +4,7 @@
 {
   programs.neovim = {
     enable = true;
-    package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+    #package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
@@ -38,5 +38,9 @@
     source = ../../config/nvim;
     recursive = true;
   };
-
+	
+   home.file."./.config/nvim/lua/user/init.lua".text = ''
+     require("user.options")
+     require("user.keymaps")
+      '';
 }
