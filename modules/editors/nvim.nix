@@ -14,8 +14,9 @@
       ps.magick
     ];
     extraPackages = with pkgs; [
+      xclip
       imagemagick
-
+      gcc
       # Language Servers
       # https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
       lua-language-server
