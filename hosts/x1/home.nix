@@ -5,6 +5,7 @@
     ../../modules/desktop/xmonad.nix
     ../../modules/shell/zsh.nix
     ../../modules/editors/nvim.nix
+    ../../modules/languages/jp.nix
     ];
 
   home.username = "neon";

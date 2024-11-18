@@ -176,7 +176,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       -- launch rofi and dashboard
       (modm, xK_p) ~> rofi_launcher,
       -- launch firefox
-      (modm, xK_f) ~> firefox,
+      (modm, xK_w) ~> firefox,
       -- launch eww sidebar
       (modm, xK_Tab) ~> sidebar_toggle,
       -- Audio keys
@@ -193,7 +193,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       (0, xK_Print) ~> maimcopy,
       (modm, xK_Print) ~> maimsave,
       -- close focused window
-      (modm .|. shiftMask, xK_w) ~> kill,
+      (modm .|. shiftMask, xK_c) ~> kill,
       -- GAPS!!!
       (modm .|. controlMask, xK_g) ~> sendMessage $ ToggleGaps, -- toggle all gaps
       (modm .|. shiftMask, xK_g) ~> sendMessage $ setGaps [(L, 30), (R, 30), (U, 40), (D, 60)], -- reset the GapSpec
@@ -207,13 +207,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       (modm .|. shiftMask, xK_i) ~> sendMessage $ DecGap 10 R, -- decrement the right-hand gap
 
       -- Toggle Full Screen
-      (modm, xK_space) ~> sequence_ [sidebar_destroy, sendMessage (Toggle "Full")],
+      (modm, xK_f) ~> sequence_ [sidebar_destroy, sendMessage (Toggle "Full")],
       -- Rotate through the available layout algorithms
       (modm, xK_n) ~> sendMessage NextLayout,
       --  Reset the layouts on the current workspace to default
       (modm .|. shiftMask, xK_n) ~> setLayout $ XMonad.layoutHook conf,
       -- Resize viewed windows to the correct size
-      (modm, xK_r) ~> refresh,
+      (modm, fK_r) ~> refresh,
       -- Move focus to the next window
       (modm, xK_j) ~> windows W.focusDown,
       -- Move focus to the previous window
