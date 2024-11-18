@@ -4,15 +4,18 @@
   # Define only essential inputs here
   inputs = {
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    #nixpkgs.url = "nixpkgs/nixos-24.05";
     nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     xmonad-contrib.url = "github:xmonad/xmonad-contrib";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
-  outputs = inputs @ { self, nixpkgs, nixos-hardware, home-manager, xmonad-contrib, nixvim, ... }: 
+  outputs = inputs @ { self, nixpkgs, nixos-hardware, home-manager, xmonad-contrib, ... }: 
   let
+    overlays = [
+        (import ./overlays/treesitter.nix)
+        ];
     args = {
      inherit self;
      inherit (nixpkgs);
