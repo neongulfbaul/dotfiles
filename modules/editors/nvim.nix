@@ -1,61 +1,36 @@
-{ pkgs, ... }:
-let
+# https://github.com/water-sucks/nixed/blob/main/home/profiles/base/nvim/default.nix
+{ pkgs, inputs, ... }:
 
-  treesitterWithGrammars = (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
-    p.bash
-    p.comment
-    p.css
-    p.dockerfile
-    p.fish
-    p.gitattributes
-    p.gitignore
-    p.go
-    p.gomod
-    p.gowork
-    p.hcl
-    p.javascript
-    p.jq
-    p.json5
-    p.json
-    p.lua
-    p.make
-    p.markdown
-    p.nix
-    p.python
-    p.rust
-    p.toml
-    p.typescript
-    p.vue
-    p.yaml
-  ]));
-
-  treesitter-parsers = pkgs.symlinkJoin {
-    name = "treesitter-parsers";
-    paths = treesitterWithGrammars.dependencies;
-  };
-in
 {
-  home.packages = with pkgs; [
-    gcc
-    fzf
-    ripgrep
-    fd
-    lua-language-server
-    rust-analyzer-unwrapped
-    black
-    nodejs_22
-
-  ];
-
   programs.neovim = {
     enable = true;
-    #package = pkgs.neovim;
+    package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+    defaultEditor = true;
+    viAlias = true;
     vimAlias = true;
-    coc.enable = false;
-    withNodeJs = true;
+    extraLuaPackages = ps: [
+      ps.lua
+      ps.luarocks-nix
+      ps.magick
+    ];
+    extraPackages = with pkgs; [
+      imagemagick
 
-    plugins = [
-      treesitterWithGrammars
+      # Language Servers
+      # https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+      lua-language-server
+      nil
+      nixd
+
+      # Formatters
+      # https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters
+      black
+      nixfmt-rfc-style
+      nodePackages.prettier
+      biome
+      shfmt
+      stylelint
+      stylua
     ];
   };
 
@@ -64,16 +39,4 @@ in
     recursive = true;
   };
 
-  home.file."./.config/nvim/lua/user/init.lua".text = ''
-   require("user.options")
-   require("user.keymaps")
-   vim.opt.runtimepath:append("${treesitter-parsers}")
-  '';
-
-  # Treesitter is configured as a locally developed module in lazy.nvim
-  # we hardcode a symlink here so that we can refer to it in our lazy config
-  home.file."./.local/share/nvim/nix/nvim-treesitter/" = {
-    recursive = true;
-    source = treesitterWithGrammars;
-  };
 }
