@@ -5,12 +5,11 @@
     ../../modules/desktop/xmonad.nix
     ../../modules/shell/zsh.nix
     ../../modules/editors/nvim.nix
-    ../../modules/languages/jp.nix
     ];
 
   home.username = "neon";
   home.stateVersion = "24.11";
-  home.file.".zshenv".enable = false;
+    #home.file.".zshenv".enable = false;
   home.packages = with pkgs; [
     cargo
     ubuntu_font_family
@@ -23,7 +22,6 @@
     lutris
     wineWowPackages.stable
     winetricks
-    tree
 
     # tools used by zsh/shell stuff
     fd
@@ -39,8 +37,23 @@
     nix-zsh-completions
     ripgrep  # a better grep
     tokei    # for code statistics
+    ouch     # a better unzip
+    tree
+
+    #jp tools
+    lime3ds
+    firefox-devedition
+    noto-fonts-cjk-sans
+    perl540Packages.ImageOCRTesseract
+    melonDS
   ];
 
+    #programs.xdg = {
+    #enable = true;
+    #userDirs.enable = true;
+    #};
+
+    
   home.sessionVariables = {
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";

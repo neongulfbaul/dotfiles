@@ -213,7 +213,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       --  Reset the layouts on the current workspace to default
       (modm .|. shiftMask, xK_n) ~> setLayout $ XMonad.layoutHook conf,
       -- Resize viewed windows to the correct size
-      (modm, fK_r) ~> refresh,
+      (modm, xK_r) ~> refresh,
       -- Move focus to the next window
       (modm, xK_j) ~> windows W.focusDown,
       -- Move focus to the previous window

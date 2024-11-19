@@ -40,25 +40,8 @@ if [[ $TERM != dumb ]]; then
   ## History
   HISTORY_SUBSTRING_SEARCH_PREFIXED=1
   HISTORY_SUBSTRING_SEARCH_FUZZY=1
-  HISTSIZE=100000   # Max events to store in internal history.
-  SAVEHIST=100000   # Max events to store in history file.
-  setopt BANG_HIST                 # History expansions on '!'
-  setopt EXTENDED_HISTORY          # Include start time in history records
-  setopt APPEND_HISTORY            # Appends history to history file on exit
-  setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
-  setopt SHARE_HISTORY             # Share history between all sessions.
-  setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
-  setopt HIST_IGNORE_DUPS          # Do not record an event that was just recorded again.
-  setopt HIST_IGNORE_ALL_DUPS      # Remove old events if new event is a duplicate
-  setopt HIST_FIND_NO_DUPS         # Do not display a previously found event.
-  setopt HIST_IGNORE_SPACE         # Do not record an event starting with a space.
-  setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history file.
-  setopt HIST_REDUCE_BLANKS        # Minimize unnecessary whitespace
-  setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
-  setopt HIST_BEEP                 # Beep when accessing non-existent history.
-  ## Directories
+ ## Directories
   DIRSTACKSIZE=9
-  unsetopt AUTO_CD            # Implicit CD slows down plugins
   setopt AUTO_PUSHD           # Push the old directory onto the stack on cd.
   setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
   setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
@@ -82,8 +65,13 @@ if [[ $TERM != dumb ]]; then
   # zsh-autosuggest
   export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 
+  echo "ZGEN_DIR: $ZGEN_DIR"
+  echo "XDG_DATA_HOME: ${XDG_DATA_HOME:-not set}"
+  echo "PWD: $PWD"
+
+
   ## Bootstrap zgenom
-  export ZGEN_DIR="${ZGEN_DIR:-${XDG_DATA_HOME:-~/.local/share}/zgenom}"
+  export ZGEN_DIR="${ZGEN_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/zgenom}"
   if [[ ! -d "$ZGEN_DIR" ]]; then
     # Use zgenom because zgen is no longer maintained
     echo "Installing jandamm/zgenom"

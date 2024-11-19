@@ -98,9 +98,14 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+  environment.sessionVariables = {
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_DATA_HOME = "$HOME/.local/share";
+    XDG_CACHE_HOME = "$HOME/.cache";
+    };
+
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.neon = {
