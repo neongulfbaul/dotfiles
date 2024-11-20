@@ -42,6 +42,10 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_AU.UTF-8";
+  # Add Support for JP Language
+  i18n.supportedLocales = [
+    "ja_JP.UTF-8/UTF-8"
+    ];
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_AU.UTF-8";
@@ -70,6 +74,10 @@
     #enableConfiguredRecompile = true;
     #};
 
+    environment.systemPackages = with pkgs; [
+        acpi
+        kitty
+    ];
   # Enable the GNOME Desktop Environment.
   #services.displayManager.sddm.enable = true;
   #  services.xserver.desktopManager.plasma5.enable = true;
@@ -137,11 +145,6 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-       acpi
-       kitty
-       dmenu
-  ];
   
   programs.zsh.enable = true;
   users.users.neon.shell = pkgs.zsh;

@@ -44,8 +44,9 @@
     lime3ds
     firefox-devedition
     noto-fonts-cjk-sans
-    perl540Packages.ImageOCRTesseract
+    tesseract
     melonDS
+
   ];
 
     #programs.xdg = {

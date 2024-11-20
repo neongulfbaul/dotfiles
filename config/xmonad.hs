@@ -161,7 +161,6 @@ infixr 0 ~>
 -- Key bindings. Add, modify or remove key bindings here.
 --
 
-firefox = spawn "firefox"
 maimcopy = spawn "maim -s | xclip -selection clipboard -t image/png"
 maimsave = spawn "maim ~/$(date +%Y-%m-%d_%H-%M-%S).png"
 rofi_launcher = spawn "rofi -no-lazy-grab -show drun -modi run,drun,window" 
@@ -175,8 +174,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       (modm .|. shiftMask, xK_l) ~> spawn "betterlockscreen -l",
       -- launch rofi and dashboard
       (modm, xK_p) ~> rofi_launcher,
-      -- launch firefox
-      (modm, xK_w) ~> firefox,
       -- launch eww sidebar
       (modm, xK_Tab) ~> sidebar_toggle,
       -- Audio keys
@@ -193,7 +190,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       (0, xK_Print) ~> maimcopy,
       (modm, xK_Print) ~> maimsave,
       -- close focused window
-      (modm .|. shiftMask, xK_c) ~> kill,
+      (modm .|. shiftMask, xK_w) ~> kill,
       -- GAPS!!!
       (modm .|. controlMask, xK_g) ~> sendMessage $ ToggleGaps, -- toggle all gaps
       (modm .|. shiftMask, xK_g) ~> sendMessage $ setGaps [(L, 30), (R, 30), (U, 40), (D, 60)], -- reset the GapSpec
