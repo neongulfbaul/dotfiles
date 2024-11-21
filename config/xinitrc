@@ -27,6 +27,8 @@ fi
 
 clipcatd
 
+feh --bg-scale $HOME/.dotfiles/wallpaper/shiny_haxorus_wallpaper_by_andarkvolt_d7h20re.png
+
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
   [ -x "$f" ] && . "$f"

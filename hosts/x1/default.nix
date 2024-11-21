@@ -16,7 +16,11 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
- 
+
+  # Testing to try further eliminate crashes
+  boot.kernelParams = [ "i915.enable_guc=0" ];
+
+
   # chatgpt suggestion for potential fix for crash - cpu microcode update?
   hardware.cpu.intel.updateMicrocode = true;
 
@@ -42,11 +46,10 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_AU.UTF-8";
-  # Add Support for JP Language
   i18n.supportedLocales = [
+    "en_AU.UTF-8/UTF-8"
     "ja_JP.UTF-8/UTF-8"
     ];
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_AU.UTF-8";
     LC_IDENTIFICATION = "en_AU.UTF-8";

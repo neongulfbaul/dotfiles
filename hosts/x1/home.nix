@@ -5,6 +5,7 @@
     ../../modules/desktop/xmonad.nix
     ../../modules/shell/zsh.nix
     ../../modules/editors/nvim.nix
+    ../../modules/languages/jp.nix
     ];
 
   home.username = "neon";
@@ -39,14 +40,19 @@
     tokei    # for code statistics
     ouch     # a better unzip
     tree
+    python314
 
     #jp tools
     lime3ds
     firefox-devedition
-    noto-fonts-cjk-sans
-    tesseract
     melonDS
+    desmume
+    mecab    # jp text parsing tool to work with yomitan
+    imagemagick
 
+    # debugger for triyng to text hook manually
+    gdb
+    bintools
   ];
 
     #programs.xdg = {
