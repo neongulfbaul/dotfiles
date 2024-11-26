@@ -84,7 +84,6 @@
   # Enable the GNOME Desktop Environment.
   #services.displayManager.sddm.enable = true;
   #  services.xserver.desktopManager.plasma5.enable = true;
-
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "au";
