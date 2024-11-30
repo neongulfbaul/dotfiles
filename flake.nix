@@ -49,4 +49,3 @@
     nixosConfigurations = builtins.listToAttrs (map createConfig hosts);
   };
 }
-
