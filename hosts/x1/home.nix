@@ -23,6 +23,7 @@
     lutris
     wineWowPackages.stable
     winetricks
+    remmina
 
     # tools used by zsh/shell stuff
     fd
