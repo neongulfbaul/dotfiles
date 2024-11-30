@@ -1,12 +1,8 @@
 # /etc/nixos/hosts/default.nix
 
-{ lib, inputs, outputs, pkgs, home-manager, ... }: {
-  # Configure nixpkgs options, allowing unfree packages
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-    };
-  };
+{ lib, inputs, outputs, pkgs, home-manager, ... }: 
+{
+  nixpkgs.config.allowUnfree = true;    
   # Configure nix settings, including experimental features and garbage collection
   nix = {
     settings = {

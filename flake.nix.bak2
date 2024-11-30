@@ -12,10 +12,16 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, ... }: 
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, xmonad-contrib, ... }: 
   let
     system = "x86_64-linux";
-    pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
+    overlays = [
+      (import ./overlays/treesitter.nix)
+    ];
+    pkgs = import nixpkgs {
+      inherit system overlays;
+      config.allowUnfree = true;
+    };
 
     hosts = [
       { host = "atlas"; configPath = ./hosts/atlas; user = "neon"; }
@@ -27,22 +33,19 @@
       value = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
-          ./hosts/default.nix
-          (import "${hostEntry.configPath}/default.nix")
-          home-manager.nixosModules.home-manager {
+          # Global default configuration
+          ./hosts/default.nix  # Reference global default.nix here
+          home-manager.nixosModules.home-manager
+          {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.${hostEntry.user} = import "${hostEntry.configPath}/home.nix" {
-              inherit pkgs;
-            };
+            home-manager.users.${hostEntry.user} = import (hostEntry.configPath + "/home.nix") { pkgs = pkgs; home-manager = home-manager; };
           }
+          # Reference the host-specific default.nix
+          (import (hostEntry.configPath + "/default.nix"))  # Host-specific default.nixostEntry.configPath/default.nix  # Host-specific default.nix override
         ];
-        # Ensure specialArgs does not conflict with _module.args
-        specialArgs = {
-          pkgs = pkgs;
-          home-manager = home-manager;
-          nixos-hardware = nixos-hardware;
-            };
+        # Pass explicitly required variables
+        specialArgs = { inherit pkgs home-manager; };
       };
     };
   in {
