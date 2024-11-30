@@ -1,53 +1,52 @@
 {
-  description = "I stole this, then made chatgpt delete it and start again, it probably doesn't work.";
+  description = "Dynamic NixOS and Home Manager configuration";
 
-  # Define only essential inputs here
   inputs = {
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     xmonad-contrib.url = "github:xmonad/xmonad-contrib";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
-  outputs = inputs @ { self, nixpkgs, nixos-hardware, home-manager, xmonad-contrib, ... }: 
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, xmonad-contrib, neovim-nightly-overlay, ... }: 
   let
-    overlays = [
-        (import ./overlays/treesitter.nix)
-        ];
-    args = {
-     inherit self;
-     inherit (nixpkgs);
-    };
-    pkgs = import nixpkgs { inherit system; };
     system = "x86_64-linux";
-    
-  in {
-    nixosConfigurations = {
-      atlas = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [ 
-	  ./hosts/atlas/default.nix 
-	  home-manager.nixosModules.home-manager
-	];
-        specialArgs = { inherit inputs home-manager; };
-      };
-      x1 = nixpkgs.lib.nixosSystem {
-     	system = "x86_64-linux";
-        modules = [ 
-        ./hosts
-        ./hosts/x1
-	    home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.neon = import ./hosts/x1/home.nix;
-        }
-             ] ++ xmonad-contrib.nixosModules ++ [ 
-        ]; 
-        specialArgs = { inherit inputs home-manager; };
+    overlays = [
+      (import ./overlays/treesitter.nix)
+      neovim-nightly-overlay.overlay
+    ];
+    pkgs = import nixpkgs {
+      inherit system overlays;
+    };
+
+    hosts = [
+      { host = "atlas"; configPath = ./hosts/atlas; user = "neon"; }
+      { host = "x1"; configPath = ./hosts/x1; user = "neon"; }
+    ];
+
+    createConfig = hostEntry: {
+      name = hostEntry.host;
+      value = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          hostEntry.configPath/default.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.${hostEntry.user} = import (hostEntry.configPath + "/home.nix") { pkgs = pkgs; home-manager = home-manager; };
+          }
+        ];
+        # Pass explicitly required variables
+        specialArgs = { inherit pkgs home-manager; };
       };
     };
+  in {
+    nixosConfigurations = builtins.listToAttrs (map createConfig hosts);
   };
 }
+
