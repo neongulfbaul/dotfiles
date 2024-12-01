@@ -50,20 +50,6 @@
     desmume
     mecab    # jp text parsing tool to work with yomitan
     imagemagick
-    python312Packages.py-desmume 
-    (retroarch.override {
-      cores = with libretro; [
-        desmume
-        ];
-        })
-    python312Packages.manga-ocr
-
-    # ai
-    ollama
-
-    # debugger for triyng to text hook manually
-    gdb
-    bintools
   ];
 
     #programs.xdg = {

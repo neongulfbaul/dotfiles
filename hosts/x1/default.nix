@@ -9,8 +9,8 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      specialArgs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-6th-gen
-      ../../modules/desktop/x.nix
+      inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-6th-gen
+            #../../modules/desktop/x.nix
     ];
 
   # Bootloader.
