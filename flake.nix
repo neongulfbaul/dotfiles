@@ -26,12 +26,19 @@
     nixosConfigurations = {
       atlas = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ 
-	  ./hosts/atlas/default.nix 
-	  home-manager.nixosModules.home-manager
+         modules = [ 
+        ./hosts
+        ./hosts/atlas
+	    home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.neon = import ./hosts/atlas/home.nix;
+        }
 	];
         specialArgs = { inherit inputs home-manager; };
       };
+
       x1 = nixpkgs.lib.nixosSystem {
      	system = "x86_64-linux";
         modules = [ 
