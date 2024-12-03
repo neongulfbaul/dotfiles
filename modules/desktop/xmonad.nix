@@ -12,6 +12,7 @@
     enableContribAndExtras = true;
     config = ../../config/xmonad.hs;
   };
+  programs.xmobar.enable = true;
 
   home.packages = with pkgs; [
     # utils
