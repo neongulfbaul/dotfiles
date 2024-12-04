@@ -20,6 +20,41 @@
   # Testing to try further eliminate crashes
   boot.kernelParams = [ "i915.enable_guc=0" ];
 
+    #services.xserver.enable = true;
+    #services.xserver.displayManager.startx.enable = true;
+    #services.xserver.displayManager.lightdm.enable = true;
+
+    # Add other packages you need here
+  services.displayManager.defaultSession = "none+xmonad";
+
+  services.xserver = {
+    enable = true;
+
+    windowManager.xmonad = {
+      enable = true;
+    };
+
+    displayManager.lightdm = {
+      enable = true;
+      greeter = {
+        name = "lightdm-gtk-greeter";
+        # Optional greeter settings
+      };
+
+    };
+  };
+
+  environment.etc."xdg/sessions/xmonad.desktop" = {
+    text = ''
+      [Desktop Entry]
+      Name=XMonad
+      Comment=Use the XMonad window manager
+      Exec=xmonad
+      Type=Application
+    '';
+    mode = "0644";
+  };
+
 
   # chatgpt suggestion for potential fix for crash - cpu microcode update?
   hardware.cpu.intel.updateMicrocode = true;
@@ -80,6 +115,8 @@
     environment.systemPackages = with pkgs; [
         acpi
         kitty
+        
+        lightdm-gtk-greeter
     ];
   # Enable the GNOME Desktop Environment.
   #services.displayManager.sddm.enable = true;
