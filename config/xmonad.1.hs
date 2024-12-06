@@ -4,12 +4,12 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Layout.Gaps
 import XMonad.Layout.Spacing
+import qualified XMonad.StackSet as W
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
-import qualified XMonad.StackSet as W
 
 main :: IO ()
-main = xmonad $ withSB myStatusBar myConfigWithKeys
+main = xmonad $ withSB myStatusBar myConfig
 
 myConfig = def
     { terminal           = "kitty"
@@ -19,7 +19,7 @@ myConfig = def
     , focusedBorderColor = "#ff0000"
     , layoutHook         = myLayout
     , manageHook         = myManageHook <+> manageDocks
-    , logHook            = dynamicLogWithPP myXmobarPP
+    , logHook            = return ()  -- xmobar handles logHook
     , startupHook        = myStartupHook
     }
 
@@ -32,16 +32,16 @@ myManageHook = composeAll
     , className =? "Firefox" --> doShift "2"
     ]
 
--- Startup applications or setup
+-- Optional startup applications or setup
 myStartupHook = do
+    spawn "xmobar"
     spawn "feh --bg-scale ~/path/to/your/wallpaper.jpg" -- Set wallpaper
-    spawn "picom" -- Compositor
+    spawn "picom" -- Compositor example
 
 -- Keybindings
-myKeys :: [(String, X ())]
 myKeys =
     [ ("M-S-<Return>", spawn "kitty")     -- Launch terminal
-    , ("M-p", spawn "rofi -show drun")    -- Launch rofi
+    , ("M-p", spawn "rofi -show run")    -- Launch rofi
     , ("M-S-c", kill)                    -- Close window
     , ("M-S-r", restart "xmonad" True)   -- Restart xmonad
     ]
@@ -50,7 +50,9 @@ myConfigWithKeys = myConfig `additionalKeysP` myKeys
 
 -- StatusBar configuration mimicking DWM's style
 myStatusBar :: StatusBarConfig
-myStatusBar = statusBarProp "xmobar ~/.dotfiles/config/xmobarrc" (pure myXmobarPP)
+-- myStatusBar = statusBarProp "xmobar" (pure myXmobarPP)
+
+myStatusBar = statusBarProp "xmobar ~/.dotfiles/config/xmobar.hs" (pure myXmobarPP)
 
 myXmobarPP :: PP
 myXmobarPP = def
@@ -58,9 +60,9 @@ myXmobarPP = def
     , ppHidden          = \s -> clickableWrap ((read s :: Int) - 1) (createDwmBox foregroundColor ("  " ++ s ++ "  "))
     , ppHiddenNoWindows = \s -> clickableWrap ((read s :: Int) - 1) ("  " ++ s ++ "  ")
     , ppUrgent          = \s -> clickableWrap ((read s :: Int) - 1) (xmobarBorder "Top" urgentColor 4 ("  " ++ s ++ "  "))
-    , ppTitle           = xmobarColor "#ffffff" "" . shorten 60
-    , ppSep             = " | "
-    , ppWsSep           = " "
+    , ppTitle           = id
+    , ppSep             = " |  "
+    , ppWsSep           = ""
     , ppLayout          = const ""
     }
   where

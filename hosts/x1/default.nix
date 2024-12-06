@@ -115,7 +115,7 @@
     environment.systemPackages = with pkgs; [
         acpi
         kitty
-        
+        xdotool
         lightdm-gtk-greeter
     ];
   # Enable the GNOME Desktop Environment.

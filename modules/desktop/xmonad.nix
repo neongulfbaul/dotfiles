@@ -8,6 +8,9 @@
     extraPackages = haskellPackages: [
       haskellPackages.xmonad-contrib
       haskellPackages.containers
+      haskellPackages.xmonad
+      haskellPackages.xmobar
+      haskellPackages.font-awesome-type
     ];
     enableContribAndExtras = true;
     config = ../../config/xmonad.hs;
@@ -30,7 +33,45 @@
     # nice
     maim # Screenshot
     rofi # quick start
-    clipcat # Clipboard
+
+    alsa-utils
+    i3lock
+    imagemagick
+    spotify
+    vlc
+    mpv
+    feh
+    blueman
+    pavucontrol
+    trayer
+    xdg-utils
+    sudo
+
+    lm_sensors   # For coreTemp
+    wirelesstools # For wireless
+    weather # For weather
+    xmonad-log # For XMonadLog (if available in your channel)
+    cabal-install
+
+    cabal2nix
+
+    alsa-lib
+    openssl
+    pkg-config
+    xorg.libX11
+    xorg.libXext
+    xorg.libXft
+    xorg.libXpm
+    xorg.libXrandr
+    xorg.libXScrnSaver
+    zlib
+    zstd
+
+    pkgs.openssl.dev
+    pkgs.zlib.dev
+        
+    haskell.compiler.ghc98
+
   ];
 
   home.file.".xinitrc".source = ../../config/xinitrc;

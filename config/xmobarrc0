@@ -1,0 +1,32 @@
+Config {
+    font = "xft:Ubuntu:size=9:bold:antialias=true"
+    , additionalFonts = ["xft:FontAwesome:size=10"]
+    , bgColor = "#222222"
+    , fgColor = "#ffffff"
+    , position = Top
+    , lowerOnStart = True
+    , hideOnStart = False
+    , allDesktops = True
+    , persistent = True
+    , commands = [
+          -- Current workspace integration with xmonad
+          Run XMonadLog
+          -- CPU usage
+        , Run Cpu ["-t", "CPU: <total>%", "-H", "50", "--high", "red"] 10
+          -- Memory usage
+        , Run Memory ["-t", "MEM: <usedratio>%"] 10
+          -- Network activity (replace wlan0 with your actual interface name)
+        , Run Network "wlan0" ["-t", "NET: <rx> <tx>", "-H", "200", "--high", "red"] 10
+          -- Battery status
+        , Run BatteryP ["BAT0"]
+          ["-t", "BAT: <acstatus>",
+           "-L", "20", "-H", "80", "--low", "red", "--high", "green",
+           "--", "-O", "Charging", "-o", "Discharging", "-h", "Full"] 50
+          -- Date and time
+        , Run Date "%a %b %_d %Y %H:%M" "date" 50
+        ]
+    , sepChar = "%"
+    , alignSep = "}{"
+    , template = "%XMonadLog% }{ %cpu% | %memory% | %wlan0% | %battery% | %date%"
+}
+
