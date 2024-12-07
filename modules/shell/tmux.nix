@@ -5,8 +5,6 @@
 {
   programs.tmux = {
     enable = true;
-    extraPackages = with pkgs; [
-    ];
   };
 
   home.file."./.config/tmux/tmux.conf" = {
