@@ -7,9 +7,10 @@ import XMonad.Layout.Spacing
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
 import qualified XMonad.StackSet as W
-
+import XMonad.Layout.NoBorders
 
 import Graphics.X11.ExtraTypes.XF86
+import XMonad.Hooks.EwmhDesktops
 
 main :: IO ()
 main = xmonad $ withSB myStatusBar myConfigWithKeys
@@ -23,11 +24,11 @@ myConfig = def
     , layoutHook         = myLayout
     , manageHook         = myManageHook <+> manageDocks
     , logHook            = dynamicLogWithPP myXmobarPP
-    , startupHook        = myStartupHook
+    , startupHook        = myStartupHook 
     }
 
 -- Layouts with gaps and spacing for a clean DWM-like look
-myLayout = avoidStruts $ layoutHook def
+myLayout = avoidStruts $ smartBorders $ layoutHook def
 
 -- $ gaps [(U, 5), (R, 5), (L, 5), (D, 5)] $ spacing 5 $ layoutHook def
 
@@ -35,6 +36,8 @@ myLayout = avoidStruts $ layoutHook def
 myManageHook = composeAll
     [ className =? "Gimp" --> doFloat
     , className =? "Firefox" --> doShift "2"
+    , className =? "feh"     --> hasBorder False
+    , className =? "Firefox" --> hasBorder False
     ]
 
 -- Startup applications or setup
