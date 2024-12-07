@@ -1,5 +1,5 @@
 Config {
-    font = "xft:Ubuntu:size=9:bold:antialias=true"
+    font = "xft:Hack light 9"
     , additionalFonts = ["xft:FontAwesome:size=10"]
     , bgColor = "#222222"
     , fgColor = "#ffffff"

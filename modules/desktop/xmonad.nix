@@ -72,6 +72,11 @@
         
     haskell.compiler.ghc98
 
+    noto-fonts-cjk-sans
+    noto-fonts-emoji
+    noto-fonts
+    nerd-fonts.hack
+
   ];
 
   home.file.".xinitrc".source = ../../config/xinitrc;
