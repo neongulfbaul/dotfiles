@@ -6,6 +6,7 @@
     ../../modules/shell/zsh.nix
     ../../modules/editors/nvim.nix
     ../../modules/languages/jp.nix
+    ../../modules/shell/tmux.nix
     ];
 
   home.username = "neon";
@@ -42,6 +43,7 @@
     ouch     # a better unzip
     tree
     python312
+    tmux
 
     #jp tools
     lime3ds
