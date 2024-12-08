@@ -68,22 +68,21 @@ myStatusBar = statusBarProp "xmobar ~/.dotfiles/config/xmobarrc" (pure myXmobarP
 
 myXmobarPP :: PP
 myXmobarPP = def
-    { ppCurrent         = \ws -> xmobarColor foregroundColorCurrent backgroundColor $ wrap "  " "  " ws
-    , ppHidden          = \s -> clickableWrap ((read s :: Int) - 1) (xmobarBorder "Top" urgentColor 4 ("  " ++ s ++ "  "))
-    , ppHiddenNoWindows = \s -> clickableWrap ((read s :: Int) - 1) ("  " ++ s ++ "  ")
-    , ppUrgent          = \s -> clickableWrap ((read s :: Int) - 1) (xmobarBorder "Top" urgentColor 4 ("  " ++ s ++ "  "))
+    { ppCurrent         = \ws -> clickableWrap ((read ws :: Int) - 1) $ xmobarColor foregroundColorCurrent backgroundColorCurrent $ wrap "  " "  " ws
+    , ppHidden          = \s -> clickableWrap ((read s :: Int) - 1) $ xmobarColor foregroundColorHidden "" $ wrap "  " "  " s
+    , ppHiddenNoWindows = \s -> clickableWrap ((read s :: Int) - 1) $ xmobarColor hiddenNoWindowsColor "" $ wrap "  " "  " s
+    , ppUrgent          = \s -> clickableWrap ((read s :: Int) - 1) $ xmobarBorder "Top" urgentColor 4 ("  " ++ s ++ "  ")
     , ppTitle           = xmobarColor "#ffffff" "" . shorten 60
     , ppSep             = " | "
     , ppWsSep           = " "
     , ppLayout          = const ""
     }
   where
-    foregroundColor = "#ffffff"
-    foregroundColorCurrent = "#000000"
-    foregroundColorHidden = "#ff0000"
-    backgroundColor = "#ffffff"
-    urgentColor     = "#ff0000"
-    hiddenNoWindowsColor = "#cccccc"
+    foregroundColorCurrent   = "#ffffff"
+    backgroundColorCurrent   = "#808080" -- Grey background for current workspace
+    foregroundColorHidden    = "#ffffff" -- White text for hidden workspaces
+    hiddenNoWindowsColor     = "#cccccc" -- Grey text for hidden no windows workspaces
+    urgentColor              = "#ff0000"
 
     -- Helper functions for DWM-like clickable workspaces
     clickableWrap :: Int -> String -> String
