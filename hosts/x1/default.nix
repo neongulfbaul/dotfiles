@@ -117,6 +117,7 @@
         kitty
         xdotool
         lightdm-gtk-greeter
+        nerd-fonts.hack
     ];
   # Enable the GNOME Desktop Environment.
   #services.displayManager.sddm.enable = true;

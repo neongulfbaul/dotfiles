@@ -13,7 +13,7 @@ import Graphics.X11.ExtraTypes.XF86
 import XMonad.Hooks.EwmhDesktops
 
 main :: IO ()
-main = xmonad $ withSB myStatusBar myConfigWithKeys
+main = xmonad $ docks $ withSB myStatusBar myConfigWithKeys
 
 myConfig = def
     { terminal           = "kitty"
@@ -29,6 +29,10 @@ myConfig = def
 
 -- Layouts with gaps and spacing for a clean DWM-like look
 myLayout = avoidStruts $ smartBorders $ layoutHook def
+
+-- Font setting
+myFont :: String
+myFont = "xft:Ubuntu:regular:size=9:antialias=true:hinting=true"
 
 -- $ gaps [(U, 5), (R, 5), (L, 5), (D, 5)] $ spacing 5 $ layoutHook def
 
@@ -62,7 +66,7 @@ myKeys =
 
 myConfigWithKeys = myConfig `additionalKeysP` myKeys
 
--- StatusBar configuration mimicking DWM's style
+-- StatusBar configuration 
 myStatusBar :: StatusBarConfig
 myStatusBar = statusBarProp "xmobar ~/.dotfiles/config/xmobarrc" (pure myXmobarPP)
 
@@ -87,7 +91,3 @@ myXmobarPP = def
     -- Helper functions for DWM-like clickable workspaces
     clickableWrap :: Int -> String -> String
     clickableWrap index str = "<action=xdotool key super+" ++ show (index + 1) ++ ">" ++ str ++ "</action>"
-
-    createDwmBox :: String -> String -> String
-    createDwmBox color prefix = "<box type=HBoth offset=L20 color="++color++"><box type=Top mt=3 color="++color++"><box type=Top color="++color++">" ++ prefix ++ "</box></box></box>"
-

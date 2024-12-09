@@ -1,7 +1,4 @@
-# Sipping once 🥣, sipping twice 🥣
-# Sipping chicken noodle soup with rice.
 { pkgs, home, ... }: {
-  #imports = [ ../programs/eww.nix ../programs/polybar.nix ];
 
   xsession.windowManager.xmonad = {
     enable = true;
@@ -50,27 +47,7 @@
     lm_sensors   # For coreTemp
     wirelesstools # For wireless
     weather # For weather
-    xmonad-log # For XMonadLog (if available in your channel)
-    cabal-install
-
-    cabal2nix
-
-    alsa-lib
-    openssl
-    pkg-config
-    xorg.libX11
-    xorg.libXext
-    xorg.libXft
-    xorg.libXpm
-    xorg.libXrandr
-    xorg.libXScrnSaver
-    zlib
-    zstd
-
-    pkgs.openssl.dev
-    pkgs.zlib.dev
-        
-    haskell.compiler.ghc98
+    xmonad-log # for communication between xmonad and xmobar 
 
     noto-fonts-cjk-sans
     noto-fonts-emoji
@@ -79,5 +56,5 @@
 
   ];
 
-  home.file.".xinitrc".source = ../../config/xinitrc;
+    #home.file.".xinitrc".source = ../../config/xinitrc;
 }

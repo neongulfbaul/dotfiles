@@ -65,9 +65,9 @@ if [[ $TERM != dumb ]]; then
   # zsh-autosuggest
   export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 
-  echo "ZGEN_DIR: $ZGEN_DIR"
-  echo "XDG_DATA_HOME: ${XDG_DATA_HOME:-not set}"
-  echo "PWD: $PWD"
+  #echo "ZGEN_DIR: $ZGEN_DIR"
+  #echo "XDG_DATA_HOME: ${XDG_DATA_HOME:-not set}"
+  #echo "PWD: $PWD"
 
 
   ## Bootstrap zgenom

@@ -1,6 +1,4 @@
-Config {
-    font = "xft:Hack light 9"
-    , additionalFonts = ["xft:FontAwesome:size=10"]
+Config { font = "Hack 9" 
     , bgColor = "#222222"
     , fgColor = "#ffffff"
     , position = Top

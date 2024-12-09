@@ -7,6 +7,7 @@
     ../../modules/editors/nvim.nix
     ../../modules/languages/jp.nix
     ../../modules/shell/tmux.nix
+    ../../modules/shell/kitty.nix
     ];
 
   home.username = "neon";
