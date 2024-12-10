@@ -52,7 +52,6 @@
     noto-fonts-cjk-sans
     noto-fonts-emoji
     noto-fonts
-    nerd-fonts.hack
 
   ];
 
