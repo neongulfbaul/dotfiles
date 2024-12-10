@@ -4,7 +4,7 @@
   programs.kitty = {
     enable = true;
     font.name = "ubuntu";
-    theme = "Rosé Pine";
+    themeFile = "rose-pine";
     shellIntegration.enableZshIntegration = true;
   };
 
