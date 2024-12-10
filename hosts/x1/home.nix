@@ -2,12 +2,12 @@
 
 {
   imports = [
-    ../../modules/desktop/xmonad.nix
-    ../../modules/shell/zsh.nix
-    ../../modules/editors/nvim.nix
-    ../../modules/languages/jp.nix
-    ../../modules/shell/tmux.nix
-    ../../modules/shell/kitty.nix
+    ../../modules/xmonad.nix
+    ../../modules/zsh.nix
+    ../../modules/nvim.nix
+    ../../modules/jp.nix
+    ../../modules/tmux.nix
+    ../../modules/kitty.nix
     ];
 
   home.username = "neon";

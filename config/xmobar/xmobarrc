@@ -1,4 +1,4 @@
-Config { font = "Hack 9" 
+Config { font = "Hack Nerd Font 9" 
     , bgColor = "#222222"
     , fgColor = "#ffffff"
     , position = Top

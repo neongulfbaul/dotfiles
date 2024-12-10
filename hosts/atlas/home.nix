@@ -2,9 +2,9 @@
 
 {
   imports = [
-    ../../modules/shell/zsh.nix
-    ../../modules/editors/nvim.nix
-    ../../modules/languages/jp.nix
+    ../../modules/zsh.nix
+    ../../modules/nvim.nix
+    ../../modules/jp.nix
     ];
 
   home.username = "neon";
