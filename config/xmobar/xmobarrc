@@ -1,0 +1,30 @@
+Config { font = "Hack 9" 
+    , bgColor = "#222222"
+    , fgColor = "#ffffff"
+    , position = Top
+    , lowerOnStart = True
+    , hideOnStart = False
+    , allDesktops = True
+    , persistent = True
+    , commands = [
+          -- Display the current workspace
+          Run UnsafeXMonadLog
+          -- Display CPU usage
+        , Run Cpu ["-t", "CPU: <total>%", "-H", "50", "--high", "red"] 10
+          -- Display memory usage
+        , Run Memory ["-t", "MEM: <usedratio>%"] 10
+          -- Display network activity
+        , Run Network "wlan0" ["-t", "NET: <rx> <tx>", "-H", "200", "--high", "red"] 10
+          -- Display time and date
+        , Run Date "%a %b %_d %Y %H:%M" "date" 50
+          -- Display battery
+        , Run BatteryP ["BAT0"]
+          ["-t", "BAT: <acstatus>",
+           "-L", "20", "-H", "80", "--low", "red", "--high", "green",
+           "--", "-O", "Charging", "-o", "Discharging", "-h", "Full"] 50
+        ]
+    , sepChar = "%"
+    , alignSep = "}{"
+    , template = "%UnsafeXMonadLog% }{ %cpu% | %memory% | %wlan0% | %battery% | %date%"
+}
+
