@@ -1,5 +1,5 @@
-Config { font = "Hack Nerd Font 9" 
-    , bgColor = "#222222"
+Config { font = "Hack Bold 9" 
+    , bgColor = "#191724"
     , fgColor = "#ffffff"
     , position = Top
     , lowerOnStart = True

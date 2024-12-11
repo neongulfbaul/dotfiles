@@ -8,7 +8,7 @@
   };
 
   home.file."./.config/tmux/tmux.conf" = {
-    source = ../../config/tmux/tmux.conf;
+    source = ../config/tmux/tmux.conf;
   };
 	
 }

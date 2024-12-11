@@ -10,7 +10,7 @@
       haskellPackages.font-awesome-type
     ];
     enableContribAndExtras = true;
-    config = ../../config/xmonad/xmonad.hs;
+    config = ../config/xmonad/xmonad.hs;
   };
   programs.xmobar.enable = true;
 

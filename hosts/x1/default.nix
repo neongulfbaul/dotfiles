@@ -10,7 +10,6 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-6th-gen
-            #../../modules/desktop/x.nix
     ];
 
   # Bootloader.
@@ -20,11 +19,7 @@
   # Testing to try further eliminate crashes
   boot.kernelParams = [ "i915.enable_guc=0" ];
 
-    #services.xserver.enable = true;
-    #services.xserver.displayManager.startx.enable = true;
-    #services.xserver.displayManager.lightdm.enable = true;
-
-    # Add other packages you need here
+  # Add other packages you need here
   services.displayManager.defaultSession = "none+xmonad";
 
   services.xserver = {
@@ -97,33 +92,17 @@
     LC_TIME = "en_AU.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-    #services.xserver.displayManager.startx.enable = true;
-  # Enable xmonad 
-    # services.xserver.windowManager.xmonad = {
-    #enable = true;
-    #enableContribAndExtras = true;
-    #flake = {
-    #    enable = true;
-    #    compiler = "ghc947";
-    #};
-    #config = builtins.readFile ../../config/xmonad.hs;
-    #enableConfiguredRecompile = true;
-    #};
-
     environment.systemPackages = with pkgs; [
         acpi
         kitty
         xdotool
         lightdm-gtk-greeter
     ];
+    
     fonts.packages = with pkgs; [
         nerd-fonts.hack
     ];
-  # Enable the GNOME Desktop Environment.
-  #services.displayManager.sddm.enable = true;
-  #  services.xserver.desktopManager.plasma5.enable = true;
+  
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "au";
@@ -156,7 +135,6 @@
     XDG_CACHE_HOME = "$HOME/.cache";
     };
 
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.neon = {
     isNormalUser = true;
@@ -184,23 +162,9 @@
     # require enabling PolKit integration on some desktop environments (e.g. Plasma).
     polkitPolicyOwners = [ "neon" ];
   };
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   
   programs.zsh.enable = true;
   users.users.neon.shell = pkgs.zsh;
-
-    # environment.etc."zshenv".text = ''
-    #source $HOME/.config/zsh/.zshenv
-    #'';
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
   # List services that you want to enable:
 
@@ -220,6 +184,5 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
-
 }
 

@@ -1,4 +1,4 @@
-{ self, config, pkgs, nixvim, ... }:
+{ self, config, pkgs, ... }:
 
 {
   imports = [
@@ -12,7 +12,6 @@
 
   home.username = "neon";
   home.stateVersion = "24.11";
-    #home.file.".zshenv".enable = false;
   home.packages = with pkgs; [
     cargo
     ubuntu_font_family
@@ -54,12 +53,6 @@
     mecab    # jp text parsing tool to work with yomitan
     imagemagick
   ];
-
-    #programs.xdg = {
-    #enable = true;
-    #userDirs.enable = true;
-    #};
-
     
   home.sessionVariables = {
     XDG_CONFIG_HOME = "$HOME/.config";
