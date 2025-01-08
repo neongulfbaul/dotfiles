@@ -27,9 +27,40 @@
     LC_TIME = "en_AU.UTF-8";
   };
 
+  # Add other packages you need here
+  services.displayManager.defaultSession = "none+xmonad";
+
+  services.xserver = {
+    enable = true;
+
+    windowManager.xmonad = {
+      enable = true;
+    };
+
+    displayManager.lightdm = {
+      enable = true;
+      greeter = {
+        name = "lightdm-gtk-greeter";
+        # Optional greeter settings
+      };
+
+    };
+  };
+
+  environment.etc."xdg/sessions/xmonad.desktop" = {
+    text = ''
+      [Desktop Entry]
+      Name=XMonad
+      Comment=Use the XMonad window manager
+      Exec=xmonad
+      Type=Application
+    '';
+    mode = "0644";
+  };
+
   services.xserver.enable = true;
-  services.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  #services.displayManager.sddm.enable = true;
+  #services.xserver.desktopManager.plasma5.enable = true;
   services.xserver.xkb = {
     layout = "us";
   };

@@ -2,14 +2,16 @@
 
 {
   imports = [
+    ../../modules/xmonad.nix
     ../../modules/zsh.nix
     ../../modules/nvim.nix
     ../../modules/jp.nix
+    ../../modules/tmux.nix
+    ../../modules/kitty.nix
     ];
 
   home.username = "neon";
   home.stateVersion = "24.11";
-    #home.file.".zshenv".enable = false;
   home.packages = with pkgs; [
     cargo
     ubuntu_font_family
