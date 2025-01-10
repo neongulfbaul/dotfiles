@@ -25,6 +25,8 @@
     wineWowPackages.stable
     winetricks
     remmina
+    firefox-devedition
+    obsidian
 
     # tools used by zsh/shell stuff
     fd
