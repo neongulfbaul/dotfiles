@@ -58,6 +58,7 @@ myKeys =
     , ("M-S-r", restart "xmonad" True)   -- Restart xmonad
     , ("<XF86MonBrightnessUp>", spawn "brightnessctl s +10%")
     , ("<XF86MonBrightnessDown>", spawn "brightnessctl s 10-%")
+    , ("M-s", spawn "flameshot gui")
     --, ("<XF86BrightnessUp>", backlight "5%+")
     --, ("<XF86BrightnessDown>", backlight "5%-")
     --, ("<XF86AudioRaiseVolume>", spawn "amixer sset Master 10%+")
