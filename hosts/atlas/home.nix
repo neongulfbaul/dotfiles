@@ -27,6 +27,7 @@
     remmina
     firefox-devedition
     obsidian
+    signal-desktop
 
     # tools used by zsh/shell stuff
     fd
