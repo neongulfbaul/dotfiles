@@ -61,7 +61,10 @@
     services.xrdp.enable = true;
     services.xrdp.defaultWindowManager = "xmonad";
     services.xrdp.openFirewall = true;
+  
 
+    hardware.bluetooth.enable = true; 
+    services.blueman.enable = true;
 
 
 
@@ -103,7 +106,6 @@
   };
 
 
-
   programs.appimage = {
   enable = true;
   binfmt = true;
@@ -120,6 +122,8 @@
     remmina
     flameshot
     ghostty
+    blueman
+    ffmpeg
   ];
 
   services.openssh.enable = true;
