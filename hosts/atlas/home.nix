@@ -52,6 +52,9 @@
 
     # ai 
     ollama
+
+    # virtual
+    quickemu
   ];
     
   home.sessionVariables = {

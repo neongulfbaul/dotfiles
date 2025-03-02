@@ -124,6 +124,8 @@
     ghostty
     blueman
     ffmpeg
+    betterdiscordctl
+    linuxKernel.packages.linux_5_15.nvidia_x11
   ];
 
   services.openssh.enable = true;
