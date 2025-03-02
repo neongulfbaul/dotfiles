@@ -89,7 +89,7 @@
     isNormalUser = true;
     description = "neon";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [ kate ];
+    #packages = with pkgs; [  ];
   };
 
   programs.firefox.enable = true;
@@ -125,7 +125,7 @@
     blueman
     ffmpeg
     betterdiscordctl
-    linuxKernel.packages.linux_5_15.nvidia_x11
+        #linuxKernel.packages.linux_5_15.nvidia_x11
   ];
 
   services.openssh.enable = true;
