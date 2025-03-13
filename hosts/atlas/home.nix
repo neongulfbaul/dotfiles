@@ -25,9 +25,12 @@
     wineWowPackages.stable
     winetricks
     remmina
-    firefox-devedition
+        #firefox-devedition
     obsidian
     signal-desktop
+    waydroid
+    waydroid-helper
+    sops-nix
 
     # tools used by zsh/shell stuff
     fd
