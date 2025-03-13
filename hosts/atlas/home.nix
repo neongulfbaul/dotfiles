@@ -19,7 +19,6 @@
     symbola
     kitty
     git
-    cowsay
     anki-bin
     lutris
     wineWowPackages.stable
@@ -28,9 +27,8 @@
         #firefox-devedition
     obsidian
     signal-desktop
-    waydroid
-    waydroid-helper
-    sops-nix
+    sops
+    age
 
     # tools used by zsh/shell stuff
     fd
@@ -49,9 +47,6 @@
     ouch     # a better unzip
     tree
     python312
-
-    #jp tools
-    desmume
 
     # ai 
     ollama
