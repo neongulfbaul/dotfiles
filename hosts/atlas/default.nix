@@ -18,7 +18,7 @@
     "ipv4.ignore-auto-dns" = true;
   };
   
-  hardwareClockInLocalTime = true;
+  time.hardwareClockInLocalTime = true;
   time.timeZone = "Australia/Hobart";
   services.timesyncd.enable = true;
 
