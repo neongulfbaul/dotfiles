@@ -68,6 +68,10 @@ if [[ $TERM != dumb ]]; then
   #echo "ZGEN_DIR: $ZGEN_DIR"
   #echo "XDG_DATA_HOME: ${XDG_DATA_HOME:-not set}"
   #echo "PWD: $PWD"
+  # kubernetes config file
+
+  export KUBECONFIG=/home/neon/.config/kube/config/k3s.yaml
+
 
 
   ## Bootstrap zgenom

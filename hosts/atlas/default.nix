@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ./nvidia.nix
+    ./ollama.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -11,8 +12,15 @@
 
   networking.hostName = "atlas";
   networking.networkmanager.enable = true;
-
+  #networking.nameservers = [ "192.168.1.239" ];
+  networking.networkmanager.connectionConfig = {
+    "ipv4.dns" = "192.168.1.239";
+    "ipv4.ignore-auto-dns" = true;
+  };
+  
+  hardwareClockInLocalTime = true;
   time.timeZone = "Australia/Hobart";
+  services.timesyncd.enable = true;
 
   i18n.defaultLocale = "en_GB.UTF-8";
   i18n.extraLocaleSettings = {

@@ -29,6 +29,7 @@
     signal-desktop
     sops
     age
+    telegram-desktop
 
     # tools used by zsh/shell stuff
     fd
@@ -49,10 +50,20 @@
     python312
 
     # ai 
-    ollama
+        #ollama
 
     # virtual
     quickemu
+
+    #homelab management
+    kubectl
+    helmfile
+    kustomize
+    kubernetes-helm
+    k9s
+    
+    #network tools
+    dig
   ];
     
   home.sessionVariables = {
