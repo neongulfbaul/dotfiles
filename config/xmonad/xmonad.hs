@@ -78,7 +78,7 @@ myKeys =
     , ("M-g", sendMessage ToggleGaps)        -- toggle gaps
     , ("M-f", sendMessage ToggleLayout)      -- toggle fullscreen
     , ("M-b", sendMessage ToggleStruts) -- toggles avoiding xmobar
-    , ("M-C-b", spawn "~/.dotfiles/scripts/toggle-xmobar.sh"
+    , ("M-C-b", spawn "~/.dotfiles/config/scripts/toggle-xmobar.sh"
            >> sendMessage ToggleStruts
            >> sendMessage ToggleGaps)
     --, ("<XF86BrightnessUp>", backlight "5%+")
