@@ -23,6 +23,7 @@
     lutris
     wineWowPackages.stable
     winetricks
+    adwaita-icon-theme
     remmina
         #firefox-devedition
     obsidian
