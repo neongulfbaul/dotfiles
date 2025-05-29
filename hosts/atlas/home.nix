@@ -30,7 +30,6 @@
     sops
     age
     telegram-desktop
-    dunst
 
     # tools used by zsh/shell stuff
     fd
