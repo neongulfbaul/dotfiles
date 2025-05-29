@@ -55,6 +55,11 @@
     };
   };
 
+  programs.virt-manager.enable = true;
+  users.groups.libvirtd.members = ["neon"];
+  virtualisation.libvirtd.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
+
   environment.etc."xdg/sessions/xmonad.desktop" = {
     text = ''
       [Desktop Entry]

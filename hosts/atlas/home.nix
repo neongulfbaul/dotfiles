@@ -30,6 +30,7 @@
     sops
     age
     telegram-desktop
+    dunst
 
     # tools used by zsh/shell stuff
     fd
@@ -65,7 +66,7 @@
     #network tools
     dig
   ];
-    
+ 
   home.sessionVariables = {
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";

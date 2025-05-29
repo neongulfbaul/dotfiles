@@ -9,6 +9,8 @@ import XMonad.Hooks.StatusBar.PP
 import qualified XMonad.StackSet as W
 import XMonad.Layout.NoBorders
 
+import Data.Monoid
+
 import Graphics.X11.ExtraTypes.XF86
 import XMonad.Hooks.EwmhDesktops
 
@@ -37,16 +39,24 @@ myFont = "xft:Ubuntu:regular:size=9:antialias=true:hinting=true"
 -- $ gaps [(U, 5), (R, 5), (L, 5), (D, 5)] $ spacing 5 $ layoutHook def
 
 -- ManageHook for floating certain window
+myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
     [ className =? "Gimp" --> doFloat
-    , className =? "Firefox" --> doShift "2"
-    , className =? "feh"     --> hasBorder False
+    , className =? "confirm" --> doFloat
+    , className =? "dialog" --> doFloat
+    , className =? "download" --> doFloat
+    , className =? "error" --> doFloat
     , className =? "Firefox" --> hasBorder False
+    , className =? "Firefox" --> doShift "2"
+    , (className =? "Firefox" <&&> resource =? "Dialog") --> doFloat
+    , className =? "feh"     --> hasBorder False
     ]
 
 -- Startup applications or setup
 myStartupHook = do
-    spawn "feh --bg-scale ~/path/to/your/wallpaper.jpg" -- Set wallpaper
+    spawn "picom" --config ~/.dotfiles/config/picom/picom.conf
+    spawn "dunst"
+    spawn "feh --bg-scale ~/git/wallpapers-nord/gun-girl.png" -- Set wallpaper
     spawn "picom" -- Compositor
 
 -- Keybindings
