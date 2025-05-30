@@ -2,3 +2,7 @@
     background = "#ff0000"
     foreground = "#ffffff"
     timeout = 0
+
+[global]
+script = ~/.dotfiles/config/scripts/notify-workspace.sh
+

@@ -20,6 +20,7 @@
     brightnessctl # Control background
     playerctl # Control audio
     jq # parse json
+    xdotool
 
     # rice
     betterlockscreen # ok lockscreen
