@@ -10,9 +10,6 @@ import XMonad.Hooks.StatusBar.PP
 import qualified XMonad.StackSet as W
 import XMonad.Layout.NoBorders
 
-import System.Directory (doesFileExist)
-import Control.Monad (when)
-
 import Data.Monoid
 
 import Graphics.X11.ExtraTypes.XF86
@@ -33,17 +30,7 @@ myConfig = def
     , focusedBorderColor = "#ff0000"
     , layoutHook         = myLayout
     , manageHook         = myManageHook <+> manageDocks
-    --, logHook            = dynamicLogWithPP myXmobarPP
-    , logHook = do
-        dynamicLogWithPP myXmobarPP
-        ws <- gets (W.currentTag . windowset)
-        liftIO $ do
-          let notifFile = "/home/neon/.cache/xmobar/notifications"
-          exists <- doesFileExist notifFile
-          when exists $ do
-            contents <- readFile notifFile
-            let remaining = unlines . filter (/= ws) . lines $ contents
-            writeFile notifFile remaining
+    , logHook            = dynamicLogWithPP myXmobarPP
     , startupHook        = myStartupHook 
     }
 
@@ -53,16 +40,6 @@ myConfig = def
 myLayout = avoidStruts $ toggleLayouts Full $ smartBorders $ gaps [(U,10), (D,10), (L,10), (R,10)] $
            spacing 8 $
            Tall 1 (3/100) (1/2) ||| Full
-
--- Notification on xmobar
-getNotifiedWorkspaces :: Set.Set String
-getNotifiedWorkspaces = unsafePerformIO $ do
-  exists <- doesFileExist "/home/neon/.cache/xmobar/notifications"
-  if exists
-    then do
-      contents <- readFile "/home/neon/.cache/xmobar/notifications"
-      return . Set.fromList . lines $ contents
-    else return Set.empty
 
 -- Font setting
 myFont :: String
@@ -122,10 +99,7 @@ myStatusBar = statusBarProp "xmobar -x 0 -d ~/.dotfiles/config/xmobar/xmobarrc" 
 myXmobarPP :: PP
 myXmobarPP = def
     { ppCurrent         = \ws -> clickableWrap ((read ws :: Int) - 1) $ xmobarColor foregroundColorCurrent backgroundColorCurrent $ wrap "  " "  " ws
-    , ppHidden = \ws ->
-        let color = if Set.member ws getNotifiedWorkspaces then "#e78284" else "#ffffff"
-        in clickableWrap ((read ws :: Int) - 1) $ xmobarColor color "" $ wrap "  " "  " ws
-    --, ppHidden          = \s -> clickableWrap ((read s :: Int) - 1) $ xmobarColor foregroundColorHidden "" $ wrap "  " "  " s
+    , ppHidden          = \s -> clickableWrap ((read s :: Int) - 1) $ xmobarColor foregroundColorHidden "" $ wrap "  " "  " s
     , ppHiddenNoWindows = \s -> clickableWrap ((read s :: Int) - 1) $ xmobarColor hiddenNoWindowsColor "" $ wrap "  " "  " s
     , ppUrgent          = \s -> clickableWrap ((read s :: Int) - 1) $ xmobarBorder "Top" urgentColor 4 ("  " ++ s ++ "  ")
     , ppTitle           = xmobarColor "#ffffff" "" . shorten 60

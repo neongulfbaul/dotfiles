@@ -1,4 +1,4 @@
-!/usr/bin/env bash
+#!/usr/bin/env bash
 
 # Determine the currently focused workspace
 ws=$(xprop -root _NET_CURRENT_DESKTOP | awk '{print $3}')

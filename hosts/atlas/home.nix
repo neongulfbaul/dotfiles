@@ -8,6 +8,7 @@
     ../../modules/jp.nix
     ../../modules/tmux.nix
     ../../modules/kitty.nix
+    ../../modules/dunst.nix
     ];
 
   home.username = "neon";
@@ -49,6 +50,7 @@
     ouch     # a better unzip
     tree
     python312
+    libnotify   
 
     # cyber
     (burpsuite.override { proEdition = true; })
