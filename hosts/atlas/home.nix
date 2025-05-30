@@ -50,8 +50,9 @@
     tree
     python312
 
-    # ai 
-        #ollama
+    # cyber
+    (burpsuite.override { proEdition = true; })
+
 
     # virtual
     quickemu
