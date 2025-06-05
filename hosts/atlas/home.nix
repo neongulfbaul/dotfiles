@@ -7,8 +7,8 @@
     ../../modules/nvim.nix
     ../../modules/jp.nix
     ../../modules/tmux.nix
-    ../../modules/kitty.nix
     ../../modules/dunst.nix
+    ../../modules/alacritty.nix
     ];
 
   home.username = "neon";
@@ -26,7 +26,7 @@
     winetricks
     adwaita-icon-theme
     remmina
-        #firefox-devedition
+    #firefox-devedition
     obsidian
     signal-desktop
     sops
@@ -51,6 +51,9 @@
     tree
     python312
     libnotify   
+    unzip
+    p7zip
+    mpv
 
     # cyber
     (burpsuite.override { proEdition = true; })

@@ -12,6 +12,8 @@ import XMonad.Layout.NoBorders
 
 import Data.Monoid
 
+import XMonad.Hooks.UrgencyHook
+
 import Graphics.X11.ExtraTypes.XF86
 import XMonad.Hooks.EwmhDesktops
 
@@ -20,10 +22,12 @@ import qualified Data.Set as Set
 -- import qualified XMonad.StackSet as W
 
 main :: IO ()
-main = xmonad $ docks $ withSB myStatusBar myConfigWithKeys
+--main = xmonad $ docks $ withSB myStatusBar myConfigWithKeys
+main = xmonad . ewmh . docks . withSB myStatusBar $ myConfigWithKeys
+--main = xmonad $ withUrgencyHook (NoUrgencyHook) $ docks $ withSB myStatusBar myConfigWithKeys
 
 myConfig = def
-    { terminal           = "kitty"
+    { terminal           = "alacritty"
     , modMask            = mod4Mask    -- Use Super/Windows key as mod
     , borderWidth        = 1
     , normalBorderColor  = "#cccccc"
@@ -84,6 +88,7 @@ myKeys =
     , ("M-C-b", spawn "~/.dotfiles/config/scripts/toggle-xmobar.sh"
            >> sendMessage ToggleStruts
            >> sendMessage ToggleGaps)
+    , ("M-S-l", spawn "betterlockscreen -l blur")
     --, ("<XF86BrightnessUp>", backlight "5%+")
     --, ("<XF86BrightnessDown>", backlight "5%-")
     --, ("<XF86AudioRaiseVolume>", spawn "amixer sset Master 10%+")
@@ -101,7 +106,8 @@ myXmobarPP = def
     { ppCurrent         = \ws -> clickableWrap ((read ws :: Int) - 1) $ xmobarColor foregroundColorCurrent backgroundColorCurrent $ wrap "  " "  " ws
     , ppHidden          = \s -> clickableWrap ((read s :: Int) - 1) $ xmobarColor foregroundColorHidden "" $ wrap "  " "  " s
     , ppHiddenNoWindows = \s -> clickableWrap ((read s :: Int) - 1) $ xmobarColor hiddenNoWindowsColor "" $ wrap "  " "  " s
-    , ppUrgent          = \s -> clickableWrap ((read s :: Int) - 1) $ xmobarBorder "Top" urgentColor 4 ("  " ++ s ++ "  ")
+    --, ppUrgent          = \s -> clickableWrap ((read s :: Int) - 1) $ xmobarBorder "Top" urgentColor 4 ("  " ++ s ++ "  ")
+    , ppUrgent          = \s -> clickableWrap ((read s :: Int) - 1) $ xmobarColor urgentColor "" $ wrap "  " "  " s
     , ppTitle           = xmobarColor "#ffffff" "" . shorten 60
     , ppSep             = " | "
     , ppWsSep           = " "
@@ -112,7 +118,7 @@ myXmobarPP = def
     backgroundColorCurrent   = "#808080" -- Grey background for current workspace
     foregroundColorHidden    = "#ffffff" -- White text for hidden workspaces
     hiddenNoWindowsColor     = "#cccccc" -- Grey text for hidden no windows workspaces
-    urgentColor              = "#ff0000"
+    urgentColor              = "#eb6f92"
 
     -- Helper functions for DWM-like clickable workspaces
     clickableWrap :: Int -> String -> String

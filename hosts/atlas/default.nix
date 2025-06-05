@@ -79,7 +79,8 @@
     hardware.bluetooth.enable = true; 
     services.blueman.enable = true;
 
-
+  # lets betterlockscreen actually work
+  security.pam.services.i3lock.enable = true;
 
   #services.xserver.enable = true;
   #services.displayManager.sddm.enable = true;
