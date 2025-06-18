@@ -12,13 +12,16 @@
 
   networking.hostName = "atlas";
   networking.networkmanager.enable = true;
-  #networking.nameservers = [ "192.168.1.239" ];
-  networking.networkmanager.connectionConfig = {
-    "ipv4.dns" = "192.168.1.239";
-    "ipv4.ignore-auto-dns" = true;
+  services.resolved = {
+    enable = true;
+    extraConfig = ''
+      DNS=192.168.1.253
+      FallbackDNS=1.1.1.1
+      DNSStubListener=no
+    '';
   };
-  
-  time.hardwareClockInLocalTime = true;
+
+  time.hardwareClockInLocalTime = false;
   time.timeZone = "Australia/Hobart";
   services.timesyncd.enable = true;
 
@@ -34,6 +37,21 @@
     LC_TELEPHONE = "en_AU.UTF-8";
     LC_TIME = "en_AU.UTF-8";
   };
+
+  fonts.fontconfig.enable = true;
+
+  fonts.fontconfig.hinting = {
+    enable = true;
+    style = "slight";
+  };
+
+  fonts.fontconfig.antialias = true;
+  fonts.fontconfig.subpixel.rgba = "rgb";
+
+  environment.shells = with pkgs; [
+    zsh
+  ];
+
 
   # Add other packages you need here
   services.displayManager.defaultSession = "none+xmonad";
@@ -54,7 +72,7 @@
 
     };
   };
-
+  # virtualisation
   programs.virt-manager.enable = true;
   users.groups.libvirtd.members = ["neon"];
   virtualisation.libvirtd.enable = true;
@@ -139,6 +157,7 @@
     blueman
     ffmpeg
     betterdiscordctl
+    zsh
         #linuxKernel.packages.linux_5_15.nvidia_x11
   ];
 

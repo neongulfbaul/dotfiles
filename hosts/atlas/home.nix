@@ -32,6 +32,8 @@
     sops
     age
     telegram-desktop
+    kdePackages.dolphin
+    ranger
 
     # tools used by zsh/shell stuff
     fd

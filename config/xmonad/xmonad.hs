@@ -75,7 +75,7 @@ myStartupHook = do
 -- Keybindings
 myKeys :: [(String, X ())]
 myKeys =
-    [ ("M-S-<Return>", spawn "kitty")     -- Launch terminal
+    [ ("M-S-<Return>", spawn "alacritty")     -- Launch terminal
     , ("M-p", spawn "rofi -show drun")    -- Launch rofi
     , ("M-S-c", kill)                    -- Close window
     , ("M-S-r", restart "xmonad" True)   -- Restart xmonad
