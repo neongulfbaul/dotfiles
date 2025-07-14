@@ -17,6 +17,10 @@
         ];
       };
 
+      window = {
+         opacity = 0.7;
+      };     
+
       colors = {
         primary = {
           background = "0x000000";

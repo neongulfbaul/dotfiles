@@ -1,5 +1,5 @@
 function ColorMyPencils(color)
-	color = color or "rose-pine-moon"
+	color = color or "catppuccin"
 	vim.cmd.colorscheme(color)
 
 	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
@@ -11,6 +11,31 @@ return {
     {
         "erikbackman/brightburn.vim",
     },
+
+--	{
+--		"catppuccin/nvim",
+--		name = "catppuccin",
+--		config = function()
+--			require("catppuccin").setup({
+--				flavour = "mocha", -- or "latte", "frappe", "macchiato"
+--				background = {
+--					light = "latte",
+--					dark = "mocha",
+--				},
+--				transparent_background = false,
+--				custom_highlights = function(colors)
+--					return {
+--						Normal = { bg = "#000000" },
+--						NormalNC = { bg = "#000000" },
+--						NormalFloat = { bg = "#000000" },
+--						FloatBorder = { bg = "#000000" },
+--					}
+--				end,
+--			})
+--
+--			vim.cmd.colorscheme("catppuccin")
+--		end,
+--	}
 
     {
         "folke/tokyonight.nvim",
@@ -87,5 +112,18 @@ return {
         end
     },
 
+    {
+        "catppuccin/neovim",
+        name = "catppuccin",
+        config = function()
+            require('catppuccin').setup({
+                transparent_background = true,
+                styles = {
+                    italic = false,
+                },
+            })
 
+            ColorMyPencils();
+        end
+    },
 }
