@@ -6,7 +6,6 @@
     xclip      # Clipboard management
     tesseract  # OCR tool
     fcitx5
-    fcitx5-mozc
   ];
 
 }   

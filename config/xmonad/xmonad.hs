@@ -71,6 +71,7 @@ myStartupHook = do
     spawn "picom --config ~/.dotfiles/config/picom/picom.conf"
     spawn "dunst"
     spawn "feh --bg-scale ~/git/wallpapers-nord/gun-girl.png" -- Set wallpaper
+    spawn "fctix -d"
 
 -- Keybindings
 myKeys :: [(String, X ())]

@@ -79,8 +79,14 @@
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_CACHE_HOME = "$HOME/.cache";
-
-  # fix issues with rebuilds not overwriting
-  backupFileExtension = "backup";
+    ## fcitx test 
+    GTK_IM_MODULE = "fcitx";
+    QT_IM_MODULE = "fcitx";
+    XMODIFIERS = "@im=fcitx";
+    INPUT_METHOD = "fcitx";
+    SDL_IM_MODULE = "fcitx";
+ 
+    # fix issues with rebuilds not overwriting
+    backupFileExtension = "backup";
   };
 }

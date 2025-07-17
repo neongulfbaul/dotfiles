@@ -9,6 +9,8 @@ Config { font = "Hack Bold 9"
     , commands = [
           -- Display the current workspace
           Run UnsafeXMonadLog
+          -- Display current input method
+        ,  Run Com "/home/neon/.dotfiles/config/xmobar/inputmethod.sh" [] "im" 5
           -- Display CPU usage
         , Run Cpu ["-t", "CPU: <total>%", "-H", "50", "--high", "red"] 10
           -- Display memory usage
@@ -25,6 +27,6 @@ Config { font = "Hack Bold 9"
         ]
     , sepChar = "%"
     , alignSep = "}{"
-    , template = "%UnsafeXMonadLog% }{ %cpu% | %memory% | %wlan0% | %battery% | %date%"
+    , template = "%UnsafeXMonadLog% }{ %im% | %cpu% | %memory% | %wlan0% | %battery% | %date%"
 }
 
