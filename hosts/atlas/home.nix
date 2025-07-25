@@ -17,7 +17,6 @@
     cargo
     ubuntu_font_family
     dejavu_fonts
-    symbola
     kitty
     git
     anki-bin
@@ -34,6 +33,8 @@
     telegram-desktop
     kdePackages.dolphin
     ranger
+    qutebrowser
+    librewolf
 
     # tools used by zsh/shell stuff
     fd
@@ -74,17 +75,38 @@
     #network tools
     dig
   ];
- 
+  
+    i18n.inputMethod.fcitx5.settings.inputMethod = {
+        GroupOrder."0" = "Default";
+        "Groups/0" = {
+            Name = "Default";
+            "Default Layout" = "jp";
+            DefaultIM = "mozc";
+        };
+        "Groups/0/Items/0".Name = "keyboard-jp";
+        "Groups/0/Items/1".Name = "mozc";
+    };
+# i18n.inputMethod.fcitx5.settings.globalOptions = { };
+
+# If not using Home Manager, you may want to ignore your local config at ~/.config/fcitx5 using the following option.
+# i18n.inputMethod.fcitx5.ignoreUserConfig = true;
+
+  programs.librewolf = {
+    enable = true;
+    # Enable WebGL, cookies and history
+    settings = {
+      "webgl.disabled" = false;
+      "privacy.resistFingerprinting" = false;
+      "privacy.clearOnShutdown.history" = false;
+      "privacy.clearOnShutdown.cookies" = false;
+      "network.cookie.lifetimePolicy" = 0;
+    };
+  };
+
   home.sessionVariables = {
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_CACHE_HOME = "$HOME/.cache";
-    ## fcitx test 
-    GTK_IM_MODULE = "fcitx";
-    QT_IM_MODULE = "fcitx";
-    XMODIFIERS = "@im=fcitx";
-    INPUT_METHOD = "fcitx";
-    SDL_IM_MODULE = "fcitx";
  
     # fix issues with rebuilds not overwriting
     backupFileExtension = "backup";
