@@ -65,6 +65,8 @@
     zsh
   ];
 
+  # Optional, allows mounting as non-root user if needed
+  boot.supportedFilesystems = [ "cifs" ];
 
   # Add other packages you need here
   services.displayManager.defaultSession = "none+xmonad";

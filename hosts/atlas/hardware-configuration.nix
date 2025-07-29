@@ -28,6 +28,17 @@
     [ { device = "/dev/disk/by-uuid/0664ab3a-2dbe-4bf3-a4a4-eafa5a1536c1"; }
     ];
 
+  fileSystems."/mnt/books" = {
+    device = "//192.168.1.250/books";
+    fsType = "cifs";
+    options = [
+      "credentials=../../secrets/smb-cred"
+      "uid=1000"
+      "gid=100"
+      "iocharset=utf8"
+    ];
+  };
+
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction

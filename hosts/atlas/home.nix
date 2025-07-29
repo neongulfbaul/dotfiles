@@ -9,6 +9,7 @@
     ../../modules/tmux.nix
     ../../modules/dunst.nix
     ../../modules/alacritty.nix
+    ../../modules/librewolf.nix
     ];
 
   home.username = "neon";
@@ -34,7 +35,8 @@
     kdePackages.dolphin
     ranger
     qutebrowser
-    librewolf
+    calibre
+    cifs-utils
 
     # tools used by zsh/shell stuff
     fd
@@ -90,18 +92,6 @@
 
 # If not using Home Manager, you may want to ignore your local config at ~/.config/fcitx5 using the following option.
 # i18n.inputMethod.fcitx5.ignoreUserConfig = true;
-
-  programs.librewolf = {
-    enable = true;
-    # Enable WebGL, cookies and history
-    settings = {
-      "webgl.disabled" = false;
-      "privacy.resistFingerprinting" = false;
-      "privacy.clearOnShutdown.history" = false;
-      "privacy.clearOnShutdown.cookies" = false;
-      "network.cookie.lifetimePolicy" = 0;
-    };
-  };
 
   home.sessionVariables = {
     XDG_CONFIG_HOME = "$HOME/.config";
