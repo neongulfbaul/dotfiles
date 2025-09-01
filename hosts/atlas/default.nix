@@ -5,7 +5,6 @@
     ./hardware-configuration.nix
     ./nvidia.nix
     ./ollama.nix
-    ../../modules/hyprland.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -37,15 +36,6 @@
     LC_PAPER = "en_AU.UTF-8";
     LC_TELEPHONE = "en_AU.UTF-8";
     LC_TIME = "en_AU.UTF-8";
-  };
-
-  i18n.inputMethod = {
-    enable = true;
-    type = "fcitx5";
-    fcitx5.addons = with pkgs; [
-      fcitx5-mozc
-      fcitx5-gtk
-    ];
   };
 
   fonts.fontconfig.enable = true;
