@@ -8,7 +8,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, ... }: let
+  outputs = inputs @ { self, nixpkgs, nixos-hardware, home-manager, ... }: let
     overlays = [ (import ./overlays/treesitter.nix) ];
     pkgsFor = system: import nixpkgs { inherit system overlays; };
   in {
