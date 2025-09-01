@@ -84,55 +84,27 @@
   boot.supportedFilesystems = [ "cifs" ];
 
   # Add other packages you need here
-  services.displayManager.defaultSession = "none+xmonad";
-
-  services.xserver = {
+ 
+  # Wayland session
+  services.greetd = {
     enable = true;
-
-    windowManager.xmonad = {
-      enable = true;
-    };
-
-    displayManager.lightdm = {
-      enable = true;
-      greeter = {
-        name = "lightdm-gtk-greeter";
-        # Optional greeter settings
-      };
-
+    settings.default_session = {
+      command = "${pkgs.dwl}/bin/dwl";
+      user = "neon";
     };
   };
+
+  security.pam.services.swaylock = {};
+
   # virtualisation
   programs.virt-manager.enable = true;
   users.groups.libvirtd.members = ["neon"];
   virtualisation.libvirtd.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
 
-  environment.etc."xdg/sessions/xmonad.desktop" = {
-    text = ''
-      [Desktop Entry]
-      Name=XMonad
-      Comment=Use the XMonad window manager
-      Exec=xmonad
-      Type=Application
-    '';
-    mode = "0644";
-  };
-
-    services.xrdp.enable = true;
-    services.xrdp.defaultWindowManager = "xmonad";
-    services.xrdp.openFirewall = true;
-  
-
     hardware.bluetooth.enable = true; 
     services.blueman.enable = true;
 
-  # lets betterlockscreen actually work
-  security.pam.services.i3lock.enable = true;
-
-  #services.xserver.enable = true;
-  #services.displayManager.sddm.enable = true;
-  #services.xserver.desktopManager.plasma5.enable = true;
   services.xserver.xkb = {
     layout = "us";
   };
@@ -189,6 +161,14 @@
     betterdiscordctl
     zsh
     age
+    dwl
+    dwlb
+    wl-clipboard
+    waybar
+    mako
+    swaylock-effects
+    swayidle
+    wofi # or fuzzel
         #linuxKernel.packages.linux_5_15.nvidia_x11
   ];
 
