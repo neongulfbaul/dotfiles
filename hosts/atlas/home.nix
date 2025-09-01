@@ -29,14 +29,14 @@
     #firefox-devedition
     obsidian
     signal-desktop
-    sops
-    age
     telegram-desktop
     kdePackages.dolphin
     ranger
     qutebrowser
     calibre
     cifs-utils
+    samba
+    newsboat
 
     # tools used by zsh/shell stuff
     fd
@@ -88,16 +88,33 @@
         "Groups/0/Items/0".Name = "keyboard-jp";
         "Groups/0/Items/1".Name = "mozc";
     };
-# i18n.inputMethod.fcitx5.settings.globalOptions = { };
+    
+    #      programs.cron = {
+    #        enable = true;
+    #        systemCronJobs = [
+    #          "0 7,19 * * * neon pkill calibre; sleep 5; rsync -a --delete /home/neon/documents/calibre ~/mnt/books/"
+    #        ];
+    #      };
 
-# If not using Home Manager, you may want to ignore your local config at ~/.config/fcitx5 using the following option.
-# i18n.inputMethod.fcitx5.ignoreUserConfig = true;
+  xdg = {
+    userDirs = {
+      enable = false;
+    };
+  };
 
   home.sessionVariables = {
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_CACHE_HOME = "$HOME/.cache";
- 
+    XDG_DESKTOP_DIR     = "$HOME";
+    XDG_DOWNLOAD_DIR    = "$HOME/downloads";
+    XDG_TEMPLATES_DIR   = "$HOME";       # disables Templates folder
+    XDG_PUBLICSHARE_DIR = "$HOME";       # disables Public folder
+    XDG_DOCUMENTS_DIR   = "$HOME/documents";
+    XDG_MUSIC_DIR       = "$HOME";       # disables Music folder
+    XDG_PICTURES_DIR    = "$HOME/pictures";
+    XDG_VIDEOS_DIR      = "$HOME";       # disables Videos folder
+   
     # fix issues with rebuilds not overwriting
     backupFileExtension = "backup";
   };

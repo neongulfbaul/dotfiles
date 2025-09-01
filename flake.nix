@@ -8,9 +8,11 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     xmonad-contrib.url = "github:xmonad/xmonad-contrib";
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs @ { self, nixpkgs, nixos-hardware, home-manager, xmonad-contrib, ... }: 
+  outputs = inputs @ { self, nixpkgs, nixos-hardware, home-manager, xmonad-contrib, sops-nix, ... }: 
   let
     overlays = [
         (import ./overlays/treesitter.nix)
@@ -29,6 +31,7 @@
          modules = [ 
         ./hosts
         ./hosts/atlas
+        sops-nix.nixosModules.sops
 	    home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

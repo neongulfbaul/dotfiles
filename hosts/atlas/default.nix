@@ -37,7 +37,22 @@
     LC_TELEPHONE = "en_AU.UTF-8";
     LC_TIME = "en_AU.UTF-8";
   };
-
+    #  systemd.timers."calibre-rsync.timer" = {
+    #    description = "Sync Calibre library twice daily";
+    #    timerConfig = {
+    #      OnCalendar = "07:00,19:00";
+    #    };
+    #    wantedBy = [ "timers.target" ];
+    #  };
+    #  
+    #  systemd.services."calibre-rsync" = {
+    #    description = "Sync Calibre library";
+    #    serviceConfig = {
+    #      ExecStart = "/bin/sh -c 'pkill calibre; sleep 5; rsync -a --delete /home/neon/documents/calibre /home/neon/mnt/books/'";
+    #      User = "neon";
+    #    };
+    #    wantedBy = [ "multi-user.target" ];
+    #  };
   i18n.inputMethod = {
       enable = true;
       type = "fcitx5";
@@ -173,6 +188,7 @@
     ffmpeg
     betterdiscordctl
     zsh
+    age
         #linuxKernel.packages.linux_5_15.nvidia_x11
   ];
 
