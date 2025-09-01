@@ -5,7 +5,7 @@
     ./hardware-configuration.nix
     ./nvidia.nix
     ./ollama.nix
-    ../modules/hyprland.nix
+    ./../../modules/hyprland.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -48,14 +48,14 @@
   environment.shells = with pkgs; [ zsh ];
   boot.supportedFilesystems = [ "cifs" ];
 
-    #    #  # Wayland session
-    #  services.greetd = {
-    #    enable = true;
-    #    settings.default_session = {
-    #      command = "${pkgs.hyprland}/bin/Hyprland";
-    #      user = "neon";
-    #    };
-    #  };
+  # Wayland session
+  services.greetd = {
+    enable = true;
+    settings.default_session = {
+      command = "${pkgs.hyprland}/bin/Hyprland";
+      user = "neon";
+    };
+  };
 
   security.pam.services.swaylock = {};
 

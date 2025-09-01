@@ -1,314 +1,188 @@
-# hyprland-config.nix
-#
-# Sets up a hyprland-based desktop environment.
-# Usage: Import this file in your configuration.nix and enable with:
-# hyprlandConfig.enable = true;
-#
-# TODO: Investigate bluetuith for bluetooth TUI
+# hyprland.nix
+{ config, pkgs, ... }:
 
-{ lib, config, pkgs, ... }:
-
-with lib;
-let 
-  cfg = config.hyprlandConfig;
-  primaryMonitor = findFirst (x: x.primary) {} cfg.monitors;
-in {
-  options.hyprlandConfig = with types; {
-    enable = mkBoolOpt false;
-    
-    extraConfig = mkOpt lines "";
-    
-    monitors = mkOpt (listOf (submodule {
-      options = {
-        output = mkOpt str "";
-        mode = mkOpt str "preferred";
-        position = mkOpt str "auto";
-        scale = mkOpt int 1;
-        disable = mkOpt bool false;
-        primary = mkOpt bool false;
-      };
-    })) [{}];
-
-    mako.settings = mkOpt attrs {};
-
-    hyprlock = {
-      settings = mkOpt (submodule {
-        options = {
-          general = mkOpt attrs {};
-          input-field = mkOpt attrs {};
-          backgrounds = mkOpt (listOf attrs) [];
-          labels = mkOpt (listOf attrs) [];
-          images = mkOpt (listOf attrs) [];
-          shapes = mkOpt (listOf attrs) [];
-        };
-      }) {};
-    };
-
-    idle = {
-      time = mkOpt int 600;       # 10 min
-      autodpms = mkOpt int 1200;  # 20 min
-      autolock = mkOpt int 2400;  # 40 min
-      autosleep = mkOpt int 0;
-    };
-
-    # User configuration
-    username = mkOpt str "user";
-    
-    # Theme/wallpaper settings
-    wallpapers = mkOpt (attrsOf (submodule {
-      options = {
-        path = mkOpt str "";
-        mode = mkOpt str "center";
-      };
-    })) {};
+{
+  # Basic Hyprland setup
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+    package = pkgs.unstable.hyprland;
+    portalPackage = pkgs.unstable.xdg-desktop-portal-hyprland;
   };
 
-  config = mkIf cfg.enable {
-    # Set Wayland environment variables
-    environment.sessionVariables = {
-      ELECTRON_OZONE_PLATFORM_HINT = "auto";
-      NIXOS_OZONE_WL = "1";
-      MOZ_ENABLE_WAYLAND = "1";
-    };
+  # Environment variables for Wayland
+  environment.sessionVariables = {
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";
+    NIXOS_OZONE_WL = "1";
+    MOZ_ENABLE_WAYLAND = "1";
+  };
 
-    # Hyprland's aquamarine requires newer MESA drivers.
-    hardware.graphics = {
-      package = pkgs.mesa;
-      package32 = pkgs.pkgsi686Linux.mesa;
-    };
+  # Essential packages
+  environment.systemPackages = with pkgs; [
+    hyprlock       # lock screen
+    hyprpicker     # color picker
+    hyprshade      # screen shaders
+    hyprshot       # screenshots
+    mako           # notifications
+    swaybg         # wallpapers
+    waybar         # status bar
+    xorg.xrandr    # for XWayland
+    pamixer        # volume control
+    wlr-randr      # monitor control
+  ];
 
-    programs.hyprland = {
-      enable = true;
-      xwayland.enable = true;
-    };
+  # Configuration files
+  environment.etc = {
+    # Hyprlock config
+    "hypr/hyprlock.conf".text = ''
+      general {
+        grace = 3
+        hide_cursor = false
+        disable_loading_bar = true
+      }
 
-    services = {
-      # There's a bug in hypridle that causes hyprlock to not read input after
-      # waking up from suspend (hyprwm/hyprlock#101). swayidle doesn't suffer
-      # from this issue.
-      swayidle = {
-        enable = true;
-        events = {
-          before-sleep = "loginctl lock-session";
-          after-resume = "echo 'resuming from sleep'";
-          lock = "hyprlock";
-          unlock = "echo 'unlocked'";
-        } // (optionalAttrs (cfg.idle.time > 0) {
-          idlehint = toString cfg.idle.time;
-        });
-        timeouts =
-          (optionals (cfg.idle.time > 0) [{
-            timeout = cfg.idle.time;
-            command = "echo 'idle timeout reached'";
-            resume = "echo 'resuming from idle'";
-          }]) ++
-          (optionals (cfg.idle.autodpms > 0) [{
-            timeout = cfg.idle.autodpms;
-            command = "hyprctl dispatch dpms off";
-            resume = "hyprctl dispatch dpms on";
-          }]) ++
-          (optionals (cfg.idle.autolock > 0) [{
-            timeout = cfg.idle.autolock;
-            command = "loginctl lock-session";
-          }]) ++
-          (optionals (cfg.idle.autosleep > 0) [{
-            timeout = cfg.idle.autosleep;
-            command = "systemctl suspend";
-          }]);
-      };
+      background {
+        monitor =
+        path = screenshot
+        blur_passes = 2
+        blur_size = 8
+      }
 
-      # REVIEW: Get rid of this when wtype adds mouse support (atx/wtype#24).
-      input-remapper.enable = true;
-    };
+      input-field {
+        monitor =
+        size = 250, 60
+        outline_thickness = 2
+        dots_size = 0.2
+        dots_spacing = 0.2
+        dots_center = true
+        outer_color = rgba(0, 0, 0, 0)
+        inner_color = rgba(0, 0, 0, 0.5)
+        font_color = rgb(200, 200, 200)
+        fade_on_empty = false
+        placeholder_text = <i><span foreground="##cdd6f4">Input Password...</span></i>
+        hide_input = false
+        position = 0, -120
+        halign = center
+        valign = center
+      }
 
-    ## Bootloader.
-    # I don't use a real login screen. Instead, I activate hyprlock immediately
-    # after boot for basic authentication, with a specialized config to make the
-    # boot up process smoother. This is enough to stop casual snoopers from
-    # getting into my desktops.
-    services.greetd = {
-      enable = true;
-      settings.default_session = {
-        command = toString (pkgs.writeShellScript "hyprland-wrapper" ''
-          trap 'systemctl --user stop graphical-session.target; sleep 1' EXIT
-          exec Hyprland >/dev/null
-        '');
-        user = cfg.username;
-      };
-    };
-    environment.etc."greetd/environments".text = "Hyprland";
+      label {
+        monitor =
+        text = Hi $USER
+        color = rgba(200, 200, 200, 1.0)
+        font_size = 25
+        font_family = Inter
+        position = 0, -40
+        halign = center
+        valign = center
+      }
+    '';
 
-    environment.systemPackages = with pkgs; [
-      hyprlock       # *fast* lock screen
-      hyprpicker     # screen-space color picker
-      hyprshade      # to apply shaders to the screen
-      hyprshot       # instead of grim(shot) or maim/slurp
+    # Mako notification config
+    "mako/config".text = ''
+      # Mako configuration
+      anchor=top-right
+      background-color=#2d3748
+      border-color=#4a5568
+      border-radius=8
+      border-size=2
+      font=Inter 11
+      margin=10
+      padding=10
+      text-color=#e2e8f0
+      timeout=5000
+      max-visible=5
+      default-timeout=5000
 
-      ## For Hyprland
-      mako           # dunst for wayland
-      swaybg         # feh (as a wallpaper manager)
-      xorg.xrandr    # for XWayland windows
-      waybar         # status bar
+      [urgency=high]
+      border-color=#e53e3e
+      background-color=#742a2a
+      timeout=0
 
-      ## For CLIs
-      gromit-mpx     # for drawing on the screen
-      pamixer        # for volume control
-      wlr-randr      # for monitors that hyprctl can't handle
-      wf-recorder    # for screencasting
-    ];
+      [mode=dnd]
+      invisible=1
+    '';
 
-    systemd.user.targets.hyprland-session = {
-      unitConfig = {
-        Description = "Hyprland compositor session";
-        Documentation = [ "man:systemd.special(7)" ];
-        BindsTo = [ "graphical-session.target" ];
-        Wants = [ "graphical-session-pre.target" ];
-        After = [ "graphical-session-pre.target" ];
-      };
-    };
+    # Screen dimming shader for hyprshade
+    "hypr/shaders/screen-dim.glsl".text = ''
+      precision highp float;
+      varying vec2 v_texcoord;
+      uniform sampler2D tex;
+      void main() {
+        gl_FragColor = texture2D(tex, v_texcoord) * 0.3;
+      }
+    '';
+  };
 
-    # Create Hyprland configuration files
-    environment.etc = {
-      "hypr/hyprland.conf".text = ''
-        # Hyprland configuration
-        # This was automatically generated by NixOS
+    environment.etc."hypr/hyprland.conf".text = ''
+    # Generated Hyprland configuration - DO NOT EDIT
+    # This combines system config with your personal config
+    
+    # Import system-generated configs first
+    source = /etc/hypr/monitors.conf
+    source = /etc/hypr/system.conf
+    
+    # Then import your personal config
+    source = ~/.dotfiles/config/hypr/hyprland.conf
+  '';
 
-        # Bootstrap session
-        exec-once = systemctl --user import-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE
-        exec-once = hyprlock --immediate
-        exec-once = systemctl --user start hyprland-session.target
+  # Monitor configuration - customize these for your setup
+  # You can also put this directly in your hyprland.conf if you prefer
+  environment.etc."hypr/monitors.conf".text = ''
+    # Monitor configuration
+    # Uncomment and modify for your setup:
+    
+    # Single monitor example:
+    # monitor = DP-1, 1920x1080@144, 0x0, 1
+    
+    # Dual monitor example:
+    # monitor = DP-1, 1920x1080@144, 0x0, 1
+    # monitor = HDMI-A-1, 1920x1080@60, 1920x0, 1
+    
+    # Default fallback
+    monitor = , preferred, auto, 1
+  '';
 
-        # Monitor configuration
-        ${concatStringsSep "\n" (map
-          (v: if v.disable
-              then "monitor = ${v.output},disable"
-              else "monitor = ${v.output},${v.mode},${v.position},${toString v.scale}")
-          cfg.monitors)}
-
-        $PRIMARY_MONITOR = ${primaryMonitor.output or ""}
-        
-        ${optionalString (primaryMonitor ? output) ''
-          cursor {
-            default_monitor = $PRIMARY_MONITOR
-          }
-
-          workspace=1,monitor:$PRIMARY_MONITOR,default:true,persistent:true
-          workspace=2,monitor:$PRIMARY_MONITOR
-          workspace=3,monitor:$PRIMARY_MONITOR
-          workspace=4,monitor:$PRIMARY_MONITOR
-          workspace=5,monitor:$PRIMARY_MONITOR
-          workspace=6,monitor:$PRIMARY_MONITOR
-          workspace=7,monitor:$PRIMARY_MONITOR
-          workspace=8,monitor:$PRIMARY_MONITOR
-          workspace=9,monitor:$PRIMARY_MONITOR
-
-          # Since wayland doesn't have the concept of a primary monitor,
-          # XWayland windows may start in unpredictable places without a hint.
-          exec-once = xrandr --output $PRIMARY_MONITOR --primary
-        ''}
-
-        # Wallpaper setup
-        ${concatStringsSep "\n"
-          (mapAttrsToList
-            (output: w: ''
-              exec-once = swaybg -o "${output}" -i "${w.path}" -m ${w.mode} &
-            '')
-            cfg.wallpapers)}
-
-        # Additional user configuration
-        ${cfg.extraConfig}
-      '';
-
-      "hypr/hyprlock.conf".text =
-        let toHyprlockINI = n: v: ''
-              ${n} {
-                ${concatStringsSep "\n"
-                  (mapAttrsToList (n: v: "${n} = ${toString v}") v)}
-              }
-            '';
-        in concatStringsSep "\n" (flatten
-          (mapAttrsToList
-            (n: v: if isAttrs v
-                   then toHyprlockINI n v
-                   else map (x: toHyprlockINI (removeSuffix "s" n) x) v)
-            (recursiveUpdate
-              {
-                general = {
-                  grace = 3;
-                  hide_cursor = "false";
-                  disable_loading_bar = "true";
-                };
-              }
-              cfg.hyprlock.settings)));
-
-      "hypr/shaders/screen-dim.glsl".text = ''
-        precision highp float;
-        varying vec2 v_texcoord;
-        uniform sampler2D tex;
-        void main() {
-          gl_FragColor = texture2D(tex, v_texcoord) * 0.3;
-        }
-      '';
-
-      "mako/config".text =
-        let toINI = mapAttrsToList (n: v: "${n}=${toString v}");
-        in ''
-          # config/mako/config -*- mode: ini -*-
-          # This was automatically generated by NixOS
-          ${concatStringsSep "\n"
-            (toINI ({ "output" = (primaryMonitor.output or ""); }
-                    // (filterAttrs (_: v: ! isAttrs v) cfg.mako.settings)))}
-
-          ${concatStringsSep "\n"
-            (mapAttrsToList
-              (n: v: ''
-                [${n}]
-                ${concatStringsSep "\n" (toINI v)}
-              '')
-              (filterAttrs (_: v: isAttrs v) cfg.mako.settings))}
-
-          [mode=dnd]
-          invisible=1
+  # Auto-start services
+  systemd.user.services = {
+    # Idle management with swayidle
+    swayidle = {
+      description = "Swayidle idle management";
+      wantedBy = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+      serviceConfig = {
+        ExecStart = ''
+          ${pkgs.swayidle}/bin/swayidle -w \
+            timeout 600 'hyprctl dispatch dpms off' \
+                resume 'hyprctl dispatch dpms on' \
+            timeout 1200 'hyprlock' \
+            timeout 2400 'systemctl suspend' \
+            before-sleep 'hyprlock'
         '';
+        Restart = "always";
+      };
     };
 
-    # Create desktop entries
-    environment.etc = {
-      "applications/toggle-blue-light-filter.desktop".text = ''
-        [Desktop Entry]
-        Name=Toggle blue light filter
-        Exec=hyprshade toggle blue-light-filter
-        Icon=redshift
-        Type=Application
-        Categories=Utility;
-      '';
-      
-      "applications/hyprpicker-rgb.desktop".text = ''
-        [Desktop Entry]
-        Name=Hyprpicker: grab RGB at point
-        Exec=hyprpicker -r -f rgb
-        Icon=com.github.finefindus.eyedropper
-        Type=Application
-        Categories=Utility;Graphics;
-      '';
-      
-      "applications/hyprpicker-hsl.desktop".text = ''
-        [Desktop Entry]
-        Name=Hyprpicker: grab HSL at point  
-        Exec=hyprpicker -r -f hsl
-        Icon=com.github.finefindus.eyedropper
-        Type=Application
-        Categories=Utility;Graphics;
-      '';
-      
-      "applications/hyprpicker-hex.desktop".text = ''
-        [Desktop Entry]
-        Name=Hyprpicker: grab hex at point
-        Exec=hyprpicker -r -f hex
-        Icon=com.github.finefindus.eyedropper
-        Type=Application
-        Categories=Utility;Graphics;
-      '';
+    # Start mako notifications
+    mako = {
+      description = "Mako notification daemon";
+      wantedBy = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+      serviceConfig = {
+        ExecStart = "${pkgs.mako}/bin/mako";
+        Restart = "always";
+      };
+    };
+
+    # Start waybar
+    waybar = {
+      description = "Waybar status bar";
+      wantedBy = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+      serviceConfig = {
+        ExecStart = "${pkgs.waybar}/bin/waybar";
+        Restart = "always";
+      };
     };
   };
 }
