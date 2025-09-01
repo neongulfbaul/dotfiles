@@ -5,7 +5,6 @@
     ./hardware-configuration.nix
     ./nvidia.nix
     ./ollama.nix
-    ../../modules/hyprland.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -38,24 +37,57 @@
     LC_TELEPHONE = "en_AU.UTF-8";
     LC_TIME = "en_AU.UTF-8";
   };
-
+    #  systemd.timers."calibre-rsync.timer" = {
+    #    description = "Sync Calibre library twice daily";
+    #    timerConfig = {
+    #      OnCalendar = "07:00,19:00";
+    #    };
+    #    wantedBy = [ "timers.target" ];
+    #  };
+    #  
+    #  systemd.services."calibre-rsync" = {
+    #    description = "Sync Calibre library";
+    #    serviceConfig = {
+    #      ExecStart = "/bin/sh -c 'pkill calibre; sleep 5; rsync -a --delete /home/neon/documents/calibre /home/neon/mnt/books/'";
+    #      User = "neon";
+    #    };
+    #    wantedBy = [ "multi-user.target" ];
+    #  };
   i18n.inputMethod = {
-    enable = true;
-    type = "fcitx5";
-    fcitx5.addons = with pkgs; [
-      fcitx5-mozc
-      fcitx5-gtk
-    ];
-  };
+      enable = true;
+      type = "fcitx5";
+      fcitx5.addons = with pkgs; [
+        fcitx5-mozc
+        fcitx5-gtk
+      ];
+    };
+
+  # Would normally set this to fcitx, but kitty only supports ibus, and fcitx
+  # provides an ibus interface. Can't use ibus for e.g. QT_IM_MODULE though,
+  # because that at least breaks mumble
+  #environment.variables.GLFW_IM_MODULE = "ibus";
 
   fonts.fontconfig.enable = true;
-  fonts.fontconfig.hinting.enable = true;
-  fonts.fontconfig.hinting.style = "slight";
+  fonts.fontconfig.hinting = {
+    enable = true;
+    style = "slight";
+  };
+
   fonts.fontconfig.antialias = true;
   fonts.fontconfig.subpixel.rgba = "rgb";
 
-  environment.shells = with pkgs; [ zsh ];
+  environment.shells = with pkgs; [
+    zsh
+  ];
+
+  # Optional, allows mounting as non-root user if needed
   boot.supportedFilesystems = [ "cifs" ];
+
+  # Add other packages you need here
+
+    #  services.xserver.enable = true;
+    #  services.xserver.displayManager.startx.enable = true;
+    #  programs.xwayland.enable = true;
 
   # Wayland session
   services.greetd = {
@@ -68,17 +100,18 @@
 
   security.pam.services.swaylock = {};
 
-  # Virtualisation
+  # virtualisation
   programs.virt-manager.enable = true;
   users.groups.libvirtd.members = ["neon"];
   virtualisation.libvirtd.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
 
-  # Hardware
-  hardware.bluetooth.enable = true; 
-  services.blueman.enable = true;
+    hardware.bluetooth.enable = true; 
+    services.blueman.enable = true;
 
-  services.xserver.xkb.layout = "us";
+  services.xserver.xkb = {
+    layout = "us";
+  };
 
   services.printing.enable = true;
   services.pulseaudio.enable = false;
@@ -94,21 +127,26 @@
     isNormalUser = true;
     description = "neon";
     extraGroups = [ "networkmanager" "wheel" ];
+    #packages = with pkgs; [  ];
   };
 
   programs.firefox.enable = true;
   nixpkgs.config.allowUnfree = true;
   programs.steam.enable = true;
+  #programs.lutris.enable = true;
 
   programs._1password.enable = true;
   programs._1password-gui = {
     enable = true;
+    # Certain features, including CLI integration and system authentication support,
+    # require enabling PolKit integration on some desktop environments (e.g. Plasma).
     polkitPolicyOwners = [ "neon" ];
   };
 
+
   programs.appimage = {
-    enable = true;
-    binfmt = true;
+  enable = true;
+  binfmt = true;
   };
 
   environment.systemPackages = with pkgs; [
@@ -132,7 +170,7 @@
     mako
     swaylock-effects
     swayidle
-    wofi
+    wofi # or fuzzel
     st
     foot
   ];

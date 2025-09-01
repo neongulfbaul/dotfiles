@@ -2,99 +2,84 @@
 
 {
   imports = [
-    ../../modules/xmonad.nix
     ../../modules/zsh.nix
     ../../modules/nvim.nix
     ../../modules/jp.nix
     ../../modules/tmux.nix
-    ../../modules/dunst.nix
     ../../modules/alacritty.nix
     ../../modules/librewolf.nix
-    ];
+  ];
 
   home.username = "neon";
   home.stateVersion = "24.11";
+
   home.packages = with pkgs; [
-    cargo
+
+    # Fonts
     ubuntu_font_family
     dejavu_fonts
-    kitty
-    git
-    anki-bin
-    lutris
-    wineWowPackages.stable
-    winetricks
     adwaita-icon-theme
-    remmina
-    #firefox-devedition
-    obsidian
-    signal-desktop
-    telegram-desktop
-    kdePackages.dolphin
-    ranger
-    qutebrowser
-    calibre
-    cifs-utils
-    samba
-    newsboat
 
-    # tools used by zsh/shell stuff
+    # Terminals / shell tools
+    kitty
     fd
-    at
-    bat      # a better cat
+    bat
     bc
-    dust     # a better du
-    eza      # a better ls
+    dust
+    eza
     fasd
-    fd
     fzf
     gnumake
     nix-zsh-completions
-    ripgrep  # a better grep
-    tokei    # for code statistics
-    ouch     # a better unzip
+    ripgrep
+    tokei
+    ouch
     tree
-    python312
-    libnotify   
     unzip
     p7zip
+    python312
+    libnotify
+
+    # Productivity / general apps
+    git
+    anki-bin
+    obsidian
+    signal-desktop
+    telegram-desktop
+    ranger
+    qutebrowser
+    calibre
+    remmina
+    newsboat
     mpv
 
-    # cyber
+    # Cyber / security
     (burpsuite.override { proEdition = true; })
 
-
-    # virtual
+    # Virtualisation
     quickemu
 
-    #homelab management
+    # Homelab / K8s
     kubectl
     helmfile
     kustomize
     kubernetes-helm
     k9s
-    
-    #network tools
+
+    # Network tools
     dig
   ];
-  
-    i18n.inputMethod.fcitx5.settings.inputMethod = {
-        GroupOrder."0" = "Default";
-        "Groups/0" = {
-            Name = "Default";
-            "Default Layout" = "jp";
-            DefaultIM = "mozc";
-        };
-        "Groups/0/Items/0".Name = "keyboard-jp";
-        "Groups/0/Items/1".Name = "mozc";
+
+  i18n.inputMethod.fcitx5.settings.inputMethod = {
+    GroupOrder."0" = "Default";
+    "Groups/0" = {
+      Name = "Default";
+      "Default Layout" = "jp";
+      DefaultIM = "mozc";
     };
-    
-    #      programs.cron = {
-    #        enable = true;
-    #        systemCronJobs = [
-    #          "0 7,19 * * * neon pkill calibre; sleep 5; rsync -a --delete /home/neon/documents/calibre ~/mnt/books/"
-    #        ];
-    #      };
+    "Groups/0/Items/0".Name = "keyboard-jp";
+    "Groups/0/Items/1".Name = "mozc";
+  };
 
   xdg = {
     userDirs = {
@@ -108,14 +93,13 @@
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_DESKTOP_DIR     = "$HOME";
     XDG_DOWNLOAD_DIR    = "$HOME/downloads";
-    XDG_TEMPLATES_DIR   = "$HOME";       # disables Templates folder
-    XDG_PUBLICSHARE_DIR = "$HOME";       # disables Public folder
+    XDG_TEMPLATES_DIR   = "$HOME";       
+    XDG_PUBLICSHARE_DIR = "$HOME";       
     XDG_DOCUMENTS_DIR   = "$HOME/documents";
-    XDG_MUSIC_DIR       = "$HOME";       # disables Music folder
+    XDG_MUSIC_DIR       = "$HOME";       
     XDG_PICTURES_DIR    = "$HOME/pictures";
-    XDG_VIDEOS_DIR      = "$HOME";       # disables Videos folder
+    XDG_VIDEOS_DIR      = "$HOME";       
    
-    # fix issues with rebuilds not overwriting
     backupFileExtension = "backup";
   };
 }

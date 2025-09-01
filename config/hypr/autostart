@@ -1,0 +1,5 @@
+# ~/.config/hypr/autostart
+waybar &
+mako &
+wofi &
+foot &
