@@ -7,13 +7,14 @@
     ../../modules/tmux.nix
     ../../modules/alacritty.nix
     ../../modules/librewolf.nix
+    ../../modules/hyprland.nix
+    ../../modules/waybar.nix
   ];
 
   home.username = "neon";
   home.stateVersion = "24.11";
 
   home.packages = with pkgs; [
-
     # Fonts
     ubuntu_font_family
     dejavu_fonts
@@ -58,26 +59,15 @@
     # Virtualisation
     quickemu
 
-    # Homelab / K8s
-    kubectl
-    helmfile
-    kustomize
-    kubernetes-helm
-    k9s
-
     # Network tools
     dig
   ];
-
 
   xdg = {
     userDirs = {
       enable = false;
     };
   };
-
-
-    #programs.zsh.dotDir = "${config.xdg.configHome}/zsh";
 
   home.sessionVariables = {
     XDG_CONFIG_HOME = "$HOME/.config";
