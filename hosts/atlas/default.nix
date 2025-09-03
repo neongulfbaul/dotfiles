@@ -5,7 +5,6 @@
     ./hardware-configuration.nix
     ./nvidia.nix
     ./ollama.nix
-    ./../../modules/hyprland.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

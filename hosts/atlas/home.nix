@@ -19,6 +19,7 @@
     ubuntu_font_family
     dejavu_fonts
     adwaita-icon-theme
+    font-awesome
 
     # Terminals / shell tools
     kitty
@@ -52,6 +53,7 @@
     remmina
     newsboat
     mpv
+    rofi
 
     # Cyber / security
     (burpsuite.override { proEdition = true; })
