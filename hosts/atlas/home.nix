@@ -9,8 +9,15 @@
     ../../modules/librewolf.nix
     ../../modules/hyprland.nix
     ../../modules/waybar.nix
+    ../../modules/spotify.nix
+    ../../modules/cursor.nix
   ];
 
+  # for good measure, export to session as well
+  home.sessionVariables = {
+    XCURSOR_THEME = "catppuccin-mocha-dark-cursors";
+    XCURSOR_SIZE = "24";
+  };
   home.username = "neon";
   home.stateVersion = "24.11";
 
@@ -40,6 +47,7 @@
     p7zip
     python312
     libnotify
+    pavucontrol
 
     # Productivity / general apps
     git
@@ -64,6 +72,9 @@
     # Network tools
     dig
   ];
+
+  modules.apps.spotify.enable = true;
+  modules.desktop.cursor.enable = true;
 
   xdg = {
     userDirs = {
