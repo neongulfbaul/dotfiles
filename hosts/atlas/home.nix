@@ -11,6 +11,7 @@
     ../../modules/waybar.nix
     ../../modules/spotify.nix
     ../../modules/cursor.nix
+    ../../modules/rofi.nix
   ];
 
   # for good measure, export to session as well
@@ -61,7 +62,6 @@
     remmina
     newsboat
     mpv
-    rofi
 
     # Cyber / security
     (burpsuite.override { proEdition = true; })
@@ -75,6 +75,7 @@
 
   modules.apps.spotify.enable = true;
   modules.desktop.cursor.enable = true;
+  modules.rofi.enable = true;
 
   xdg = {
     userDirs = {
