@@ -73,10 +73,12 @@
     dig
   ];
 
+  programs.opencode.enable = true;
+
   modules.apps.spotify.enable = true;
   modules.desktop.cursor.enable = true;
   modules.rofi.enable = true;
-
+  modules.librewolf.enable = true;
   xdg = {
     userDirs = {
       enable = false;

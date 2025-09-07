@@ -15,16 +15,16 @@
     main = {
       layer = "top";
       position = "top";
-      height = 35;
+      height = 14;
       margin-bottom = 0;
       modules-left = [
-        "clock"
-        "tray"
-      ];
-      modules-center = [
         "hyprland/workspaces"
       ];
+      modules-center = [
+        "hyprland/window"
+      ];
       modules-right = [
+        "tray"
         "custom/spacer"
         "cpu"
         "custom/gpu-nvidia"
@@ -35,6 +35,7 @@
         "backlight"
         "pulseaudio"
         "idle_inhibitor"
+        "clock"
         # "privacy"
       ];
       "tray" = {
@@ -91,6 +92,9 @@
           "4" = [];
           "5" = [];
           "6" = [];
+          "7" = [];
+          "8" = [];
+          "9" = [];
         };
       };
       "clock" = {

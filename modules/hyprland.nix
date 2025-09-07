@@ -13,19 +13,40 @@
   settings = { };
   };
 
-  programs.hyprlock.enable = true;
-  services.hypridle.enable = true;
-  services.hyprpaper.enable = true;
+  services.hyprpaper = {
+    enable = true;
+         settings = {
+           preload = [ "/home/neon/.dotfiles/wallpaper/dibbles.jpg" ];
+           wallpaper = [ ",/home/neon/.dotfiles/wallpaper/dibbles.jpg" ];
+         };
+  };
+
+  services.hypridle = {
+    enable = true;
+    settings.general.lock_cmd = "hyprlock";
+    settings.listener = [
+      {
+        timeout = 300;
+        on-timeout = "hyprlock";
+      }
+    ];
+  };
+
+  programs.hyprlock = {
+    enable = true;
+    # put config in settings here
+  };
 
   home.packages = with pkgs; [
     hyprlock       # *fast* lock screen
     hyprpicker     # screen-space color picker
     hyprshade      # to apply shaders to the screen
     hyprshot       # instead of grim(shot) or maim/slurp
+    hyprpaper      # instead of feh, swaybg
 
     ## For Hyprland
     mako           # dunst for wayland
-    swaybg         # feh (as a wallpaper manager)
+     #swaybg         # feh (as a wallpaper manager)
     xorg.xrandr    # for XWayland windows
 
     ## For CLIs
