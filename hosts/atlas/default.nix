@@ -124,7 +124,6 @@
     swayidle
     wofi
     st
-    foot
   ];
 
   services.openssh.enable = true;

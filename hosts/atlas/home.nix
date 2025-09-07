@@ -12,6 +12,7 @@
     ../../modules/spotify.nix
     ../../modules/cursor.nix
     ../../modules/rofi.nix
+    ../../modules/foot.nix
   ];
 
   # for good measure, export to session as well
