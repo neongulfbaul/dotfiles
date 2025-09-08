@@ -1,11 +1,10 @@
-{ self, config, pkgs, nixvim, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
     ../../modules/zsh.nix
     ../../modules/nvim.nix
     ../../modules/tmux.nix
-    ../../modules/alacritty.nix
     ../../modules/librewolf.nix
     ../../modules/hyprland.nix
     ../../modules/waybar.nix
@@ -15,11 +14,17 @@
     ../../modules/foot.nix
   ];
 
+
   # for good measure, export to session as well
   home.sessionVariables = {
     XCURSOR_THEME = "catppuccin-mocha-dark-cursors";
     XCURSOR_SIZE = "24";
   };
+
+
+    #  programs.foot.settings.colors = nix-colors.colorSchemes.catppuccin-mocha;
+    #  programs.zsh.settings.prompt.colors = nix-colors.colorSchemes.catppuccin-mocha;
+
   home.username = "neon";
   home.stateVersion = "24.11";
 
@@ -73,6 +78,9 @@
     # Network tools
     dig
   ];
+
+
+
 
   programs.opencode.enable = true;
 

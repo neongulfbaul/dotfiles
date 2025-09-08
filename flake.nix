@@ -21,10 +21,10 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.neon = import ./hosts/atlas/home.nix;
+            home-manager.users.neon = import ./hosts/atlas/home.nix; 
           }
         ];
-        specialArgs = { inherit inputs home-manager; };
+        specialArgs = { inherit home-manager; };
       };
 
       x1 = nixpkgs.lib.nixosSystem {

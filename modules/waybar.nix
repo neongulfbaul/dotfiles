@@ -195,7 +195,11 @@
       * {
         font-family: "Sans";
         font-size: 10px;
-      }
+          #waybar {
+          background: #001f3f; /* navy blue */
+          color: #ffffff;
+          }
+        }
     '';
   };
 
