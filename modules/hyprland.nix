@@ -44,6 +44,13 @@
     hyprshot       # instead of grim(shot) or maim/slurp
     hyprpaper      # instead of feh, swaybg
 
+
+    # apparently I need like 4 packages to replace flameshot
+    grim
+    slurp
+    wl-clipboard
+    swappy
+
     ## For Hyprland
     mako           # dunst for wayland
      #swaybg         # feh (as a wallpaper manager)
