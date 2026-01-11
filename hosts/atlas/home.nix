@@ -12,6 +12,7 @@
     ../../modules/cursor.nix
     ../../modules/rofi.nix
     ../../modules/foot.nix
+    ../../modules/mpd.nix
   ];
 
 
@@ -34,6 +35,9 @@
     dejavu_fonts
     adwaita-icon-theme
     font-awesome
+    noto-fonts
+    noto-fonts-cjk-serif
+    noto-fonts-cjk-sans
 
     # Terminals / shell tools
     kitty
@@ -55,6 +59,7 @@
     python312
     libnotify
     pavucontrol
+    internetarchive
 
     # Productivity / general apps
     git
@@ -68,6 +73,9 @@
     remmina
     newsboat
     mpv
+    zathura
+    jq
+    bottles
 
     # Cyber / security
     (burpsuite.override { proEdition = true; })

@@ -64,13 +64,29 @@
   virtualisation.libvirtd.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
 
+
+
+
+
   # Hardware
   hardware.bluetooth.enable = true; 
   services.blueman.enable = true;
 
   services.xserver.xkb.layout = "us";
 
-  services.printing.enable = true;
+  services.printing = {
+    enable = true;
+    drivers = [ ]; # leave empty unless you need Brother-specific drivers
+  };
+
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+    openFirewall = true;
+  };
+
+  services.printing.browsing = true;
+
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
