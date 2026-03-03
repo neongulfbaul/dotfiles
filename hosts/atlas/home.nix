@@ -91,7 +91,7 @@
 
 
   programs.opencode.enable = true;
-  modules.mpd.enable = true;
+  modules.mpdModule.enable = true;
   modules.apps.spotify.enable = true;
   modules.desktop.cursor.enable = true;
   modules.rofi.enable = true;

@@ -28,7 +28,7 @@ with lib;
 
     # Enable ncmpcpp client
     programs.ncmpcpp.enable = true;
-    programs.ncmpcpp.mpdMusicDir = services.mpd.musicDirectory;
+    programs.ncmpcpp.mpdMusicDir = config.services.mpd.musicDirectory;
 
     # optional: install cava if you want visualizer in ncmpcpp
     home.packages = [ pkgs.cava ];
