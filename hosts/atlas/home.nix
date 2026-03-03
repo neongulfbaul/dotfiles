@@ -76,6 +76,9 @@
     zathura
     jq
     bottles
+    yazi
+    nnn
+    xfce.thunar
 
     # Cyber / security
     (burpsuite.override { proEdition = true; })

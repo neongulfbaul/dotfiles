@@ -13,19 +13,19 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/3d9d045f-4f82-4594-930c-306a2f6e899d";
+fileSystems."/" =
+    { device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/43BB-D5BE";
+    { device = "/dev/disk/by-label/BOOT";
       fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
+      options = [ "fmask=0022" "dmask=0022" ]; # Standard masks
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/0664ab3a-2dbe-4bf3-a4a4-eafa5a1536c1"; }
+    [ { device = "/dev/disk/by-label/swap"; }
     ];
 
     #  fileSystems."/mnt/books" = {
