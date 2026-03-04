@@ -13,7 +13,7 @@
     ../../modules/rofi.nix
     ../../modules/foot.nix
     ../../modules/mpd.nix
-    ../../shell
+    ../../modules/shell
   ];
 
 

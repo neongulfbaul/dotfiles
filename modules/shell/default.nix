@@ -3,22 +3,23 @@
 let
   cfg = config.modules.shell.core;
 in {
-  # 1. Define the "Switch"
   options.modules.shell.core = {
     enable = lib.mkEnableOption "Core Shell Utilities";
   };
 
-  # 2. Define what happens when the switch is ON
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
+    # CHANGE THIS: Use home.packages instead of environment.systemPackages
+    home.packages = with pkgs; [
       htop
-      btop     # A "prettier" htop for testing
-      neofetch # To verify the "look" of your new setup
+      btop
+      neofetch
       ripgrep
       fd
     ];
 
-    # You can even set environment variables here
-    environment.variables.EDITOR = "nvim";
+    # CHANGE THIS: Use home.sessionVariables instead of environment.variables
+    home.sessionVariables = {
+      EDITOR = "nvim";
+    };
   };
 }
