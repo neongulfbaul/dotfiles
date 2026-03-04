@@ -13,6 +13,7 @@
     ../../modules/rofi.nix
     ../../modules/foot.nix
     ../../modules/mpd.nix
+    ../../shell
   ];
 
 
@@ -99,7 +100,9 @@
   modules.desktop.cursor.enable = true;
   modules.rofi.enable = true;
   modules.librewolf.enable = true;
-  xdg = {
+  # This is your new "Lissner-style" toggle!
+  modules.shell.core.enable = true;
+    xdg = {
     userDirs = {
       enable = false;
     };

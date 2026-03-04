@@ -1,7 +1,8 @@
-{ config, pkgs, home-manager, ... }:
+{ config, pkgs, lib, modulesPath, inputs, ... }:
 
 {
   imports = [
+    (modulesPath + "/installer/scan/not-detected.nix") # Add this
     ./nvidia.nix
     ./ollama.nix
   ];
@@ -86,7 +87,7 @@
 
   networking.useDHCP = lib.mkDefault true;
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableHardware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault true;
 
   # Hardware
   hardware.bluetooth.enable = true; 
