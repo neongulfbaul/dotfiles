@@ -3,8 +3,8 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix") # Add this
-    ../modules/hardware/nvidia.nix
-    ../modules/services/ollama.nix
+    ../../modules/hardware/nvidia.nix
+    ../../modules/services/ollama.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
