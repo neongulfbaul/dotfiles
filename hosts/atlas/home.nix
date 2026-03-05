@@ -2,20 +2,16 @@
 
 {
   imports = [
-    ../../modules/zsh.nix
-    ../../modules/nvim.nix
-    ../../modules/tmux.nix
-    ../../modules/librewolf.nix
-    ../../modules/hyprland.nix
-    ../../modules/waybar.nix
-    ../../modules/spotify.nix
-    ../../modules/cursor.nix
-    ../../modules/rofi.nix
-    ../../modules/foot.nix
-    ../../modules/mpd.nix
+    ../../modules/shell/zsh.nix
+    ../../modules/editor/nvim.nix
+    ../../modules/shell/tmux.nix
+    ../../modules/desktop/browsers/librewolf.nix
+    ../../modules/desktop/hyprland.nix
+    ../../modules/desktop/media/spotify.nix
+    ../../modules/desktop/apps/rofi.nix
+    ../../modules/desktop/term/foot.nix
     ../../modules/shell
   ];
-
 
   # for good measure, export to session as well
   home.sessionVariables = {
@@ -100,7 +96,6 @@
   modules.desktop.cursor.enable = true;
   modules.rofi.enable = true;
   modules.librewolf.enable = true;
-  # This is your new "Lissner-style" toggle!
   modules.shell.core.enable = true;
     xdg = {
     userDirs = {
