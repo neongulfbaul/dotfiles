@@ -4,7 +4,6 @@
   imports = [
     ../../modules/shell/zsh.nix
     ../../modules/editors/nvim.nix
-    ../../modules/shell/tmux.nix
     ../../modules/desktop/browsers/librewolf.nix
     ../../modules/desktop/hyprland.nix
     ../../modules/desktop/media/spotify.nix
@@ -79,12 +78,10 @@
     dig
   ];
 
-  programs.opencode.enable = true;
-  #modules.mpdModule.enable = true;
-  modules.apps.spotify.enable = true;
-  #modules.desktop.cursor.enable = true;
+  modules.desktop.media.spotify.enable = true;
   modules.desktop.apps.rofi.enable = true;
   modules.desktop.browsers.librewolf.enable = true;
+  modules.shell.tmux.enable = true;
   modules.shell.core.enable = true;
     xdg = {
     userDirs = {

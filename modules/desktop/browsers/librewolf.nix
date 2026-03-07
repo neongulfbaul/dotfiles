@@ -3,11 +3,11 @@
 with lib;
 
 {
-  options.modules.librewolf = {
+  options.modules.desktop.browsers.librewolf = {
     enable = mkEnableOption "Enable Librewolf with XDG wrapper";
   };
 
-  config = mkIf config.modules.librewolf.enable {
+  config = mkIf config.modules.desktop.browsers.librewolf.enable {
     programs.firefox = {
       enable = true;
       package = pkgs.librewolf;

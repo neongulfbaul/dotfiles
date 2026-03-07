@@ -4,11 +4,11 @@
 with lib;
 
 {
-  options.modules.rofi = {
+  options.modules.desktop.apps.rofi = {
     enable = mkEnableOption "enable rofi";
   };
 
-  config = mkIf config.modules.rofi.enable {
+  config = mkIf config.modules.desktop.apps.rofi.enable {
     programs.rofi = {
       enable = true;
       package = pkgs.rofi;

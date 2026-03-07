@@ -1,14 +1,21 @@
+{ pkgs, lib, inputs, config, ... }:
 
-# https://github.com/water-sucks/nixed/blob/main/home/profiles/base/nvim/default.nix
-{ pkgs, inputs, ... }:
+with lib;
 
 {
-  programs.tmux = {
-    enable = true;
+  options.modules.shell.tmux = {
+    enable = mkEnableOption "Enable tmux";
   };
 
-  home.file."./.config/tmux/tmux.conf" = {
-    source = ../../config/tmux/tmux.conf;
-  };
+  config = mkIf config.modules.shell.tmux.enable {
+
+        programs.tmux = {
+            enable = true;
+        };
+
+        home.file."./.config/tmux/tmux.conf" = {
+            source = ../../config/tmux/tmux.conf;
+        };
+    };
 	
 }

@@ -3,9 +3,9 @@
 with lib;
 
 let
-  cfg = config.modules.apps.spotify;
+  cfg = config.modules.desktop.media.spotify;
 in {
-  options.modules.apps.spotify = {
+  options.modules.desktop.media.spotify = {
     enable = mkEnableOption "Spotify client with playerctl support";
   };
 

@@ -8,6 +8,7 @@ alias update="sudo nixos-rebuild switch --flake .#$(hostname)"
 
 alias q=exit
 alias clr=clear
+alias cls=clear
 alias sudo='sudo '
 alias rm='rm -i'
 alias mkdir='mkdir -pv'
