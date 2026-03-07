@@ -1,6 +1,12 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
+  options.modules.desktop.hyprland = {
+    enable = lib.mkEnableOption "hyprland configuration";
+  };
+
+  config = lib.mkIf config.modules.desktop.hyprland.enable {
+
   wayland.windowManager.hyprland = {
     enable = true;
     package = pkgs.hyprland;
@@ -69,4 +75,5 @@
       NIXOS_OZONE_WL = "1";
       MOZ_ENABLE_WAYLAND = "1";
     };
+};
 }

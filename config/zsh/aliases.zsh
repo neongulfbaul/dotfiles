@@ -122,6 +122,4 @@ fi
 
 autoload -U zmv
 
-function mkcd { mkdir "$1" && cd "$1"; }; compdef mkcd=mkdir
-
 function zman { PAGER="less -g -I -s '+/^       "$1"'" man zshall; }

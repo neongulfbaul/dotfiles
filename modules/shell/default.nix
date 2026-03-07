@@ -7,6 +7,7 @@ in {
   # This tells Nix to look at these files too. 
   # You can now remove the tmux import from your Atlas host file.
   imports = [
+    ./zsh.nix
     ./tmux.nix
   ];
 

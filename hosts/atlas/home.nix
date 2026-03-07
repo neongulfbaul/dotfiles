@@ -2,10 +2,9 @@
 
 {
   imports = [
-    ../../modules/shell/zsh.nix
     ../../modules/editors/nvim.nix
     ../../modules/desktop/browsers/librewolf.nix
-    ../../modules/desktop/hyprland.nix
+    ../../modules/desktop
     ../../modules/desktop/media/spotify.nix
     ../../modules/desktop/apps/rofi.nix
     ../../modules/desktop/term/foot.nix
@@ -77,11 +76,13 @@
     # Network tools
     dig
   ];
-
+  modules.desktop.core.enable = true;
+  modules.desktop.hyprland.enable = true;
   modules.desktop.media.spotify.enable = true;
   modules.desktop.apps.rofi.enable = true;
   modules.desktop.browsers.librewolf.enable = true;
   modules.shell.tmux.enable = true;
+  modules.shell.zsh.enable = true;
   modules.shell.core.enable = true;
     xdg = {
     userDirs = {
