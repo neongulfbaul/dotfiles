@@ -3,7 +3,7 @@
 {
   imports = [
     ../../modules/shell/zsh.nix
-    ../../modules/editor/nvim.nix
+    ../../modules/editors/nvim.nix
     ../../modules/shell/tmux.nix
     ../../modules/desktop/browsers/librewolf.nix
     ../../modules/desktop/hyprland.nix
@@ -19,13 +19,8 @@
     XCURSOR_SIZE = "24";
   };
 
-
-    #  programs.foot.settings.colors = nix-colors.colorSchemes.catppuccin-mocha;
-    #  programs.zsh.settings.prompt.colors = nix-colors.colorSchemes.catppuccin-mocha;
-
   home.username = "neon";
   home.stateVersion = "24.11";
-
   home.packages = with pkgs; [
     # Fonts
     ubuntu_font_family
@@ -45,7 +40,6 @@
     eza
     fasd
     fzf
-    gnumake
     nix-zsh-completions
     ripgrep
     tokei
@@ -66,13 +60,11 @@
     telegram-desktop
     ranger
     qutebrowser
-    calibre
     remmina
     newsboat
     mpv
     zathura
     jq
-    bottles
     yazi
     nnn
     xfce.thunar
@@ -87,15 +79,12 @@
     dig
   ];
 
-
-
-
   programs.opencode.enable = true;
-  modules.mpdModule.enable = true;
+  #modules.mpdModule.enable = true;
   modules.apps.spotify.enable = true;
-  modules.desktop.cursor.enable = true;
-  modules.rofi.enable = true;
-  modules.librewolf.enable = true;
+  #modules.desktop.cursor.enable = true;
+  modules.desktop.apps.rofi.enable = true;
+  modules.desktop.browsers.librewolf.enable = true;
   modules.shell.core.enable = true;
     xdg = {
     userDirs = {
@@ -115,7 +104,6 @@
     XDG_MUSIC_DIR       = "$HOME";       
     XDG_PICTURES_DIR    = "$HOME/pictures";
     XDG_VIDEOS_DIR      = "$HOME";       
-   
     backupFileExtension = "backup";
   };
 }

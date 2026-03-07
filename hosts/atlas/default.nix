@@ -3,7 +3,7 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix") # Add this
-    ../../modules/hardware/nvidia.nix
+    ../../modules/profiles/hardware/nvidia.nix
     ../../modules/services/ollama.nix
   ];
 

@@ -7,7 +7,7 @@
     xwayland.enable = true;
 
   # read your config file from config/hypr
-  extraConfig = builtins.readFile ../config/hypr/hyprland.conf;
+  extraConfig = builtins.readFile ../../config/hypr/hyprland.conf;
 
   # you can still keep some inline settings if you want
   settings = { };

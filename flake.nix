@@ -1,5 +1,5 @@
 {
-  description = "Minimal flake for NixOS with Home Manager modules";
+  description = "flake for NixOS";
 
   inputs = {
     nixos-hardware.url = "github:NixOS/nixos-hardware";

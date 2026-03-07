@@ -29,7 +29,7 @@ let
   '';
 in
 {
-  home.file.".config/zsh/".source = ../config/zsh; 
+  home.file.".config/zsh/".source = ../../config/zsh; 
   home.file.".config/zsh/".recursive = true; 
   
   programs.zsh = {
