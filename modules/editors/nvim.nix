@@ -1,7 +1,14 @@
-# https://github.com/water-sucks/nixed/blob/main/home/profiles/base/nvim/default.nix
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, lib, config, ... }:
+
+with lib;
 
 {
+  options.modules.editors.neovim = {
+    enable = lib.mkEnableOption "neovim configuration";
+  };
+
+  config = lib.mkIf config.modules.editors.neovim.enable {
+
   programs.neovim = {
     enable = true;
     #package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
@@ -44,4 +51,5 @@
      require("user.options")
      require("user.keymaps")
       '';
+};
 }

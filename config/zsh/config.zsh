@@ -10,9 +10,6 @@ if [[ $TERM != dumb ]]; then
   setopt LONG_LIST_JOBS
   unsetopt BEEP
 
-  # Path exports
-  export KUBECONFIG="$HOME/.config/kube/config/k3s.yaml"
-
   # Plugin Env Vars
   export ZVM_INIT_MODE=sourcing
   export ZSH_AUTOSUGGEST_MANUAL_REBIND=1

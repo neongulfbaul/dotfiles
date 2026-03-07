@@ -2,13 +2,7 @@
 
 {
   imports = [
-    ../../modules/editors/nvim.nix
-    ../../modules/desktop/browsers/librewolf.nix
-    ../../modules/desktop
-    ../../modules/desktop/media/spotify.nix
-    ../../modules/desktop/apps/rofi.nix
-    ../../modules/desktop/term/foot.nix
-    ../../modules/shell
+    ../../modules
   ];
 
   # for good measure, export to session as well
@@ -76,7 +70,9 @@
     # Network tools
     dig
   ];
-  modules.desktop.core.enable = true;
+
+  modules.desktop.term.foot.enable = true;
+  modules.editors.neovim.enable = true;
   modules.desktop.hyprland.enable = true;
   modules.desktop.media.spotify.enable = true;
   modules.desktop.apps.rofi.enable = true;

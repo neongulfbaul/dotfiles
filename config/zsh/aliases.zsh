@@ -3,7 +3,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias -- -='cd -'
 
-alias update="sudo nixos-rebuild switch --flake .#$(hostname)"
+alias update="sudo nixos-rebuild switch --flake '.#$(hostname)'"
 
 
 alias q=exit

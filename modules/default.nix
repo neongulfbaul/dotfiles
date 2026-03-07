@@ -1,0 +1,9 @@
+{ ... }: 
+
+{
+  imports = [
+    ./shell
+    ./editors
+    ./desktop
+  ];
+}

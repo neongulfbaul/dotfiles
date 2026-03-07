@@ -1,6 +1,12 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
+  options.modules.desktop.term.foot = {
+    enable = lib.mkEnableOption "foot configuration";
+  };
+
+  config = lib.mkIf config.modules.desktop.term.foot.enable {
+
   programs.foot = {
     enable = true;
 
@@ -15,4 +21,5 @@
         };
     };
   };
+};
 }
