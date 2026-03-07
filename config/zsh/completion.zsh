@@ -1,4 +1,4 @@
-ifpath+=( "${0:a:h}/completions" )
+fpath+=( "${0:a:h}/completions" )
 
 # Don't offer history completion; we have fzf, C-r, and
 # zsh-history-substring-search for that.
@@ -26,7 +26,7 @@ setopt AUTO_LIST           # Automatically list choices on ambiguous completion.
 # setopt AUTO_PARAM_KEYS
 unsetopt FLOW_CONTROL        # Redundant with tmux
 unsetopt MENU_COMPLETE     # Do not autoselect the first completion entry.
-unsetopt COMPLETE_ALIASES  # Disabling this enables completion for aliases
+# unsetopt COMPLETE_ALIASES  # Disabling this enables completion for aliases
 # unsetopt ALWAYS_TO_END     # Move cursor to the end of a completed word.
 unsetopt CASE_GLOB
 
