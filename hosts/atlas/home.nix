@@ -76,6 +76,7 @@
   modules.desktop.hyprland.enable = true;
   modules.desktop.media.spotify.enable = true;
   modules.desktop.apps.rofi.enable = true;
+  modules.desktop.apps.dunst.enable = true;
   modules.desktop.browsers.librewolf.enable = true;
   modules.shell.tmux.enable = true;
   modules.shell.zsh.enable = true;
