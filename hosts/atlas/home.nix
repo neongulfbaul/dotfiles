@@ -5,11 +5,16 @@
     ../../modules
   ];
 
-  # for good measure, export to session as well
-  home.sessionVariables = {
-    XCURSOR_THEME = "catppuccin-mocha-dark-cursors";
-    XCURSOR_SIZE = "24";
-  };
+  modules.desktop.term.foot.enable = true;
+  modules.editors.neovim.enable = true;
+  modules.desktop.hyprland.enable = true;
+  modules.desktop.media.spotify.enable = true;
+  modules.desktop.apps.rofi.enable = true;
+  modules.desktop.apps.dunst.enable = true;
+  modules.desktop.browsers.librewolf.enable = true;
+  modules.shell.tmux.enable = true;
+  modules.shell.zsh.enable = true;
+  modules.shell.core.enable = true;
 
   home.username = "neon";
   home.stateVersion = "24.11";
@@ -71,34 +76,18 @@
     dig
   ];
 
-  modules.desktop.term.foot.enable = true;
-  modules.editors.neovim.enable = true;
-  modules.desktop.hyprland.enable = true;
-  modules.desktop.media.spotify.enable = true;
-  modules.desktop.apps.rofi.enable = true;
-  modules.desktop.apps.dunst.enable = true;
-  modules.desktop.browsers.librewolf.enable = true;
-  modules.shell.tmux.enable = true;
-  modules.shell.zsh.enable = true;
-  modules.shell.core.enable = true;
-    xdg = {
-    userDirs = {
-      enable = false;
-    };
-  };
-
-  home.sessionVariables = {
-    XDG_CONFIG_HOME = "$HOME/.config";
-    XDG_DATA_HOME = "$HOME/.local/share";
-    XDG_CACHE_HOME = "$HOME/.cache";
-    XDG_DESKTOP_DIR     = "$HOME";
-    XDG_DOWNLOAD_DIR    = "$HOME/downloads";
-    XDG_TEMPLATES_DIR   = "$HOME";       
-    XDG_PUBLICSHARE_DIR = "$HOME";       
-    XDG_DOCUMENTS_DIR   = "$HOME/documents";
-    XDG_MUSIC_DIR       = "$HOME";       
-    XDG_PICTURES_DIR    = "$HOME/pictures";
-    XDG_VIDEOS_DIR      = "$HOME";       
-    backupFileExtension = "backup";
-  };
+    #  home.sessionVariables = {
+    #    XDG_CONFIG_HOME = "$HOME/.config";
+    #    XDG_DATA_HOME = "$HOME/.local/share";
+    #    XDG_CACHE_HOME = "$HOME/.cache";
+    #    XDG_DESKTOP_DIR     = "$HOME";
+    #    XDG_DOWNLOAD_DIR    = "$HOME/downloads";
+    #    XDG_TEMPLATES_DIR   = "$HOME";       
+    #    XDG_PUBLICSHARE_DIR = "$HOME";       
+    #    XDG_DOCUMENTS_DIR   = "$HOME/documents";
+    #    XDG_MUSIC_DIR       = "$HOME";       
+    #    XDG_PICTURES_DIR    = "$HOME/pictures";
+    #    XDG_VIDEOS_DIR      = "$HOME";       
+    #    backupFileExtension = "backup";
+    #  };
 }

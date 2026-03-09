@@ -36,7 +36,7 @@ in
     time.timeZone = "Australia/Hobart"; # Matches your current locale
       
     # Set your XDG state here
-    home.stateVersion = "23.11"; 
+    home.stateVersion = "24.11"; 
     };
   };
 }

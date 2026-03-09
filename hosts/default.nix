@@ -18,7 +18,6 @@
     optimise.automatic = true;
   };
 
-  # Define shared packages (Neovim and Git) to be installed on all hosts
   environment.systemPackages = with pkgs; [
     git
   ];
