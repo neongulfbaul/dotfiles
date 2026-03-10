@@ -6,7 +6,7 @@
       enable = true;
       createDirectories = true;
       # lowercase Mapping
-      download  = "${config.home.homeDirectory}/download";
+      download  = "${config.home.homeDirectory}/downloads";
       documents = "${config.home.homeDirectory}/documents";
       music     = "${config.home.homeDirectory}/music";
       pictures  = "${config.home.homeDirectory}/pictures";
@@ -26,12 +26,13 @@
 
   # The "Force" Layer: Some apps only obey XDG if these env vars are set explicitly.
   home.sessionVariables = {
-    # The Big Three
-    XDG_CONFIG_HOME = "$HOME/.config";
-    XDG_CACHE_HOME  = "$HOME/.cache";
-    XDG_DATA_HOME   = "$HOME/.local/share";
-    XDG_STATE_HOME  = "$HOME/.local/state";
 
+    # Force lowercase for the user dirs we just made
+    XDG_DOWNLOAD_DIR  = "${config.xdg.userDirs.download}";
+    XDG_DOCUMENTS_DIR = "${config.xdg.userDirs.documents}";
+    XDG_MUSIC_DIR     = "${config.xdg.userDirs.music}";
+    XDG_PICTURES_DIR  = "${config.xdg.userDirs.pictures}";
+    XDG_VIDEOS_DIR    = "${config.xdg.userDirs.videos}";
     # Cleaning up common offenders
         #    GOPATH = "$XDG_DATA_HOME/go";
         #    GOMODCACHE = "$XDG_CACHE_HOME/go/mod";

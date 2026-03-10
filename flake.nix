@@ -10,35 +10,24 @@
 
   outputs = inputs @ { self, nixpkgs, nixos-hardware, home-manager, ... }: let
     overlays = [ (import ./overlays/treesitter.nix) ];
-    pkgsFor = system: import nixpkgs { inherit system overlays; };
+    # Use specialArgs to pass inputs globally to all modules
+    specialArgs = { inherit inputs; }; 
   in {
     nixosConfigurations = {
       atlas = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
         system = "x86_64-linux";
         modules = [
-          ./hosts/atlas
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.neon = import ./hosts/atlas/home.nix; 
-          }
+          ./hosts/atlas  # This now contains your system + HM config
         ];
-        specialArgs = { inherit home-manager; };
       };
 
       x1 = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
         system = "x86_64-linux";
         modules = [
-          ./hosts/x1
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.neon = import ./hosts/x1/home.nix;
-          }
+          ./hosts/x1     # Assuming you follow the same pattern for the X1
         ];
-        specialArgs = { inherit inputs home-manager; };
       };
     };
   };

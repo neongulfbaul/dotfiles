@@ -6,6 +6,7 @@ in {
   imports = [
     ./zsh.nix
     ./tmux.nix
+    ./utils.nix
   ];
 
   options.modules.shell.core = {
