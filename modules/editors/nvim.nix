@@ -8,6 +8,11 @@ in {
   };
 
   config = lib.mkIf config.modules.editors.neovim.enable {
+    environment.sessionVariables = {
+    EDITOR  = "nvim";
+    VISUAL  = "nvim";  # worth adding too — some programs use VISUAL
+    };
+
     home-manager.users.${user} = {
       programs.neovim = {
         enable        = true;
