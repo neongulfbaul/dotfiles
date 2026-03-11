@@ -116,6 +116,7 @@
   modules = {
     editors.neovim.enable = true;
     shell.zsh.enable      = true;
+    shell.tmux.enable     = true;
     desktop = {
       hyprland.enable           = true;
       apps.rofi.enable          = true;
