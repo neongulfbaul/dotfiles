@@ -4,7 +4,11 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix") # Add this
     ../../modules/profiles/hardware/nvidia.nix
-    ../../modules/services/ollama.nix
+    ../../modules/desktop/fonts.nix
+    ../../modules/user.nix
+    ../../modules/home.nix
+    ../../modules/profiles/user/neon.nix
+    ../../modules/desktop/apps/jp.nix
     inputs.home-manager.nixosModules.home-manager
   ];
 
@@ -27,24 +31,10 @@
   time.timeZone = "Australia/Hobart";
   services.timesyncd.enable = true;
 
-  i18n.defaultLocale = "en_GB.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_AU.UTF-8";
-    LC_IDENTIFICATION = "en_AU.UTF-8";
-    LC_MEASUREMENT = "en_AU.UTF-8";
-    LC_MONETARY = "en_AU.UTF-8";
-    LC_NAME = "en_AU.UTF-8";
-    LC_NUMERIC = "en_AU.UTF-8";
-    LC_PAPER = "en_AU.UTF-8";
-    LC_TELEPHONE = "en_AU.UTF-8";
-    LC_TIME = "en_AU.UTF-8";
-  };
-
-  fonts.fontconfig.enable = true;
-  fonts.fontconfig.hinting.enable = true;
-  fonts.fontconfig.hinting.style = "slight";
-  fonts.fontconfig.antialias = true;
-  fonts.fontconfig.subpixel.rgba = "rgb";
+  i18n.defaultLocale = "en_AU.UTF-8";
+  ## System Toggles
+  modules.desktop.fonts.enable = true;
+  modules.desktop.apps.jp.enable = true;
 
   environment.shells = with pkgs; [ zsh ];
   boot.supportedFilesystems = [ "cifs" ];
@@ -109,12 +99,6 @@
     pulse.enable = true;
   };
 
-  users.users.neon = {
-    isNormalUser = true;
-    description = "neon";
-    extraGroups = [ "networkmanager" "wheel" ];
-  };
-
   nixpkgs.config.allowUnfree = true;
   programs._1password.enable = true;
   programs._1password-gui = {
@@ -157,7 +141,6 @@
                     apps = {
                         rofi.enable = true;
                         dunst.enable = true;
-                        jp.enable = true;
                         cyber.enable = true;
                     };
                 };
