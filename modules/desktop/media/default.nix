@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./mpd.nix
-    ./spotify.nix
+        #./mpd.nix
+        #./spotify.nix
   ];
 }

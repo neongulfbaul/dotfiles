@@ -1,8 +1,8 @@
-{ ... }: 
-
-{
+# modules/default.nix
+{ ... }: {
   imports = [
-    ./xdg.nix
+    ./user.nix
+    ./home.nix
     ./shell
     ./editors
     ./desktop

@@ -1,25 +1,29 @@
+# hosts/atlas/default.nix
 { config, pkgs, lib, modulesPath, inputs, ... }:
-
 {
   imports = [
-    (modulesPath + "/installer/scan/not-detected.nix") # Add this
+    (modulesPath + "/installer/scan/not-detected.nix")
+    ../../modules
     ../../modules/profiles/hardware/nvidia.nix
-    ../../modules/desktop/fonts.nix
-    ../../modules/user.nix
-    ../../modules/home.nix
     ../../modules/profiles/user/neon.nix
-    ../../modules/desktop/apps/jp.nix
-    inputs.home-manager.nixosModules.home-manager
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
- 
-  networking.hostName = "atlas";
-  networking.networkmanager.enable = true;
+  # ── Boot ────────────────────────────────────────────────────────
+  boot = {
+    loader.systemd-boot.enable      = true;
+    loader.efi.canTouchEfiVariables = true;
+    initrd.availableKernelModules   = [ "nvme" "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
+    supportedFilesystems            = [ "cifs" ];
+  };
+
+  # ── Networking ──────────────────────────────────────────────────
+  networking = {
+    hostName       = "atlas";
+    networkmanager.enable = true;
+    useDHCP        = lib.mkDefault true;
+  };
   services.resolved = {
-    enable = true;
+    enable      = true;
     extraConfig = ''
       DNS=192.168.1.253
       FallbackDNS=1.1.1.1
@@ -27,168 +31,98 @@
     '';
   };
 
+  # ── Hardware ────────────────────────────────────────────────────
+  nixpkgs.hostPlatform          = lib.mkDefault "x86_64-linux";
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault true;
+  hardware.bluetooth.enable     = true;
+  services.blueman.enable       = true;
+  services.xserver.xkb.layout  = "us";
   time.hardwareClockInLocalTime = false;
-  time.timeZone = "Australia/Hobart";
-  services.timesyncd.enable = true;
+  services.timesyncd.enable     = true;
 
-  i18n.defaultLocale = "en_AU.UTF-8";
-  ## System Toggles
-  modules.desktop.fonts.enable = true;
-  modules.desktop.apps.jp.enable = true;
+  # ── Audio ───────────────────────────────────────────────────────
+  services.pulseaudio.enable = false;
+  security.rtkit.enable      = true;
+  services.pipewire = {
+    enable           = true;
+    alsa.enable      = true;
+    alsa.support32Bit = true;
+    pulse.enable     = true;
+  };
 
-  environment.shells = with pkgs; [ zsh ];
-  boot.supportedFilesystems = [ "cifs" ];
+  # ── Printing ────────────────────────────────────────────────────
+  services.printing = {
+    enable   = true;
+    browsing = true;
+    drivers  = [];
+  };
+  services.avahi = {
+    enable      = true;
+    nssmdns     = true;
+    openFirewall = true;
+  };
 
-  # Wayland session
+  # ── Wayland session ─────────────────────────────────────────────
   services.greetd = {
     enable = true;
     settings.default_session = {
       command = "${pkgs.hyprland}/bin/Hyprland";
-      user = "neon";
+      user    = config.user.name;  # no more hardcoded "neon"
     };
   };
-
   security.pam.services.swaylock = {};
 
-  programs.virt-manager.enable = true;
-  users.groups.libvirtd.members = ["neon"];
-  virtualisation.libvirtd.enable = true;
+  # ── Virtualisation ──────────────────────────────────────────────
+  programs.virt-manager.enable          = true;
+  users.groups.libvirtd.members         = [ config.user.name ];
+  virtualisation.libvirtd.enable        = true;
   virtualisation.spiceUSBRedirection.enable = true;
 
+  # ── Filesystems ─────────────────────────────────────────────────
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
   };
-
   fileSystems."/boot" = {
-    device = "/dev/disk/by-label/BOOT";
-    fsType = "vfat";
+    device  = "/dev/disk/by-label/BOOT";
+    fsType  = "vfat";
     options = [ "fmask=0022" "dmask=0022" ];
   };
+  swapDevices = [{ device = "/dev/disk/by-label/swap"; }];
 
-  swapDevices = [
-    { device = "/dev/disk/by-label/swap"; }
+  # ── System packages ─────────────────────────────────────────────
+  # TODO: move these into neon.nix user.packages or dedicated modules
+  nixpkgs.config.allowUnfree = true;
+  environment.systemPackages = with pkgs; [
+    git wget age
+    discord betterdiscordctl
+    remmina blueman
+    mako swaylock-effects swayidle
   ];
 
-  networking.useDHCP = lib.mkDefault true;
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault true;
-
-  # Hardware
-  hardware.bluetooth.enable = true; 
-  services.blueman.enable = true;
-  services.xserver.xkb.layout = "us";
-  services.printing = {
-    enable = true;
-    drivers = [ ]; # leave empty unless you need Brother-specific drivers
-  };
-
-  services.avahi = {
-    enable = true;
-    nssmdns = true;
-    openFirewall = true;
-  };
-
-  services.printing.browsing = true;
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
-  nixpkgs.config.allowUnfree = true;
   programs._1password.enable = true;
   programs._1password-gui = {
-    enable = true;
-    polkitPolicyOwners = [ "neon" ];
+    enable             = true;
+    polkitPolicyOwners = [ config.user.name ];
   };
-
   programs.appimage = {
     enable = true;
     binfmt = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    git
-    wget
-    discord
-    remmina
-    blueman
-    betterdiscordctl
-    age
-    mako
-    swaylock-effects
-    swayidle
-  ];
-
-
-    home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-        extraSpecialArgs = { inherit inputs; };
-        users.neon = { pkgs, ... }: {
-            imports = [ ../../modules ]; 
-            home.stateVersion = "24.11";
-            modules = {
-                desktop = {
-                    hyprland.enable = true;
-                    term.foot.enable = true;
-                    media.spotify.enable = true;
-                    browsers.librewolf.enable = true;
-                    apps = {
-                        rofi.enable = true;
-                        dunst.enable = true;
-                        cyber.enable = true;
-                    };
-                };
-                editors.neovim.enable = true;
-                shell = {
-                    tmux.enable = true;
-                    zsh.enable = true;
-                    core.enable = true;
-                    utils.enable = true;
-                };
-            };
-            home.packages = with pkgs; [
-                # Fonts
-                ubuntu_font_family
-                dejavu_fonts
-                adwaita-icon-theme
-                font-awesome
-
-                # Terminals / Shell Tools
-                fd
-                bat
-                eza
-                fasd
-                fzf
-                nix-zsh-completions
-                ripgrep
-                tree
-                python312
-                pavucontrol
-
-                # Productivity / General Apps
-                git
-                obsidian
-                signal-desktop
-                telegram-desktop
-                qutebrowser
-                remmina
-                newsboat
-                mpv
-                zathura
-                jq
-                yazi
-                nnn
-                xfce.thunar
-            ];
-        };
-};
   services.openssh.enable = true;
 
-  system.stateVersion = "24.05";
+  # ── Modules ─────────────────────────────────────────────────────
+  modules = {
+    editors.neovim.enable = true;
+    shell.zsh.enable      = true;
+    desktop = {
+      hyprland.enable           = true;
+      apps.rofi.enable          = true;
+      term.foot.enable          = true;
+      browsers.librewolf.enable = true;
+    };
+  };
+
+  system.stateVersion = "24.11";
 }

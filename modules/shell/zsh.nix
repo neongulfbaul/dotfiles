@@ -1,77 +1,75 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-
+# modules/shell/zsh.nix
+{ lib, config, pkgs, ... }:
 let
-  # Stage 1: Load Behavior & Plugins
-  zshInteractive = lib.mkOrder 1100 ''
+  inherit (lib) mkEnableOption mkIf mkOrder mkMerge types;
+  cfg  = config.modules.shell.zsh;
+  user = config.user.name;
+
+  zshInteractive = mkOrder 1100 ''
     source $ZDOTDIR/config.zsh
     source $ZDOTDIR/aliases.zsh
     source $ZDOTDIR/keybinds.zsh
   '';
-
-  # Stage 2: Load Completions & Initialize the Engine
-  zshCompletion = lib.mkOrder 1500 ''
-    # Manually source your completion file now
+  zshCompletion = mkOrder 1500 ''
     [[ ! -f $ZDOTDIR/completion.zsh ]] || source $ZDOTDIR/completion.zsh
-    
-    # Theme always comes last
-    [[ ! -f $ZDOTDIR/p10k.zsh ]] || source $ZDOTDIR/p10k.zsh
+    [[ ! -f $ZDOTDIR/p10k.zsh ]]      || source $ZDOTDIR/p10k.zsh
   '';
-in
-{
+in {
   options.modules.shell.zsh = {
-    enable = lib.mkEnableOption "zsh configuration";
+    enable  = mkEnableOption "zsh";
+    rcInit  = lib.mkOption { type = types.lines; default = ""; };
+    envInit = lib.mkOption { type = types.lines; default = ""; };
   };
 
-  config = lib.mkIf config.modules.shell.zsh.enable {
-  # Recursively link your config directory
-  home.file.".config/zsh/".source = ../../config/zsh;
-  home.file.".config/zsh/".recursive = true;
+  config = mkIf cfg.enable {
 
-  programs.zsh = {
-    enable = true;
-    dotDir = ".config/zsh";
-    enableCompletion = false; # We handle this manually in zshCompletion to control timing
+    # ── System level ──────────────────────────────────────────────
+    programs.zsh.enable = true;
 
-    history = {
-      path = "${config.home.homeDirectory}/.local/state/zsh/history";
-      size = 100000;
-      save = 100000;
-      extended = true;
-      share = true;
-      ignoreDups = true;
-      ignoreSpace = true;
+    environment.sessionVariables = {
+      ZDOTDIR    = "${config.home.configDir}/zsh";
+      ZGEN_DIR   = "${config.home.dataDir}/zgenom";
+      _FASD_DATA = "${config.home.cacheDir}/fasd";
     };
 
-    envExtra = ''
-      # Security umask from Lissner's setup
-      if (( EUID != 0 )); then umask 027; else umask 077; fi
-      
-      # Ensure Zgenom knows where to live
-      export ZGEN_DIR="$XDG_DATA_HOME/zgenom"
-    '';
+    # ── Files (via home.nix aliases) ──────────────────────────────
+    # Link individual files so dotDir can coexist without conflict
+    home.configFile = {
+      "zsh/config.zsh".source     = ../../config/zsh/config.zsh;
+      "zsh/aliases.zsh".source    = ../../config/zsh/aliases.zsh;
+      "zsh/keybinds.zsh".source   = ../../config/zsh/keybinds.zsh;
+      "zsh/completion.zsh".source = ../../config/zsh/completion.zsh;
+      "zsh/p10k.zsh".source       = ../../config/zsh/p10k.zsh;
+    };
 
-    # The gathering point
-    initContent = lib.mkMerge [ zshInteractive zshCompletion ];
+    # ── Home-manager program config ────────────────────────────────
+    home-manager.users.${user} = { lib, ... }: {
+      programs.zsh = {
+        enable           = true;
+        dotDir           = ".config/zsh";
+        enableCompletion = false;
+        history = {
+          path        = "${config.home.stateDir}/zsh/history";
+          size        = 100000;
+          save        = 100000;
+          extended    = true;
+          share       = true;
+          ignoreDups  = true;
+          ignoreSpace = true;
+        };
+        initContent = mkMerge [ zshInteractive zshCompletion ];
+      };
+
+      systemd.user.tmpfiles.rules = [
+        "d %h/.local/state/zsh 700 - - - -"
+        "d %h/.cache/zsh       750 - - - -"
+      ];
+
+      home.activation.cleanupZsh = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        rm -fv  "${config.home.dataDir}/zgenom/init.zsh"
+        rm -fv  "${config.home.configDir}/zsh/*.zwc"
+        rm -fv  "${config.home.cacheDir}/zsh/zcompdump*"
+      '';
+    };
   };
-
-  # Ensure the state directory exists to prevent history write errors
-  systemd.user.tmpfiles.rules = [
-    "d %h/.local/state/zsh 700 - - - -"
-    "d %h/.cache/zsh 750 - - - -"
-  ];
-  # This is the "Reload Fix" emulating Henrik's hook
-  home.activation.cleanupZsh = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    echo "Cleaning up Zsh binary cache and stale state..."
-    # 1. Nuke the Zgenom init file so it regenerates on next shell launch
-    rm -fv "${config.home.homeDirectory}/.local/share/zgenom/init.zsh"
-    
-    # 2. Nuke all .zwc files in your ZDOTDIR to keep the folder clean
-    rm -fv ${config.home.homeDirectory}/.config/zsh/*.zwc
-    
-    # 3. Clear the completion dump cache
-    rm -fv ${config.home.homeDirectory}/.cache/zsh/zcompdump*
-  '';
-    };
 }

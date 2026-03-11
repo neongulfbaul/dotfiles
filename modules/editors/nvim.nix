@@ -1,55 +1,51 @@
-{ pkgs, inputs, lib, config, ... }:
-
-with lib;
-
-{
+# modules/editors/nvim.nix
+{ pkgs, lib, config, ... }:
+let
+  user = config.user.name;
+in {
   options.modules.editors.neovim = {
-    enable = lib.mkEnableOption "neovim configuration";
+    enable = lib.mkEnableOption "neovim";
   };
 
   config = lib.mkIf config.modules.editors.neovim.enable {
+    home-manager.users.${user} = {
+      programs.neovim = {
+        enable        = true;
+        defaultEditor = true;
+        viAlias       = true;
+        vimAlias      = true;
+        extraLuaPackages = ps: [
+          ps.lua
+          ps.luarocks-nix
+          ps.magick
+        ];
+        extraPackages = with pkgs; [
+          xclip
+          imagemagick
+          gcc
+          lua-language-server
+          nil
+          nixd
+          black
+          nixfmt-rfc-style
+          nodePackages.prettier
+          biome
+          shfmt
+          stylelint
+          stylua
+        ];
+      };
 
-  programs.neovim = {
-    enable = true;
-    #package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-    extraLuaPackages = ps: [
-      ps.lua
-      ps.luarocks-nix
-      ps.magick
-    ];
-    extraPackages = with pkgs; [
-      xclip
-      imagemagick
-      gcc
-      # Language Servers
-      # https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-      lua-language-server
-      nil
-      nixd
+      xdg.configFile."nvim" = {
+        source    = ../../config/nvim;
+        recursive = true;
+      };
 
-      # Formatters
-      # https://github.com/stevearc/conform.nvim?tab=readme-ov-file#formatters
-      black
-      nixfmt-rfc-style
-      nodePackages.prettier
-      biome
-      shfmt
-      stylelint
-      stylua
-    ];
-  };
-
-  home.file."./.config/nvim/" = {
-    source = ../../config/nvim;
-    recursive = true;
-  };
-	
-   home.file."./.config/nvim/lua/user/init.lua".text = ''
-     require("user.options")
-     require("user.keymaps")
+      # Generates the init.lua that loads your user modules
+      xdg.configFile."nvim/lua/user/init.lua".text = ''
+        require("user.options")
+        require("user.keymaps")
       '';
-};
+    };
+  };
 }

@@ -1,21 +1,17 @@
-{ pkgs, lib, inputs, config, ... }:
-
-with lib;
-
-{
+# modules/shell/tmux.nix
+{ pkgs, lib, config, ... }:
+let
+  user = config.user.name;
+in {
   options.modules.shell.tmux = {
-    enable = mkEnableOption "Enable tmux";
+    enable = lib.mkEnableOption "tmux";
   };
 
-  config = mkIf config.modules.shell.tmux.enable {
+  config = lib.mkIf config.modules.shell.tmux.enable {
+    home-manager.users.${user} = {
+      programs.tmux.enable = true;
 
-        programs.tmux = {
-            enable = true;
-        };
-
-        home.file."./.config/tmux/tmux.conf" = {
-            source = ../../config/tmux/tmux.conf;
-        };
+      xdg.configFile."tmux/tmux.conf".source = ../../config/tmux/tmux.conf;
     };
-	
+  };
 }

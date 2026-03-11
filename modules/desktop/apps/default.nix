@@ -1,7 +1,7 @@
 { ... }: {
   imports = [
-    ./dunst.nix
-    ./rofi.nix
-    ./cyber.nix
+        #./dunst.nix
+        ./rofi.nix
+        #./cyber.nix
   ];
 }
