@@ -31,5 +31,5 @@ in {
         (mkIf (config.modules.shell ? gnupg && config.modules.shell.gnupg.enable) git-crypt)
       ];
     };
-  };
+};
 }

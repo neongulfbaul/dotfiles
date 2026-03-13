@@ -4,6 +4,7 @@
     ./zsh.nix
     ./tmux.nix
     ./git.nix
+    ./gnupg.nix
    #./utils.nix
   ];
 }
