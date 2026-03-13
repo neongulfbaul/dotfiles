@@ -1,0 +1,13 @@
+[user]
+    name = neon gulfbaul
+    email = neongulfbaul@gmail.com
+[init]
+    defaultBranch = main
+[core]
+    whitespace = trailing-space
+[pull]
+    rebase = true
+[push]
+    default = current
+[credential "https://github.com"]
+    helper = !gh auth git-credential
