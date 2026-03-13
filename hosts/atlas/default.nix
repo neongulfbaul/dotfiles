@@ -118,6 +118,7 @@
     editors.neovim.enable = true;
     shell.zsh.enable      = true;
     shell.tmux.enable     = true;
+    shell.git.enable      = true;
     desktop = {
       hyprland.enable           = true;
       apps.rofi.enable          = true;

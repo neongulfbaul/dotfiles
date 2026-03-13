@@ -51,8 +51,8 @@ in {
       users.${user} = {
         home.stateVersion = config.system.stateVersion; # [cite: 20]
         home.file = mkAliasDefinitions options.home.file;
-
-        xdg = {
+       
+          xdg = {
           configFile = mkAliasDefinitions options.home.configFile; # [cite: 20]
           dataFile   = mkAliasDefinitions options.home.dataFile; # [cite: 21]
           # Force HM to use our defined system paths

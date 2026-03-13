@@ -3,38 +3,33 @@
 with lib;
 let 
   cfg = config.modules.shell.git;
-  # Assuming your dotfiles repo has a 'config' folder in the root
-  # Adjust this path if your git config files are somewhere else
-  configDir = ../../../config; 
+  # Define the user variable exactly like in hyprland.nix 
+  user = config.user.name; 
+  configDir = ../../config; 
 in {
   options.modules.shell.git = {
     enable = mkEnableOption "Git shell module";
   };
 
   config = mkIf cfg.enable {
-    # 1. Packages (Replacing user.packages with home-manager's equivalent)
-    home.packages = with pkgs; [
-      diff-so-fancy
-      gh
-      git-annex
-      git-open
-      act
-      (mkIf config.modules.shell.gnupg.enable git-crypt)
-    ];
-
-    # 2. XDG Config Files (Replacing hey.configDir)
-    # This automatically links these files to ~/.config/git/...
-    xdg.configFile = {
+    # 1. Custom top-level configFile (moved outside the HM block as requested)
+    home.configFile = {
       "git/config".source     = "${configDir}/git/config";
       "git/ignore".source     = "${configDir}/git/ignore";
       "git/attributes".source = "${configDir}/git/attributes";
     };
 
-    # 3. ZSH Aliases
-    # This assumes you have a way to inject extra RC files into ZSH
-    # If using standard Home Manager ZSH:
-    programs.zsh.initExtra = ''
-      source ${configDir}/git/aliases.zsh
-    '';
+    # 2. Home-manager level (Matches hyprland.nix structure [cite: 16])
+    home-manager.users.${user} = {
+      # This matches how you install packages in hyprland.nix 
+      home.packages = with pkgs; [
+        diff-so-fancy
+        gh
+        git-annex
+        git-open
+        act
+        (mkIf (config.modules.shell ? gnupg && config.modules.shell.gnupg.enable) git-crypt)
+      ];
+    };
   };
 }
