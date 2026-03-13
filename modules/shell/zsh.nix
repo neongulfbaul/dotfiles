@@ -74,6 +74,6 @@ in {
     };
 
     # Cleanup hook — nukes zgenom state on rebuild so it regenerates
-    home.file.".local/share/zgenom/.keep".text = "";  # ensure dir exists
+    #home.file.".local/share/zgenom/.keep".text = "";  # ensure dir exists
   };
 }
