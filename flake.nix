@@ -1,5 +1,5 @@
 {
-  description = "Elegant NixOS Flake";
+  description = "blatantly ripped from https://github.com/hlissner/dotfiles";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
