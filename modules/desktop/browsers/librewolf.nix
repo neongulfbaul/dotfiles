@@ -13,6 +13,14 @@ in {
   };
 
   config = lib.mkIf config.modules.desktop.browsers.librewolf.enable {
+    modules.desktop.browsers.librewolf.userChrome = ''
+      /* Remove window control buttons (close/min/max) */
+      .titlebar-buttonbox-container { display: none !important; }
+
+      /* Remove the × close button on tabs */
+      .tab-close-button { display: none !important; }
+    '';
+
     home-manager.users.${user} = { pkgs, osConfig, lib, ... }: {
 
       # ── Profile jail ──────────────────────────────────────────────
@@ -37,18 +45,37 @@ in {
           config.modules.desktop.browsers.librewolf.userContent;
       };
 
-      # ── XDG wrapper — obey or be jailed ───────────────────────────
+      # ── XDG wrapper — HOME jail ────────────────────────────────────
+      # Named 'lw' to avoid conflicting with the Nix librewolf package
+      # wrapper which wins the 'librewolf' name in PATH. This sets HOME
+      # to fakeDir then delegates to the real wrapper for LD_LIBRARY_PATH
+      # and Wayland env setup.
       home.packages = [
-        (pkgs.writeShellScriptBin "librewolf" ''
+        (pkgs.writeShellScriptBin "lw" ''
           export HOME="$XDG_FAKE_HOME"
-          exec "${osConfig.programs.firefox.package}/bin/librewolf" "$@"
+          exec librewolf "$@"
         '')
       ];
 
+      # ── Desktop entry — ensure all launch paths use the jail ──────
+      xdg.desktopEntries.librewolf = {
+        name     = "LibreWolf";
+        exec     = "lw %U";
+        icon     = "librewolf";
+        terminal = false;
+        categories = [ "Network" "WebBrowser" ];
+        mimeType = [
+          "text/html"
+          "x-scheme-handler/http"
+          "x-scheme-handler/https"
+          "application/pdf"
+        ];
+      };
+
       # ── Default apps ──────────────────────────────────────────────
       xdg.mimeApps.defaultApplications = {
-        "application/pdf"  = "librewolf.desktop";
-        "text/html"        = "librewolf.desktop";
+        "application/pdf"        = "librewolf.desktop";
+        "text/html"              = "librewolf.desktop";
         "x-scheme-handler/http"  = "librewolf.desktop";
         "x-scheme-handler/https" = "librewolf.desktop";
       };
@@ -134,9 +161,10 @@ in {
             "privacy.trackingprotection.emailtracking.enabled"      = true;
             "privacy.trackingprotection.fingerprinting.enabled"     = true;
             "privacy.trackingprotection.socialtracking.enabled"     = true;
-            # Lissner: sanitise on shutdown
+            # sanitise on shutdown
             "privacy.sanitize.sanitizeOnShutdown"                   = true;
             "privacy.clearOnShutdown.cache"                         = true;
+            "privacy.clearOnShutdown.sessions"                      = false; # This is the "Active Logins" checkbox
             "privacy.clearOnShutdown.cookies"                       = false; # keep logins
             "privacy.clearOnShutdown.history"                       = false; # keep history
             "privacy.clearOnShutdown.downloads"                     = false;
@@ -146,21 +174,17 @@ in {
             "security.family_safety.mode"                           = 0;
             "security.pki.sha1_enforcement_level"                   = 1;
             "security.tls.enable_0rtt_data"                         = false;
-            # Lissner: HTTPS-only mode
             "dom.security.https_only_mode"                          = true;
             "dom.security.https_only_mode_ever_enabled"             = true;
-            # Lissner: disable dangerous APIs
             "dom.battery.enabled"                                    = false;
             "dom.gamepad.enabled"                                    = false;
             "beacon.enabled"                                        = false;
             "browser.send_pings"                                    = false;
             "browser.fixup.alternate.enabled"                       = false;
-            # Lissner: OCSP for certificate validation
             "security.OCSP.enabled"                                 = 1;
             "security.OCSP.require"                                 = true;
 
             # ── Geolocation ────────────────────────────────────────
-            # Use Mozilla's service instead of Google
             "geo.provider.network.url"                              = "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
             "geo.provider.use_gpsd"                                 = false;
 
@@ -174,9 +198,7 @@ in {
             "extensions.formautofill.heuristics.enabled"            = false;
 
             # ── Performance / SSD ──────────────────────────────────
-            # Write session every 30min not 15sec — kinder to SSDs
             "browser.sessionstore.interval"                         = "1800000";
-            # Lissner: reduce session history entries
             "browser.sessionhistory.max_entries"                    = 25;
 
             # ── Sync ───────────────────────────────────────────────

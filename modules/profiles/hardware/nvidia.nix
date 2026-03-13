@@ -1,44 +1,67 @@
-{ pkgs, config, libs, ... }:
+{ lib, config, pkgs, ... }:
 
-{
+with lib;
+let
+  cfg = config.modules.hardware.nvidia;
+  # We need to define this here so the rest of the file can see it
+  nvidiaPkg = config.boot.kernelPackages.nvidiaPackages.stable;
+in {
+  options.modules.hardware.nvidia.enable = mkEnableOption "Nvidia GPU support";
 
-# Enable OpenGL
-  hardware.graphics.enable = true;
+  config = mkIf cfg.enable {
+    # 1. Hardware & Driver Core
+    hardware.graphics = {
+      enable = true;
+      enable32Bit = true;
+      extraPackages = [ pkgs.libva-vdpau-driver ];
+    };
 
-  # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+    services.xserver.videoDrivers = [ "nvidia" ];
 
-  hardware.nvidia = {
+    hardware.nvidia = {
+      package = nvidiaPkg;
+      modesetting.enable = true;
+      
+      powerManagement.enable = mkDefault true;
+      powerManagement.finegrained = mkDefault false;
 
-    # Modesetting is required.
-    modesetting.enable = true;
+      open = mkDefault false;
+      nvidiaSettings = false; # Use our wrapper instead
+      
+      # persistenced helps with power/stability.
+      #nvidiaPersistenced = true;
+    };
 
-    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    powerManagement.enable = false;
-    # Fine-grained power management. Turns off GPU when not in use.
-    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-    powerManagement.finegrained = false;
+    environment = {
+      systemPackages = with pkgs; [
+        # The "Lissner Special": Wraps nvidia-settings to respect XDG
+        (stdenv.mkDerivation {
+          name = "nvidia-settings-wrapped";
+          buildInputs = [ makeWrapper ];
+          buildCommand = ''
+            mkdir -p $out/bin
+            makeWrapper ${nvidiaPkg.settings}/bin/nvidia-settings $out/bin/nvidia-settings \
+              --run 'mkdir -p "$XDG_CONFIG_HOME/nvidia"' \
+              --append-flags '--config="$XDG_CONFIG_HOME/nvidia/rc.conf"'
+          '';
+        })
 
-    # Use the NVidia open source kernel module (not to be confused with the
-    # independent third-party "nouveau" open source driver).
-    # Support is limited to the Turing and later architectures. Full list of 
-    # supported GPUs is at: 
-    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
-    # Only available from driver 515.43.04+
-    # Currently alpha-quality/buggy, so false is currently the recommended setting.
-    open = false;
+        cudaPackages.cudatoolkit
+        libva
+      ];
 
-    # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
-    nvidiaSettings = true;
+      variables = {
+        CUDA_PATH = "${pkgs.cudaPackages.cudatoolkit}";
+        CUDA_CACHE_PATH = "$XDG_CACHE_HOME/nv";
+      };
 
-    # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-
-    prime = { 
-		# Make sure to use the correct Bus ID values for your system!
-		  intelBusId = "PCI:00:02.0";
-		  nvidiaBusId = "PCI:01:00.0";
-	};
-  };
+      sessionVariables = {
+        LIBVA_DRIVER_NAME = "nvidia";
+        #WLR_NO_HARDWARE_CURSORS = "1";
+        __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+        # GBM_BACKEND can stay for now, but comment it out if Firefox/Discord flickers
+        #GBM_BACKEND = "nvidia-drm";
+      };
+    };
+  }; 
 }

@@ -39,6 +39,7 @@
   services.xserver.xkb.layout  = "us";
   time.hardwareClockInLocalTime = false;
   services.timesyncd.enable     = true;
+  modules.hardware.nvidia.enable = true;
 
   # ── Audio ───────────────────────────────────────────────────────
   services.pulseaudio.enable = false;
@@ -58,7 +59,7 @@
   };
   services.avahi = {
     enable      = true;
-    nssmdns     = true;
+    nssmdns4     = true;
     openFirewall = true;
   };
 

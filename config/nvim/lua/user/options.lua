@@ -25,7 +25,7 @@ vim.opt.hlsearch = false
 vim.opt.wrap = false
 
 -- Undo Options
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undodir = vim.fn.stdpath("state") .. "/undo"
 vim.opt.undofile = true
 
 -- Better splitting

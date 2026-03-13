@@ -104,6 +104,8 @@ zstyle ':completion:*:(ssh|scp|rsync):*:hosts-host' ignored-patterns '*(.|:)*' l
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-domain' ignored-patterns '<->.<->.<->.<->' '^[-[:alnum:]]##(.[-[:alnum:]]##)##' '*@*'
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '255.255.255.255' '::1' 'fe80::*'
 
+# sudo prompt
+export SUDO_PROMPT=$(printf "\e[1;38;2;205;214;244;48;2;49;50;68msudo\e[0m \e[38;2;250;179;135m%%u\e[0m@\e[38;2;137;180;250m%%h\e[0m: ")
 # Only generate the dump if it doesn't exist. `hey reload` will clear it. And
 # yes, -d is necessary. compinit doesn't respect cache-path.
 ZCOMPCACHE="$XDG_CACHE_HOME/zsh/zcompdump.$ZSH_VERSION"

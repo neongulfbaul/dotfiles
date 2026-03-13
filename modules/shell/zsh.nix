@@ -31,6 +31,9 @@ in {
       ZDOTDIR       = "$XDG_CONFIG_HOME/zsh";
       ZGEN_DIR      = "$XDG_DATA_HOME/zgenom";
       _FASD_DATA    = "$XDG_CACHE_HOME/fasd";
+      # bold "sudo" — Mocha text on surface0 bg
+      # %%u — teal, %%h — blue
+      SUDO_PROMPT = "\x1b[1;38;2;205;214;244;48;2;49;50;68msudo\x1b[0m \x1b[38;2;148;226;213m%%u\x1b[0m@\x1b[38;2;137;180;250m%%h\x1b[0m: ";
     };
 
     systemd.user.tmpfiles.rules = [

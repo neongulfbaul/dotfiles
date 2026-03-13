@@ -1,34 +1,24 @@
 {
-  description = "flake for NixOS";
+  description = "Elegant NixOS Flake";
 
   inputs = {
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs @ { self, nixpkgs, nixos-hardware, home-manager, ... }: let
-    overlays = [ (import ./overlays/treesitter.nix) ];
-    # Use specialArgs to pass inputs globally to all modules
-    specialArgs = { inherit inputs; }; 
-  in {
-    nixosConfigurations = {
-      atlas = nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64-linux";
+  outputs = { self, nixpkgs, ... } @ inputs: 
+    let
+      hosts = [ "atlas" "x1" ];
+      
+      mkHost = host: nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
         modules = [
-          ./hosts/atlas  # This now contains your system + HM config
+          ./hosts/${host} 
         ];
       };
-
-      x1 = nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/x1     # Assuming you follow the same pattern for the X1
-        ];
-      };
+    in {
+      nixosConfigurations = nixpkgs.lib.genAttrs hosts mkHost;
     };
-  };
 }
