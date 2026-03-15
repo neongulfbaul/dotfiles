@@ -35,8 +35,8 @@ in {
       services.hyprpaper = {
         enable = true;
         settings = {
-          preload   = [ "${config.user.home}/.dotfiles/wallpaper/dibbles.jpg" ];
-          wallpaper = [ ",${config.user.home}/.dotfiles/wallpaper/dibbles.jpg" ];
+          preload   = [ "${config.user.home}/.dotfiles/wallpaper/puffy-stars.jpg" ];
+          wallpaper = [ ",${config.user.home}/.dotfiles/wallpaper/puffy-stars.jpg" ];
         };
       };
 

@@ -7,6 +7,13 @@
     ../../modules/profiles/hardware/nvidia.nix
     ../../modules/profiles/user/neon.nix
   ];
+  
+  # Activate the neon profile
+  modules.profiles = {
+    user = "neon";
+    role = "workstation";
+    platform = "x86_64-linux";
+  };
 
   # ── Boot ────────────────────────────────────────────────────────
   boot = {

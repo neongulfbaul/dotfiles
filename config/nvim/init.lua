@@ -5,7 +5,7 @@ if not vim.loop.fs_stat(lazypath) then
         "clone",
         "--filter=blob:none",
         "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
+        "--branch=stable",
         lazypath,
     })
 end
@@ -17,10 +17,11 @@ vim.opt.guicursor = ""
 
 require("lazy").setup("plugins", {
     rocks = { enabled = false },
-    dev = {
-        path = "~/.local/share/nvim/nix",
-        fallback = false,
-    }
+    -- Remove this dev section!
+    -- dev = {
+    --     path = "~/.local/share/nvim/nix",
+    --     fallback = false,
+    -- }
 })
 
 require("user")

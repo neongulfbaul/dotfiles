@@ -15,6 +15,8 @@
       mkHost = host: nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
+          ./default.nix
+	  #{ nixpkgs.overlays = [ (import ./overlays/treesitter.nix) ]; }
           ./hosts/${host} 
         ];
       };

@@ -1,5 +1,5 @@
 function ColorMyPencils(color)
-	color = color or "catppuccin"
+	color = color or "tokyonight-storm"
 	vim.cmd.colorscheme(color)
 
 	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
@@ -103,21 +103,6 @@ return {
         config = function()
             require('rose-pine').setup({
                 disable_background = true,
-                styles = {
-                    italic = false,
-                },
-            })
-
-            ColorMyPencils();
-        end
-    },
-
-    {
-        "catppuccin/neovim",
-        name = "catppuccin",
-        config = function()
-            require('catppuccin').setup({
-                transparent_background = true,
                 styles = {
                     italic = false,
                 },
