@@ -78,7 +78,7 @@ in {
 
     # 5. Service-level Fixes
     services.dbus.implementation = "broker"; # [cite: 74]
-    services.displayManager.environment.XAUTHORITY = "$XDG_RUNTIME_DIR/xauthority"; # [cite: 75]
-    services.displayManager.environment.XCOMPOSECACHE = "/tmp/xcompose"; # [cite: 77]
+    services.displayManager.generic.environment.XAUTHORITY = "$XDG_RUNTIME_DIR/xauthority"; # [cite: 75]
+    services.displayManager.generic.environment.XCOMPOSECACHE = "/tmp/xcompose"; # [cite: 77]
   };
 }

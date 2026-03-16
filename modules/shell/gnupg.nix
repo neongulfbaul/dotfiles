@@ -22,7 +22,7 @@ in {
     programs.gnupg.agent = {
       enable = true;
       pinentryPackage = pkgs.pinentry-rofi.override {
-        rofi = pkgs.rofi-wayland-unwrapped; # Swapped to wayland version for your setup
+        rofi = pkgs.rofi-unwrapped; # Swapped to wayland version for your setup
       };
     };
 

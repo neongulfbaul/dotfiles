@@ -34,9 +34,14 @@ in {
 
       services.hyprpaper = {
         enable = true;
+        package = pkgs.hyprpaper;
         settings = {
-          preload   = [ "${config.user.home}/.dotfiles/wallpaper/puffy-stars.jpg" ];
-          wallpaper = [ ",${config.user.home}/.dotfiles/wallpaper/puffy-stars.jpg" ];
+          wallpaper = [ 
+            {
+                monitor = "DP-3";
+                path = "${config.user.home}/.dotfiles/wallpaper/puffy-stars.jpg"; 
+            }
+          ];
         };
       };
 
@@ -58,13 +63,12 @@ in {
         hyprpicker
         hyprshade
         hyprshot
-        hyprpaper
         grim
         slurp
         wl-clipboard
         swappy
         mako
-        xorg.xrandr
+        xrandr
         gromit-mpx
         pamixer
         wlr-randr

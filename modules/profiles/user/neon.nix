@@ -21,7 +21,7 @@ mkIf (username == "neon") (mkMerge [
         # Fonts
         nerd-fonts.blex-mono  # This is "IBM Plex Mono" patched with icons
         noto-fonts-cjk-sans   # Keep this for your Japanese study!
-        ubuntu_font_family
+        ubuntu-classic
         dejavu_fonts
         adwaita-icon-theme
         font-awesome
@@ -36,7 +36,7 @@ mkIf (username == "neon") (mkMerge [
         qutebrowser
         newsboat mpv zathura
         jq yazi nnn
-        xfce.thunar
+        thunar
         python312
         pavucontrol
       ];

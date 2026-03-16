@@ -24,14 +24,13 @@
     useDHCP        = lib.mkDefault true;
   };
   services.resolved = {
-    enable      = true;
-    extraConfig = ''
-      DNS=192.168.1.253
-      FallbackDNS=1.1.1.1
-      DNSStubListener=no
-    '';
+      enable = true;
+      settings = {
+          Resolve = {
+              DNS = [ "192.168.1.253" "1.1.1.1" ];
+          };
+      };
   };
-
   # ── Hardware ────────────────────────────────────────────────────
   nixpkgs.hostPlatform          = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault true;
@@ -63,6 +62,9 @@
     nssmdns4     = true;
     openFirewall = true;
   };
+
+  # -- TODO temp fix for build issues
+  documentation.enable = false;
 
   # ── Wayland session ─────────────────────────────────────────────
   services.greetd = {
@@ -131,6 +133,4 @@
       browsers.librewolf.enable = true;
     };
   };
-
-  system.stateVersion = "24.11";
 }

@@ -36,7 +36,7 @@ in {
           
           # Formatters
           black
-          nixfmt-rfc-style
+          nixfmt
           nodePackages.prettier
           biome
           shfmt

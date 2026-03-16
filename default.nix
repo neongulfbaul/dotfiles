@@ -54,7 +54,7 @@ with lib;
       };
     };
 
-    system.stateVersion = "24.11";
+    system.stateVersion = "25.11";
 
     boot = {
       kernelPackages = mkDefault pkgs.linuxPackages_latest;

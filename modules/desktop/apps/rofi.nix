@@ -11,7 +11,7 @@ in {
     home-manager.users.${user} = {
       programs.rofi = {
         enable    = true;
-        package   = pkgs.rofi-wayland;
+        package   = pkgs.rofi;
         plugins   = with pkgs; [
           rofi-calc
           rofi-emoji
