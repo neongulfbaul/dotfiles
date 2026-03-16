@@ -16,7 +16,6 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./default.nix
-	  #{ nixpkgs.overlays = [ (import ./overlays/treesitter.nix) ]; }
           ./hosts/${host} 
         ];
       };
