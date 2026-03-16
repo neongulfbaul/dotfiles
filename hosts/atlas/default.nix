@@ -1,12 +1,6 @@
 # hosts/atlas/default.nix
-{ config, pkgs, lib, modulesPath, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-    ../../modules
-    ../../modules/profiles/hardware/nvidia.nix
-    ../../modules/profiles/user/neon.nix
-  ];
   
   # Activate the neon profile
   modules.profiles = {

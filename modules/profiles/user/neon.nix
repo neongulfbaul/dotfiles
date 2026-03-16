@@ -19,6 +19,8 @@ mkIf (username == "neon") (mkMerge [
       
       packages = with pkgs; [
         # Fonts
+        nerd-fonts.blex-mono  # This is "IBM Plex Mono" patched with icons
+        noto-fonts-cjk-sans   # Keep this for your Japanese study!
         ubuntu_font_family
         dejavu_fonts
         adwaita-icon-theme

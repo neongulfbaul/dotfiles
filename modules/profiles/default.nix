@@ -5,6 +5,11 @@ let
   mkOpt = type: default: mkOption { inherit type default; };
 in
 {
+  imports = [
+    ./user/neon.nix
+    ./hardware/nvidia.nix
+  ];
+  
   options.modules.profiles = with types; {
     user = mkOpt str "";
     role = mkOpt str "";
