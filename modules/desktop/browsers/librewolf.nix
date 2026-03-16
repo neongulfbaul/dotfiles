@@ -37,6 +37,11 @@ in {
           StartWithLastProfile=1
           Version=2
         '';
+        
+        "${localDir}/${profileName}.default/user.js".text = ''
+        user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+        '';
+
       } // lib.optionalAttrs (config.modules.desktop.browsers.librewolf.userChrome != "") {
         "${localDir}/${profileName}.default/chrome/userChrome.css".text =
           config.modules.desktop.browsers.librewolf.userChrome;
@@ -84,6 +89,16 @@ in {
       programs.firefox = {
         enable  = true;
         package = pkgs.librewolf;
+      
+        # to load the custom css option otherwise it doesn't seem to work
+        profiles.${profileName} = {
+            id = 0;
+            isDefault = true;
+            settings = {
+                "toolkit.legacyUserProfileCustomizations.stylesheet" = true;
+            };
+            userChrome = config.modules.desktop.browsers.librewolf.userChrome;
+        };
 
         policies = {
           DontCheckDefaultBrowser = true;
@@ -203,7 +218,6 @@ in {
 
             # ── Sync ───────────────────────────────────────────────
             "services.sync.prefs.sync.browser.uiCustomization.state" = true;
-            "toolkit.legacyUserProfileCustomizations.stylesheets"   = true;
 
             # ── Crash / telemetry / reporting ──────────────────────
             "toolkit.telemetry.unified"                             = false;

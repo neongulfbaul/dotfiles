@@ -27,6 +27,25 @@ in {
 
     users.defaultUserShell = pkgs.zsh;
 
+    user.packages = with pkgs; [
+      at
+      bat      # a better cat
+      bc
+      dust     # a better du
+      eza      # a better ls
+      fasd
+      fd
+      fzf
+      gnumake
+      libqalculate  # calculator cli w/ currency conversion
+      nix-zsh-completions
+      ripgrep  # a better grep
+      tokei    # for code statistics
+      unar
+      zip
+      unzip
+    ];
+
     environment.variables = {
       ZDOTDIR       = "$XDG_CONFIG_HOME/zsh";
       ZGEN_DIR      = "$XDG_DATA_HOME/zgenom";
