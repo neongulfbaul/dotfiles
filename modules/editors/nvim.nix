@@ -45,7 +45,7 @@ in {
         ];
         
         # Add this Lua snippet to make Nix grammars available
-        extraLuaConfig = ''
+        initLua = ''
           -- Make Nix-compiled treesitter grammars available
           vim.opt.runtimepath:append("${pkgs.vimPlugins.nvim-treesitter}")
           vim.opt.runtimepath:append("${treesitterGrammars}")

@@ -53,10 +53,6 @@ in {
       desktop     = "${home.fakeDir}";
       publicShare = "${home.fakeDir}";
       templates   = "${home.fakeDir}";
-
-      extraConfig = {
-        XDG_SCREENSHOTS_DIR = "${config.user.home}/pictures/screenshots"; # [cite: 35]
-      };
     };
 
     # 4. Activation Scripts (Auto-create folders and Symlink the Jail)
