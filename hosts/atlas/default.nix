@@ -71,7 +71,7 @@
     enable = true;
     settings.default_session = {
       command = "${pkgs.hyprland}/bin/Hyprland";
-      user    = config.user.name;  # no more hardcoded "neon"
+      user    = config.user.name; 
     };
   };
   security.pam.services.swaylock = {};
