@@ -24,14 +24,12 @@
       nixosConfigurations = nixpkgs.lib.genAttrs hosts mkHost;
 
       nixosModules = {
-        default = ./modules;
+        default = ./default.nix;
         shell = ./modules/shell;
         editors = ./modules/editors;
-        desktop = ./modules/desktop;
         profiles = ./modules/profiles;
-        services = ./modules/services;
-        security = ./modules/security;
-        xdg = ./modules/xdg;
+        security = ./modules/security.nix;
+        xdg = ./modules/xdg.nix;
         };
     };
 }
