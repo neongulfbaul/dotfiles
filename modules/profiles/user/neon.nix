@@ -5,7 +5,7 @@ let
   cfg = config.modules.profiles;
   username = cfg.user;
   role = cfg.role;
-  key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPutYourActualSSHKeyHere";
+  key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQHUIP2sUhehBXojjy6Kfq6UINn5AU/TJrjYgEvYDeL neon@atlas";
 in
 mkIf (username == "neon") (mkMerge [
   {
