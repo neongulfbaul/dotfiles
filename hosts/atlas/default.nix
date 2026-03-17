@@ -131,6 +131,7 @@
       apps.rofi.enable          = true;
       term.foot.enable          = true;
       browsers.librewolf.enable = true;
+      fonts.enable              = true;
     };
   };
 }

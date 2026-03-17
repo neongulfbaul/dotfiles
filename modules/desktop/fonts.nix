@@ -18,10 +18,12 @@
     # You can also move your system-wide fonts here if you want them 
     # available before you even log in to your user account.
     fonts.packages = with pkgs; [
-      ubuntu_font_family
+      ubuntu-classic
       dejavu_fonts
       adwaita-icon-theme
       font-awesome
+      nerd-fonts.blex-mono
+      noto-fonts-cjk-sans
     ];
   };
 }

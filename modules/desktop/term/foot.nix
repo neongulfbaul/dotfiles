@@ -9,13 +9,14 @@ in {
 
   config = lib.mkIf config.modules.desktop.term.foot.enable {
     home-manager.users.${user} = {
+      fonts.fontconfig.enable = true; # <--- THIS IS THE MAGIC SWITCH
       programs.foot = {
         enable = true;
         settings = {
           main = {
             term  = "foot";
             shell = "${pkgs.tmux}/bin/tmux new-session -A -D -s main 'zsh -l'";
-            font  = "monospace:size=14";
+            font  = "BlexMono Nerd Font:size=14";
           };
                     colors = {
                         alpha      = "0.9";
