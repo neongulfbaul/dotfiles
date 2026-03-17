@@ -22,7 +22,8 @@
       dejavu_fonts
       adwaita-icon-theme
       font-awesome
-      nerd-fonts.blex-mono
+      lilex
+      nerd-fonts.lilex
       noto-fonts-cjk-sans
     ];
   };

@@ -16,9 +16,9 @@ in {
           main = {
             term  = "foot";
             shell = "${pkgs.tmux}/bin/tmux new-session -A -D -s main 'zsh -l'";
-            font  = "BlexMono Nerd Font:size=14";
+            font  = "Lilex Nerd Font:style=Regular:size=14, Noto Sans CJK JP:size=14";
           };
-                    colors = {
+                    colors-dark = {
                         alpha      = "0.9";
                         background = "1e1e2e";
                         foreground = "cdd6f4";
