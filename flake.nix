@@ -25,6 +25,8 @@
 
       nixosModules = {
         default = ./default.nix;
+        home = ./modules/home.nix;
+        options = ./modules/default-options.nix;
         shell = ./modules/shell;
         editors = ./modules/editors;
         profiles = ./modules/profiles;
