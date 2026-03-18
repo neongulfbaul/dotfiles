@@ -2,12 +2,8 @@
 let
   user = config.user.name; # [cite: 23]
   home = config.home;
-  cfg  = config.modules.xdg;
 in {
-  options.modules.xdg = {
-      enable = mkBoolOpt true;
-  };
-  config = mkIf cfg.enable {
+  config = {
     # 1. System-wide XDG Enforcement
     nix.settings.use-xdg-base-directories = true; # [cite: 43]
     environment.systemPackages = [ pkgs.xdg-user-dirs ]; # [cite: 44]
@@ -57,6 +53,7 @@ in {
       desktop     = "${home.fakeDir}";
       publicShare = "${home.fakeDir}";
       templates   = "${home.fakeDir}";
+
     };
 
     # 4. Activation Scripts (Auto-create folders and Symlink the Jail)
