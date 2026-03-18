@@ -18,6 +18,7 @@
     # You can also move your system-wide fonts here if you want them 
     # available before you even log in to your user account.
     fonts.packages = with pkgs; [
+      nerd-fonts.blex-mono  # This is "IBM Plex Mono" patched with icons
       ubuntu-classic
       dejavu_fonts
       adwaita-icon-theme

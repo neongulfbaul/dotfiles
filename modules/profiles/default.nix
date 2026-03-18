@@ -6,6 +6,8 @@ let
 in
 {
   imports = [
+    ./role/server.nix
+    ./role/workstation.nix
     ./user/neon.nix
     ./hardware/nvidia.nix
   ];

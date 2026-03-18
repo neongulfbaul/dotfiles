@@ -72,6 +72,17 @@ in {
         gromit-mpx
         pamixer
         wlr-randr
+
+        #TODO sort later
+        obsidian
+        signal-desktop
+        telegram-desktop
+        qutebrowser
+        newsboat mpv zathura
+        jq yazi nnn
+        thunar
+        python312
+        pavucontrol
       ];
     };
   };

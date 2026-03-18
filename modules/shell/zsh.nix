@@ -44,6 +44,8 @@ in {
       unar
       zip
       unzip
+      bat 
+      tree
     ];
 
     environment.variables = {

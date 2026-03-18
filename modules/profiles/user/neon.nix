@@ -16,31 +16,6 @@ mkIf (username == "neon") (mkMerge [
       uid = 1000;
       shell = pkgs.zsh;
       extraGroups = [ "wheel" "networkmanager" "video" "audio" "libvirtd" ];
-      
-      packages = with pkgs; [
-        # Fonts
-        nerd-fonts.blex-mono  # This is "IBM Plex Mono" patched with icons
-        noto-fonts-cjk-sans   # Keep this for your Japanese study!
-        ubuntu-classic
-        dejavu_fonts
-        adwaita-icon-theme
-        font-awesome
-        # Shell tools
-        fd bat eza fasd fzf
-        nix-zsh-completions
-        ripgrep tree
-        # Apps
-        git obsidian
-        signal-desktop
-        telegram-desktop
-        qutebrowser
-        newsboat mpv zathura
-        jq yazi nnn
-        thunar
-        python312
-        pavucontrol
-      ];
-      
       openssh.authorizedKeys.keys = [ key ];
     };
     
