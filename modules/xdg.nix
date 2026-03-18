@@ -2,8 +2,12 @@
 let
   user = config.user.name; # [cite: 23]
   home = config.home;
+  cfg  = config.modules.xdg;
 in {
-  config = {
+  options.modules.xdg = {
+      enable = mkBoolOpt true;
+  };
+  config = mkIf cfg.enable {
     # 1. System-wide XDG Enforcement
     nix.settings.use-xdg-base-directories = true; # [cite: 43]
     environment.systemPackages = [ pkgs.xdg-user-dirs ]; # [cite: 44]
