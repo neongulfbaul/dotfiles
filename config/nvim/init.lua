@@ -41,15 +41,5 @@ require("lazy").setup("plugins", {
 local nix_plugins = "/etc/profiles/per-user/" .. vim.env.USER .. "/share/nvim/site"
 vim.opt.rtp:append(nix_plugins)
 
--- 5. Initialize User Configs
--- We call lsp.setup directly here to ensure it runs after the bridge is built
-local ok, lsp_mod = pcall(require, "user.lsp")
-if ok then
-    lsp_mod.setup()
-else
-    -- Silently fail or print a debug message if lsp.lua isn't found yet
-    print("LSP configuration module not found")
-end
-
 -- Load the rest of your user preferences
 require("user")
