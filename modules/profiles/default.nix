@@ -6,6 +6,7 @@ let
 in
 {
   imports = [
+    ./role/vm.nix
     ./role/server.nix
     ./role/workstation.nix
     ./user/neon.nix
