@@ -12,7 +12,7 @@ function M.setup()
     require("lspconfig.configs") 
     
     require("lspconfig").nixd.setup({ capabilities = capabilities })
-    require("lspconfig").nil_ls.setup({ capabilities = capabilities })
+--    require("lspconfig").nil_ls.setup({ capabilities = capabilities })
     require("lspconfig").zls.setup({ 
         capabilities = capabilities,
         settings = { zls = { enable_inlay_hints = true } }

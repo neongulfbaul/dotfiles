@@ -25,13 +25,12 @@ in {
         # Let Nix manage the heavy-lifting plugins
         plugins = with pkgs.vimPlugins; [
           nvim-treesitter.withAllGrammars
-          nvim-lspconfig
         ];
 
         extraPackages = with pkgs; [
           # Binaries for LSPs and Tools
           lua-language-server
-          nil
+          #nil
           nixd
           zls # Added back for your Zig config
           
@@ -49,13 +48,13 @@ in {
         ];
 
       # modules/editors/nvim.nix inside programs.neovim
-        initLua = ''
-          -- Force Neovim to prioritize Nix-managed grammars
-          vim.opt.runtimepath:prepend("${pkgs.vimPlugins.nvim-treesitter.withAllGrammars}")
-          
-          -- Optional: Explicitly point to the parser directory for plugins that check it
-          vim.opt.runtimepath:append("${pkgs.vimPlugins.nvim-treesitter.withAllGrammars}/parser")
-        '';
+#        initLua = ''
+#          -- Force Neovim to prioritize Nix-managed grammars
+#          vim.opt.runtimepath:prepend("${pkgs.vimPlugins.nvim-treesitter.withAllGrammars}")
+#          
+#          -- Optional: Explicitly point to the parser directory for plugins that check it
+#          vim.opt.runtimepath:append("${pkgs.vimPlugins.nvim-treesitter.withAllGrammars}/parser")
+#        '';
         # Tell Neovim where the Nix-managed grammars are
         # This replaces the old 'symlinkJoin' logic with the modern direct path
       };

@@ -1,3 +1,4 @@
+-- 1. Lazy Bootstrap (Keep this for dynamic plugin management)
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -10,23 +11,45 @@ if not vim.loop.fs_stat(lazypath) then
     })
 end
 vim.opt.rtp:prepend(lazypath)
+
+-- 2. Your Core Options (Cold Hard Facts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.opt.termguicolors = true
 vim.opt.guicursor = ""
+-- Add these to ensure Nix-managed files are detected
+vim.opt.runtimepath:append("/etc/profiles/per-user/" .. vim.env.USER .. "/share/nvim/site")
 
+-- 3. Lazy Plugin Setup
 require("lazy").setup("plugins", {
     rocks = { enabled = false },
-    -- Remove this dev section!
-    -- dev = {
-    --     path = "~/.local/share/nvim/nix",
-    --     fallback = false,
-    -- }
+    -- This ensures Lazy doesn't try to "own" the Treesitter parsers provided by Nix
+    performance = {
+        rtp = {
+            disabled_plugins = {
+                "netrw",
+                "netrwPlugin",
+                "netrwSettings",
+                "netrwFileHandlers",
+            },
+        },
+    },
 })
-vim.api.nvim_create_autocmd("User", {
-    pattern = "LazyDone",
-    callback = function()
-        require("user.lsp").setup()
-    end,
-})
+
+-- 4. The Nix Bridge (Re-injecting Nix-managed paths AFTER Lazy setup)
+-- This ensures nvim-treesitter.withAllGrammars is visible to Neovim
+local nix_plugins = "/etc/profiles/per-user/" .. vim.env.USER .. "/share/nvim/site"
+vim.opt.rtp:append(nix_plugins)
+
+-- 5. Initialize User Configs
+-- We call lsp.setup directly here to ensure it runs after the bridge is built
+local ok, lsp_mod = pcall(require, "user.lsp")
+if ok then
+    lsp_mod.setup()
+else
+    -- Silently fail or print a debug message if lsp.lua isn't found yet
+    print("LSP configuration module not found")
+end
+
+-- Load the rest of your user preferences
 require("user")
