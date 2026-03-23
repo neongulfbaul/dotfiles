@@ -30,6 +30,6 @@ mkIf (username == "neon") (mkMerge [
     ];
     
     # Link user packages to home-manager (if you're using it)
-    home-manager.users.${username}.home.packages = config.user.packages;
+    #home-manager.users.${username}.home.packages = config.user.packages;
   }
 ])
