@@ -1,7 +1,13 @@
 # hosts/atlas/default.nix
-{ config, pkgs, lib, inputs, ... }:
 {
-  
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
+{
+
   # Activate the neon profile
   modules.profiles = {
     user = "neon";
@@ -11,55 +17,64 @@
 
   # ── Boot ────────────────────────────────────────────────────────
   boot = {
-    loader.systemd-boot.enable      = true;
+    loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-    initrd.availableKernelModules   = [ "nvme" "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
-    supportedFilesystems            = [ "cifs" ];
+    initrd.availableKernelModules = [
+      "nvme"
+      "xhci_pci"
+      "ahci"
+      "usb_storage"
+      "sd_mod"
+    ];
+    supportedFilesystems = [ "cifs" ];
   };
 
   # ── Networking ──────────────────────────────────────────────────
   networking = {
-    hostName       = "atlas";
+    hostName = "atlas";
     networkmanager.enable = true;
-    useDHCP        = lib.mkDefault true;
+    useDHCP = lib.mkDefault true;
   };
   services.resolved = {
-      enable = true;
-      settings = {
-          Resolve = {
-              DNS = [ "192.168.1.253" "1.1.1.1" ];
-          };
+    enable = true;
+    settings = {
+      Resolve = {
+        DNS = [
+          "192.168.1.253"
+          "1.1.1.1"
+        ];
       };
+    };
   };
   # ── Hardware ────────────────────────────────────────────────────
-  nixpkgs.hostPlatform          = lib.mkDefault "x86_64-linux";
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault true;
-  hardware.bluetooth.enable     = true;
-  services.blueman.enable       = true;
-  services.xserver.xkb.layout  = "us";
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+  services.xserver.xkb.layout = "us";
   time.hardwareClockInLocalTime = false;
-  services.timesyncd.enable     = true;
+  services.timesyncd.enable = true;
   modules.hardware.nvidia.enable = true;
 
   # ── Audio ───────────────────────────────────────────────────────
   services.pulseaudio.enable = false;
-  security.rtkit.enable      = true;
+  security.rtkit.enable = true;
   services.pipewire = {
-    enable           = true;
-    alsa.enable      = true;
+    enable = true;
+    alsa.enable = true;
     alsa.support32Bit = true;
-    pulse.enable     = true;
+    pulse.enable = true;
   };
 
   # ── Printing ────────────────────────────────────────────────────
   services.printing = {
-    enable   = true;
+    enable = true;
     browsing = true;
-    drivers  = [];
+    drivers = [ ];
   };
   services.avahi = {
-    enable      = true;
-    nssmdns4     = true;
+    enable = true;
+    nssmdns4 = true;
     openFirewall = true;
   };
 
@@ -71,15 +86,15 @@
     enable = true;
     settings.default_session = {
       command = "${pkgs.hyprland}/bin/Hyprland";
-      user    = config.user.name; 
+      user = config.user.name;
     };
   };
-  security.pam.services.swaylock = {};
+  security.pam.services.swaylock = { };
 
   # ── Virtualisation ──────────────────────────────────────────────
-  programs.virt-manager.enable          = true;
-  users.groups.libvirtd.members         = [ config.user.name ];
-  virtualisation.libvirtd.enable        = true;
+  programs.virt-manager.enable = true;
+  users.groups.libvirtd.members = [ config.user.name ];
+  virtualisation.libvirtd.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
 
   # ── Filesystems ─────────────────────────────────────────────────
@@ -88,28 +103,36 @@
     fsType = "ext4";
   };
   fileSystems."/boot" = {
-    device  = "/dev/disk/by-label/BOOT";
-    fsType  = "vfat";
-    options = [ "fmask=0022" "dmask=0022" ];
+    device = "/dev/disk/by-label/BOOT";
+    fsType = "vfat";
+    options = [
+      "fmask=0022"
+      "dmask=0022"
+    ];
   };
-# Enable zRam and remove physical swapDevices
+  # Enable zRam and remove physical swapDevices
   zramSwap.enable = true;
   swapDevices = [ ];
-
 
   # ── System packages ─────────────────────────────────────────────
   # TODO: move these into neon.nix user.packages or dedicated modules
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    git wget age
-    discord betterdiscordctl
-    remmina blueman
-    mako swaylock-effects swayidle
+    git
+    wget
+    age
+    discord
+    betterdiscordctl
+    remmina
+    blueman
+    mako
+    swaylock-effects
+    swayidle
   ];
 
   programs._1password.enable = true;
   programs._1password-gui = {
-    enable             = true;
+    enable = true;
     polkitPolicyOwners = [ config.user.name ];
   };
   programs.appimage = {
@@ -122,16 +145,16 @@
   # ── Modules ─────────────────────────────────────────────────────
   modules = {
     editors.neovim.enable = true;
-    shell.zsh.enable      = true;
-    shell.tmux.enable     = true;
-    shell.git.enable      = true;
-    shell.gnupg.enable    = true;
+    shell.zsh.enable = true;
+    shell.tmux.enable = true;
+    shell.git.enable = true;
+    shell.gnupg.enable = true;
     desktop = {
-      hyprland.enable           = true;
-      apps.rofi.enable          = true;
-      term.foot.enable          = true;
+      hyprland.enable = true;
+      apps.rofi.enable = true;
+      term.foot.enable = true;
       browsers.librewolf.enable = true;
-      fonts.enable              = true;
+      fonts.enable = true;
     };
   };
 }

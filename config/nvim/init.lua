@@ -23,5 +23,10 @@ require("lazy").setup("plugins", {
     --     fallback = false,
     -- }
 })
-
+vim.api.nvim_create_autocmd("User", {
+    pattern = "LazyDone",
+    callback = function()
+        require("user.lsp").setup()
+    end,
+})
 require("user")

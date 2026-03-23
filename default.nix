@@ -1,5 +1,11 @@
 # default.nix
-{ lib, options, config, pkgs, ... }:
+{
+  lib,
+  options,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 {
   imports = [
@@ -7,19 +13,23 @@ with lib;
   ];
 
   options = with types; {
-    modules = {};
+    modules = { };
     # Creates a simpler, polymorphic alias for users.users.$USER.
     user = mkOption {
-      type = attrs;  # Keep as attrs like Henrik does
-      default = { name = ""; };
+      type = attrs; # Keep as attrs like Henrik does
+      default = {
+        name = "";
+      };
     };
   };
 
   config = {
-    assertions = [{
-      assertion = config.user ? name && config.user.name != "";
-      message = "config.user.name is not set!";
-    }];
+    assertions = [
+      {
+        assertion = config.user ? name && config.user.name != "";
+        message = "config.user.name is not set!";
+      }
+    ];
 
     environment.sessionVariables = mkOrder 10 {
       DOTFILES_HOME = toString ./.;
@@ -48,8 +58,14 @@ with lib;
         experimental-features = nix-command flakes
       '';
       settings = {
-        trusted-users = [ "root" config.user.name ];
-        allowed-users = [ "root" config.user.name ];
+        trusted-users = [
+          "root"
+          config.user.name
+        ];
+        allowed-users = [
+          "root"
+          config.user.name
+        ];
         auto-optimise-store = true;
       };
     };
