@@ -142,13 +142,17 @@
 
   services.openssh.enable = true;
 
-  # ── Modules ─────────────────────────────────────────────────────
+  home.enable = true;
+  
   modules = {
+    xdg.enable = true;
     editors.neovim.enable = true;
-    shell.zsh.enable = true;
-    shell.tmux.enable = true;
-    shell.git.enable = true;
-    shell.gnupg.enable = true;
+    shell = {
+      zsh.enable = true;
+      tmux.enable = true;
+      git.enable = true;
+      gnupg.enable = true;
+    };
     desktop = {
       hyprland.enable = true;
       apps.rofi.enable = true;

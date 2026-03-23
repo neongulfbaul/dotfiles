@@ -14,7 +14,6 @@ mkIf (username == "neon") (mkMerge [
       name = username;
       description = "neon";
       uid = 1000;
-      shell = pkgs.zsh;
       extraGroups = [ "wheel" "networkmanager" "video" "audio" "libvirtd" ];
       openssh.authorizedKeys.keys = [ key ];
     };
