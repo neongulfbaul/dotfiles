@@ -142,8 +142,6 @@
 
   services.openssh.enable = true;
 
-  home.enable = true;
-  
   modules = {
     xdg.enable = true;
     editors.neovim.enable = true;
