@@ -33,6 +33,7 @@ in {
           #nil
           nixd
           zls # Added back for your Zig config
+          alejandra
           
           # Tools
           git curl ripgrep fd xclip

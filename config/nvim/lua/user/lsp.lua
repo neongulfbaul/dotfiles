@@ -1,34 +1,25 @@
--- config/nvim/lua/plugins/lsp.lua
--- We no longer return a table for lazy.nvim here. 
--- We just define the function to be called by init.lua.
-
 local M = {}
 
 function M.setup()
-    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    -- 1. Setup UI & Capabilities
     require("fidget").setup({})
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-    -- The most direct way to setup without framework triggers
-    require("lspconfig.configs") 
-    
-    require("lspconfig").nixd.setup({ capabilities = capabilities })
---    require("lspconfig").nil_ls.setup({ capabilities = capabilities })
-    require("lspconfig").zls.setup({ 
+    -- 2. Global LSP Configuration
+    -- This replaces passing 'capabilities' to every single server setup.
+    vim.lsp.config("*", {
         capabilities = capabilities,
-        settings = { zls = { enable_inlay_hints = true } }
     })
 
-    require("lspconfig").lua_ls.setup({
-        capabilities = capabilities,
-        settings = {
-            Lua = {
-                runtime = { version = "Lua 5.1" },
-                diagnostics = { globals = { "vim", "bit" } },
-            },
-        },
-    })
+    -- 3. Initialize lspconfig (Adds its server definitions to the RTP)
+    -- This is required so Neovim knows where to find nixd, zls, etc.
+    require("lspconfig")
 
-    -- Setup CMP
+    -- 4. Enable your servers
+    -- This replaces the individual .setup() calls.
+    vim.lsp.enable({ "nixd", "zls", "lua_ls" })
+
+    -- 5. Setup CMP (Remains mostly the same)
     local cmp = require('cmp')
     cmp.setup({
         snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end },
@@ -43,4 +34,4 @@ function M.setup()
     vim.diagnostic.config({ float = { border = "single" } })
 end
 
-return M -- This closes the 'return {}' table
+return M

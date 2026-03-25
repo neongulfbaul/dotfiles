@@ -2,6 +2,8 @@
 return {
   {
     "neovim/nvim-lspconfig",
+    -- We want this to load early enough to set up the runtimepath
+    lazy = false, 
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/nvim-cmp",
@@ -9,11 +11,11 @@ return {
       "j-hui/fidget.nvim",
     },
     config = function()
-      -- This calls the 'M.setup()' function from the file you just shared
+      -- This triggers your refactored logic in lua/user/lsp.lua
       require("user.lsp").setup()
     end,
   },
 
-  -- Explicitly disable Lazy's Treesitter so it doesn't fight with Nix
+  -- Keep this disabled to let Nix handle your parsers
   { "nvim-treesitter/nvim-treesitter", enabled = false },
 }
