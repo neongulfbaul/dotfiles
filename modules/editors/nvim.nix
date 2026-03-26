@@ -34,6 +34,7 @@ in {
           nixd
           zls # Added back for your Zig config
           alejandra
+          nixpkgs-fmt
           
           # Tools
           git curl ripgrep fd xclip
