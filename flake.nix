@@ -10,7 +10,7 @@
 
   outputs = { self, nixpkgs, ... } @ inputs: 
     let
-      hosts = [ "atlas" "x1" ];
+      hosts = [ "atlas" "x1" "wsl" ];
       
       mkHost = host: nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
