@@ -4,11 +4,12 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, ... } @ inputs: 
+  outputs = { self, nixpkgs, nixos-wsl, ... } @ inputs: 
     let
       hosts = [ "atlas" "x1" "wsl" ];
       
@@ -18,6 +19,7 @@
           ./default.nix
           ./modules
           ./hosts/${host} 
+          (nixpkgs.lib.optionalAttrs (host == "wsl") nixos-wsl.nixosModules.default)
         ];
       };
     in {
