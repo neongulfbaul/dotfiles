@@ -128,6 +128,7 @@
     mako
     swaylock-effects
     swayidle
+    rsync
   ];
 
   programs._1password.enable = true;
@@ -157,6 +158,7 @@
       term.foot.enable = true;
       browsers.librewolf.enable = true;
       fonts.enable = true;
+      apps.chess.enable = true;
     };
   };
 }
