@@ -146,6 +146,7 @@
   modules = {
     xdg.enable = true;
     editors.neovim.enable = true;
+    services.sunshine.enable = true;
     shell = {
       zsh.enable = true;
       tmux.enable = true;
