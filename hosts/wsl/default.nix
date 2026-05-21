@@ -2,7 +2,6 @@
 
   modules.profiles = {
     user = "neon";
-    role = "workstation";
     platform = "x86_64-linux";
   };
 
@@ -39,14 +38,12 @@
   environment.systemPackages = with pkgs; [
     git
     wget
+    gcc
+    gnumake
+    binutils
     # CLI-only for now; GUI apps like Discord can be run via Windows 
     # or added back once the base build is stable
   ];
-
-  programs.appimage = {
-    enable = true;
-    binfmt = true;
-  };
 
   # ── Modular Config ─────────────────────────────────────────────
   modules = {
@@ -60,7 +57,6 @@
     };
     desktop = {
       # Disable the heavy sessions, keep fonts for terminal rendering
-      hyprland.enable = false;
       fonts.enable = true;
     };
   };
