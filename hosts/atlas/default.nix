@@ -29,20 +29,24 @@
     supportedFilesystems = [ "cifs" ];
   };
 
-  # ── Networking ──────────────────────────────────────────────────
+# ── Networking ──────────────────────────────────────────────────
   networking = {
     hostName = "atlas";
     networkmanager.enable = true;
+    
+    # 1. Global nameservers (universal standard)
+    nameservers = [ "192.168.1.253" "1.1.1.1" ];
+    
+    networkmanager.dns = "systemd-resolved";
     useDHCP = lib.mkDefault true;
   };
+
+  # 2. The Modern Systemd-Resolved Block
   services.resolved = {
     enable = true;
     settings = {
       Resolve = {
-        DNS = [
-          "192.168.1.253"
-          "1.1.1.1"
-        ];
+        Domains = [ "lan" ];
       };
     };
   };
@@ -128,6 +132,7 @@
     mako
     swaylock-effects
     swayidle
+    rsync
   ];
 
   programs._1password.enable = true;
@@ -145,6 +150,7 @@
   modules = {
     xdg.enable = true;
     editors.neovim.enable = true;
+    services.sunshine.enable = true;
     shell = {
       zsh.enable = true;
       tmux.enable = true;
@@ -157,6 +163,7 @@
       term.foot.enable = true;
       browsers.librewolf.enable = true;
       fonts.enable = true;
+      apps.chess.enable = true;
     };
   };
 }
