@@ -29,20 +29,24 @@
     supportedFilesystems = [ "cifs" ];
   };
 
-  # ── Networking ──────────────────────────────────────────────────
+# ── Networking ──────────────────────────────────────────────────
   networking = {
     hostName = "atlas";
     networkmanager.enable = true;
+    
+    # 1. Global nameservers (universal standard)
+    nameservers = [ "192.168.1.253" "1.1.1.1" ];
+    
+    networkmanager.dns = "systemd-resolved";
     useDHCP = lib.mkDefault true;
   };
+
+  # 2. The Modern Systemd-Resolved Block
   services.resolved = {
     enable = true;
     settings = {
       Resolve = {
-        DNS = [
-          "192.168.1.253"
-          "1.1.1.1"
-        ];
+        Domains = [ "lan" ];
       };
     };
   };

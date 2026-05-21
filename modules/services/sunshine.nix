@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.modules.desktop.services.sunshine;
+  cfg = config.modules.services.sunshine;
 in {
   options.modules.services.sunshine = {
     enable = lib.mkEnableOption "sunshine";
