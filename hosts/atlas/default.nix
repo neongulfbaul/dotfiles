@@ -34,10 +34,21 @@
     hostName = "atlas";
     networkmanager.enable = true;
     
-    # 1. Global nameservers (universal standard)
-    nameservers = [ "192.168.1.253" "1.1.1.1" ];
+    # 1. Global nameservers - ONLY your local AdGuard instance
+    nameservers = [ "192.168.1.253" ];
     
-    networkmanager.dns = "systemd-resolved";
+    networkmanager = {
+      dns = "systemd-resolved";
+      
+      # Quote the keys so Nix handles them as flat INI atoms
+      settings = {
+        connection = {
+          "ipv4.ignore-auto-dns" = "true";
+          "ipv6.ignore-auto-dns" = "true";
+        };
+      };
+    };
+    
     useDHCP = lib.mkDefault true;
   };
 
@@ -46,7 +57,7 @@
     enable = true;
     settings = {
       Resolve = {
-        Domains = [ "lan" ];
+        Domains = [ "~lan" ];
       };
     };
   };
@@ -150,7 +161,7 @@
   modules = {
     xdg.enable = true;
     editors.neovim.enable = true;
-    services.sunshine.enable = true;
+    services.sunshine.enable = false;
     shell = {
       zsh.enable = true;
       tmux.enable = true;

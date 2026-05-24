@@ -14,15 +14,29 @@ in {
       autoStart = true;
       capSysAdmin = true; # Required for Wayland/Hyprland screen capture
       openFirewall = true; # Opens 47984-48010 for local streaming
+      
+      # Define your immutable applications here:
+      applications = {
+        apps = [
+          {
+            name = "Desktop";
+            image-path = "desktop.png";
+          }
+          {
+            name = "En Croissant";
+            cmd = "/etc/profiles/per-user/neon/bin/en-croissant";
+          }
+        ];
+      }; 
     };
 
     # Requirements for virtual input (controller/mouse emulation)
     hardware.uinput.enable = true;
-    
+
     # Add your user to the necessary groups
-    users.users.${config.user.name}.extraGroups = [ 
-      "uinput" 
-      "video" 
+    users.users.${config.user.name}.extraGroups = [
+      "uinput"
+      "video"
     ];
 
     # Udev rules to ensure uinput is accessible to the sunshine service
