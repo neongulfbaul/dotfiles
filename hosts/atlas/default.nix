@@ -6,6 +6,7 @@
   inputs,
   ...
 }:
+
 {
 
   # Activate the neon profile
@@ -27,6 +28,10 @@
       "sd_mod"
     ];
     supportedFilesystems = [ "cifs" ];
+    # Force the xpad driver to clamp onto your specific MadCatz ID
+    extraModprobeConfig = ''
+      options xpad quirks=0738:4738:0x1
+    '';
   };
 
 # ── Networking ──────────────────────────────────────────────────
@@ -112,11 +117,21 @@
   virtualisation.libvirtd.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
 
+  # --- AI -----
+  #my.services.ollama.enabled = true;
+
   # ── Filesystems ─────────────────────────────────────────────────
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
   };
+
+  fileSystems."/mnt/storage" = {
+    device = "/dev/disk/by-label/storage"; # Or use your existing label/UUID
+    fsType = "ext4";
+    options = [ "nofail" ]; # Prevents boot failure if the drive is ever unplugged/missing
+  };
+
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/BOOT";
     fsType = "vfat";
@@ -144,7 +159,17 @@
     swaylock-effects
     swayidle
     rsync
+    anki
+    mpv
+    nodejs
+    claude-code
   ];
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Optional, for local streaming
+    dedicatedServer.openFirewall = true;
+  };
 
   programs._1password.enable = true;
   programs._1password-gui = {

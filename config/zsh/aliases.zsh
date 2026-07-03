@@ -4,7 +4,8 @@ alias ....='cd ../../..'
 alias -- -='cd -'
 
 alias update="sudo nixos-rebuild switch --flake '.#$(hostname)'"
-
+alias gemini="npx @google/gemini-cli"
+alias ai-code="ollama launch claude --model qwen-coder-nix"
 
 alias q=exit
 alias clr=clear

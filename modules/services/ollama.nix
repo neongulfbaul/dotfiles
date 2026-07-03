@@ -3,7 +3,8 @@
 {
   services.ollama = {
     enable = true;
-    acceleration = "cuda"; # Enable NVIDIA GPU support
+    # Replace acceleration = "cuda" with the direct CUDA package
+    package = pkgs.ollama-cuda; 
     host = "0.0.0.0";      # Allow external access
   };
 
