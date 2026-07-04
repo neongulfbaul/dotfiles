@@ -42,7 +42,7 @@ in {
           # Formatters
           black
           nixfmt
-          nodePackages.prettier
+          prettier
           biome
           shfmt
           stylelint

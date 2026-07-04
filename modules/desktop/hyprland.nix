@@ -1,89 +1,194 @@
-# modules/desktop/hyprland.nix
-{ config, pkgs, lib, ... }:
+{ inputs, lib, config, pkgs, ... }:
+
 let
-  user = config.user.name;
+  # Assuming this file sits at modules/desktop/hyprland.nix, 
+  # this paths back to the root config directory of your dotfiles repository.
+  configDir = ../../config;
+
+  # Native clean replacement for Henrik's custom 'mkLauncherEntry'
+  mkLauncherEntry = name: { icon, exec }: pkgs.makeDesktopItem {
+    inherit name exec icon;
+    desktopName = name;
+    categories = [ "Utility" ];
+  };
+  
+  # Shorthand to make references cleaner within this module
+  cfg = config.modules.desktop.hyprland;
 in {
   options.modules.desktop.hyprland = {
-    enable = lib.mkEnableOption "hyprland";
+    enable = lib.mkEnableOption "Hyprland-based desktop environment";
+    extraConfig = lib.mkOption {
+      type = lib.types.lines;
+      default = "";
+      description = "Extra configuration to append to hyprland-post.lua";
+    };
+    monitors = lib.mkOption {
+      type = lib.types.listOf (lib.types.submodule {
+        options = {
+          output = lib.mkOption { type = lib.types.str; default = ""; };
+          mode = lib.mkOption { type = lib.types.str; default = "preferred"; };
+          position = lib.mkOption { type = lib.types.str; default = "auto"; };
+          scale = lib.mkOption { type = lib.types.int; default = 1; };
+          disabled = lib.mkOption { type = lib.types.bool; default = false; };
+          primary = lib.mkOption { type = lib.types.bool; default = false; };
+        };
+      });
+      default = [{}];
+    };
   };
 
-  config = lib.mkIf config.modules.desktop.hyprland.enable {
+  config = lib.mkIf cfg.enable {
+    # REMOVED: modules.desktop.hyprland.enable = true; (This broke evaluation)
 
-    # ── System level ──────────────────────────────────────────────
-    programs.hyprland = {
-      enable  = true;
-      package = pkgs.hyprland;
-      xwayland.enable = true;
-    };
+    environment.systemPackages = with pkgs; [
+      ## For Hyprland & DMS
+      xrandr         # for XWayland windows
+      adw-gtk3       # for DMS
+      libinput       # For screenkey plugin
+
+      ## For CLIs
+      gromit-mpx     # for drawing on the screen
+      wlr-randr      # for monitors that hyprctl can't handle
+      wf-recorder    # for screencasting
+      slurp          # slop
+      grim           # screenshot (hyprshot, dms screenshot, etc)
+      swappy         # satty/Snappy/sharex
+    ];
+
+    user.extraGroups = [ "input" ];   # For DMS Screenkey plugin
 
     environment.sessionVariables = {
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
-      NIXOS_OZONE_WL               = "1";
-      MOZ_ENABLE_WAYLAND           = "1";
+      NIXOS_OZONE_WL = "1";
+      MOZ_ENABLE_WAYLAND = "1";
+      QT_QPA_PLATFORMTHEME = "gtk3";
+      QT_QPA_PLATFORMTHEME_QT6 = "gtk3";
     };
 
-    # ── Home-manager level ────────────────────────────────────────
-    home-manager.users.${user} = {
-      wayland.windowManager.hyprland = {
-        enable      = true;
-        package     = pkgs.hyprland;
-        xwayland.enable = true;
-        extraConfig = builtins.readFile ../../config/hypr/hyprland.conf;
-        settings    = {};
-      };
-
-      services.hyprpaper = {
-        enable = true;
-        package = pkgs.hyprpaper;
-        settings = {
-          wallpaper = [ 
-            {
-                monitor = "DP-3";
-                path = "${config.user.home}/.dotfiles/wallpaper/puffy-stars.jpg"; 
-            }
-          ];
-        };
-      };
-
-      services.hypridle = {
-        enable = true;
-        settings.general.lock_cmd = "hyprlock";
-        settings.listener = [
-          {
-            timeout    = 300;
-            on-timeout = "hyprlock";
-          }
-        ];
-      };
-
-      programs.hyprlock.enable = true;
-
-      home.packages = with pkgs; [
-        hyprlock
-        hyprpicker
-        hyprshade
-        hyprshot
-        grim
-        slurp
-        wl-clipboard
-        swappy
-        mako
-        xrandr
-        gromit-mpx
-        pamixer
-        wlr-randr
-
-        #TODO sort later
-        obsidian
-        signal-desktop
-        telegram-desktop
-        qutebrowser
-        newsboat mpv zathura
-        jq yazi nnn
-        thunar
-        python312
-        pavucontrol
-      ];
+    programs.hyprland = {
+      enable = true;
+      withUWSM = true;
+      systemd.setPath.enable = true;
     };
+
+    programs.dms-shell = {
+      enable = true;
+      package = inputs.dms.packages."${pkgs.stdenv.hostPlatform.system}".default;
+      quickshell.package = inputs.quickshell.packages."${pkgs.stdenv.hostPlatform.system}".default;
+      systemd.enable = true;
+      enableSystemMonitoring = true;
+      enableDynamicTheming = true;
+    };
+
+    services.greetd = {
+      enable = true;
+      settings.default_session = {
+        command = "uwsm start -eD Hyprland hyprland.desktop";
+        user = config.user.name;
+      };
+    };
+
+    home.dataFile."hey/info.json".text = builtins.toJSON {
+      hypr = {
+        monitors = cfg.monitors; # FIXED path
+      };
+      theme.fonts = {
+        mono = "JetBrainsMono Nerd Font";
+        sans = "Fira Sans";
+      };
+    };
+
+    home.configFile = {
+      "matugen/templates".source = "${configDir}/matugen/templates";
+
+      "matugen/config.toml".text = ''
+        [config]
+        version_check = false
+        import_json_files = ["${config.home.dataDir}/hey/info.json"]
+
+        [templates.hyprland]
+        input_path = "${configDir}/matugen/templates/hyprland.lua"
+        output_path = "${config.home.configDir}/hypr/hyprland-colors.lua"
+
+        ${lib.optionalString config.modules.shell.tmux.enable ''
+          [templates.tmux]
+          input_path = "${configDir}/matugen/templates/tmux.conf"
+          output_path = "${config.home.configDir}/tmux/dank-colors.conf"
+        ''}
+        ${lib.optionalString config.modules.desktop.browsers.librewolf.enable ''
+          [templates.librewolf]
+          input_path = "${configDir}/matugen/templates/librewolf.css"
+          output_path = "${config.home.fakeDir}/.librewolf/neon.default/chrome/userChrome.colors.css"
+        ''}
+        ${lib.optionalString config.modules.desktop.apps.rofi.enable ''
+          [templates.rofi]
+          input_path = "${configDir}/matugen/templates/rofi.rasi"
+          output_path = "${config.home.configDir}/rofi/themes/dank-colors.rasi"
+        ''}
+        ${lib.optionalString config.modules.desktop.term.foot.enable ''
+          [templates.foot]
+          input_path = "${configDir}/matugen/templates/foot.ini"
+          output_path = "${config.home.configDir}/foot/dank-colors.ini"
+        ''}
+      '';
+
+      "swappy" = {
+        source = "${configDir}/swappy";
+        recursive = true;
+      };
+
+      "hypr/hyprland.lua".text = ''
+        -- Auto-generated by nixos
+        package.path = "${configDir}/hypr/hyprland.lua;" .. package.path
+
+        ${lib.concatStringsSep "\n"
+          (map (v: ''
+            hl.monitor({
+              output = "${v.output}",
+              mode = "${v.mode}",
+              position = "${v.position}",
+              scale = ${toString (v.scale or 1)},
+              disabled = ${if v.disabled then "true" else "false"}
+            })
+          '') cfg.monitors)}
+
+        HOSTNAME = "${config.networking.hostName}"
+
+        require("hyprland")
+        require("hyprland-post")
+
+        local f = io.open("${configDir}/hypr/hyprland-colors.lua")
+        if f ~= nil then
+            io.close(f)
+        else
+            require("hyprland-colors")  -- generated by matugen
+        end
+      '';
+
+      "hypr/hyprland-post.lua".text = cfg.extraConfig; # FIXED path
+    };
+
+    user.packages = with pkgs; [
+      catppuccin-cursors.mochaDark
+      tela-circle-icon-theme
+      dracula-icon-theme
+
+      (mkLauncherEntry "Toggle night mode" {
+        icon = "redshift";
+        exec = "dms ipc night toggle";
+      })
+      (mkLauncherEntry "Color picker: grab RGB at point" {
+        icon = "com.github.finefindus.eyedropper";
+        exec = "dms color pick --rgb -a";
+      })
+      (mkLauncherEntry "Color picker: grab HSL at point" {
+        icon = "com.github.finefindus.eyedropper";
+        exec = "dms color pick --hsl -a";
+      })
+      (mkLauncherEntry "Color picker: grab hex at point" {
+        icon = "com.github.finefindus.eyedropper";
+        exec = "dms color pick --hex -a";
+      })
+    ];
   };
 }
