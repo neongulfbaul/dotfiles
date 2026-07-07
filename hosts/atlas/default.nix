@@ -156,6 +156,7 @@
     mpv
     nodejs
     claude-code
+    obsidian
   ];
 
   programs.steam = {

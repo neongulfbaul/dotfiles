@@ -282,26 +282,26 @@ end)
 -- ** Layout controls
 hl.bind("SUPER + f",              hl.dsp.window.float({ action = "toggle" }))
 hl.bind("SUPER + SHIFT + f",      hl.dsp.window.fullscreen({ action = "toggle" }))
-hl.bind("SUPER + o", my.dsp.layout({
-    scrolling = hl.dsp.layout("consume_or_expel next"),
-    monocle   = hl.dsp.focus({ last = true }),
-    master    = hl.dsp.layout("addmaster"),
-}))
-hl.bind("SUPER + SHIFT + o", my.dsp.layout({
-    scrolling = hl.dsp.layout("consume_or_expel prev"),
-    monocle   = hl.dsp.focus({ urgent_or_last = true }),
-    master    = hl.dsp.layout("removemaster"),
-}))
-hl.bind("SUPER + TAB", my.dsp.layout({
-    scrolling = hl.dsp.layout("swapcol r"),
-    monocle   = hl.dsp.layout("cyclenext"),
-    master    = hl.dsp.layout("swapwithmaster"),
-}))
-hl.bind("SUPER + SHIFT + TAB", my.dsp.layout({
-    scrolling = hl.dsp.layout("swapcol l"),
-    monocle   = hl.dsp.layout("cycleprev"),
-    master    = hl.dsp.exec_cmd("hey @rofi windowmenu"),
-}))
+--hl.bind("SUPER + o", my.dsp.layout({
+--    scrolling = hl.dsp.layout("consume_or_expel next"),
+--    monocle   = hl.dsp.focus({ last = true }),
+--    master    = hl.dsp.layout("addmaster"),
+-- }))
+-- hl.bind("SUPER + SHIFT + o", my.dsp.layout({
+--     scrolling = hl.dsp.layout("consume_or_expel prev"),
+--    monocle   = hl.dsp.focus({ urgent_or_last = true }),
+--    master    = hl.dsp.layout("removemaster"),
+-- }))
+--hl.bind("SUPER + TAB", my.dsp.layout({
+--    scrolling = hl.dsp.layout("swapcol r"),
+--    monocle   = hl.dsp.layout("cyclenext"),
+--    master    = hl.dsp.layout("swapwithmaster"),
+--}))
+--hl.bind("SUPER + SHIFT + TAB", my.dsp.layout({
+--    scrolling = hl.dsp.layout("swapcol l"),
+--    monocle   = hl.dsp.layout("cycleprev"),
+--    master    = hl.dsp.exec_cmd("hey @rofi windowmenu"),
+--}))
 hl.bind("SUPER + Left",         hl.dsp.layout("orientationleft"))
 hl.bind("SUPER + Right",        hl.dsp.layout("orientationright"))
 hl.bind("SUPER + Up",           hl.dsp.layout("orientationtop"))
@@ -346,7 +346,7 @@ hl.bind("SUPER + mouse:273",      hl.dsp.window.resize(), { mouse = true })
 -- ** Monitor brightness control
 hl.bind("XF86MonBrightnessUp",    hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 10%+"), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 10%-"), { locked = true, repeating = true })
-hl.bind("XF86PowerOff",           my.dsp.dpms(false), { locked = true; })
+--hl.bind("XF86PowerOff",           my.dsp.dpms(false), { locked = true; })
 
 -- ** Audio and player controls
 hl.bind("XF86AudioRaiseVolume",        hl.dsp.exec_cmd("dms ipc audio increment 10"), { locked = true, repeating = true })
