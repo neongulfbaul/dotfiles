@@ -172,11 +172,11 @@ hl.workspace_rule({
 
 -- * Window rules
 
-hl.window_rule({   -- see coniig/hypr/bin/screenshot.zsh
-    name = "swappy",
-    match = { class = "swappy" },
-    dim_around = true
-})
+--hl.window_rule({   -- see coniig/hypr/bin/screenshot.zsh
+--    name = "swappy",
+--    match = { class = "swappy" },
+--    dim_around = true
+--})
 
 hl.window_rule({   -- see coniig/hypr/bin/screendraw.zsh
     name = "gromit-mpx-rule",
@@ -257,15 +257,15 @@ hl.define_submap("session", "reset", function()
 --    hl.bind("catchall", hl.dsp.submap("reset"))
 end)
 
+
+-- hl.bind("SUPER + p", hl.dsp.exec_cmd('grim -g "$(slurp)" - | swappy -f -'))
+
 -- ** Screenshot/recording
---hl.bind("Print", hl.dsp.submap("screenshot"))
---hl.define_submap("screenshot", "reset", function()
---    hl.bind("Print",    hl.dsp.exec_cmd("hey .screenshot region"))
---    hl.bind("w",        hl.dsp.exec_cmd("hey .screenshot window"))
---    hl.bind("m",        hl.dsp.exec_cmd("hey .screenshot output"))
---    hl.bind("l",        hl.dsp.exec_cmd("hey .screenshot last"))
---    hl.bind("catchall", hl.dsp.submap("reset"))
---end)
+-- hl.bind("SUPER + p", hl.dsp.exec_cmd("$HOME/.config/hypr/bin/screenshot.zsh"))
+-- ** Screenshot/recording
+-- ** Screenshot/recording
+hl.bind("SUPER + SHIFT + p", hl.dsp.exec_cmd("$HOME/.config/hypr/bin/screenshot.zsh"))
+--hl.bind("SUPER + p", hl.dsp.exec_cmd("$XDG_CONFIG_HOME/hypr/bin/screenshot.zsh"), { release = true })
 --hl.bind("SUPER + Print", hl.dsp.submap("screencap"))
 --hl.define_submap("screencap", "reset", function()
 --    hl.bind("SUPER + Print",         hl.dsp.exec_cmd("hey .screencast webm"))

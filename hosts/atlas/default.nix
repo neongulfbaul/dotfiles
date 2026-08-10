@@ -176,6 +176,7 @@
   };
 
   services.openssh.enable = true;
+  services.speechd.enable = true;
 
   modules = {
     xdg.enable = true;

@@ -53,6 +53,11 @@ in {
       slurp          # slop
       grim           # screenshot (hyprshot, dms screenshot, etc)
       swappy         # satty/Snappy/sharex
+      wl-clipboard
+      pngquant
+
+      speechd        # speech-dispatcher for tts
+      espeak-ng      # service to play said speech
     ];
 
     user.extraGroups = [ "input" ];   # For DMS Screenkey plugin
@@ -131,6 +136,13 @@ in {
           output_path = "${config.home.configDir}/foot/dank-colors.ini"
         ''}
       '';
+    
+      "hypr/bin" = {
+        source = "${configDir}/hypr/bin";
+        recursive = true;
+        executable = true; # Ensures your scripts remain executable after deployment
+      };
+
 
       "swappy" = {
         source = "${configDir}/swappy";
